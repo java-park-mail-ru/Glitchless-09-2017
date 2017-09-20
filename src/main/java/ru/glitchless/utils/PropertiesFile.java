@@ -3,21 +3,27 @@ package ru.glitchless.utils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.lang.Nullable;
 
 import javax.annotation.PreDestroy;
 import java.io.*;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class PropertiesFile {
+public class PropertiesFile implements IPropertiesFile {
     private static final File CONFIGFILE = new File("config.properties");
     private static final Logger LOG = LoggerFactory.getLogger("props");
+    private final ExecutorService service;
 
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
-    public PropertiesFile() {
+    public PropertiesFile(@Nullable ExecutorService service) {
+        if (service == null) {
+            this.service = Executors.newCachedThreadPool();
+        } else {
+            this.service = service;
+        }
         try {
             if (!CONFIGFILE.exists()) {
                 if (CONFIGFILE.createNewFile()) {
@@ -44,16 +50,23 @@ public class PropertiesFile {
         }
     }
 
+    @Override
     public String getSalt() {
         String salt = properties.getProperty("salt", null);
         if (salt == null) {
             salt = BCrypt.gensalt();
             properties.setProperty("salt", salt);
+            asyncSave();
         }
         return salt;
     }
 
+    public void asyncSave() {
+        service.execute(this::save);
+    }
+
     @PreDestroy
+    @Override
     public void save() {
         try {
             try (FileOutputStream fos = new FileOutputStream(CONFIGFILE)) {

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 public class Application {
     public static void main(String... args) {
-        ConfigurableApplicationContext app = SpringApplication.run(Application.class, args);
+        final ConfigurableApplicationContext app = SpringApplication.run(Application.class, args);
+        app.registerShutdownHook();
     }
 }

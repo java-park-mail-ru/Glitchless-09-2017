@@ -1,16 +1,18 @@
 package ru.glitchless.auth;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import ru.glitchless.models.UserModel;
 
 @RestController
+@CrossOrigin
 public class UserController {
 
-
-    @GetMapping("/user")
-    public Principal user(Principal user) {
-        return user;
+    @PostMapping(path = "/signup")
+    public ResponseEntity signUp(@RequestBody(required = false) UserModel profile) {
+        if(profile == null){
+            return ResponseEntity.badRequest().body("Error!");
+        }
+        return ResponseEntity.ok("OK!");
     }
 }

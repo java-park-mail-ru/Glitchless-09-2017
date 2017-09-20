@@ -1,4 +1,4 @@
-package ru.glitchless.auth;
+package ru.glitchless.models;
 
 public class UserModel {
     private String loginOrEmail;
