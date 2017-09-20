@@ -60,6 +60,16 @@ public class UserController {
         return ResponseEntity.ok(new Message(true));
     }
 
+    @PostMapping("/api/user/change")
+    public ResponseEntity changeUser(UserModel user) {
+        try {
+            final UserModel userModel = service.changeUser(user);
+            return ResponseEntity.ok(new Message(userModel, true));
+        } catch (InvalidData e) {
+            return ResponseEntity.badRequest().body(new Message(e.getReason(), false));
+        }
+    }
+
     @GetMapping("/api/user")
     public ResponseEntity currentUser(HttpSession httpSession) {
         final String session = (String) httpSession.getAttribute("session");

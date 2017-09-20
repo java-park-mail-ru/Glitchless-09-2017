@@ -77,4 +77,22 @@ public class UserService {
 
         return getSession(model);
     }
+
+    public UserModel changeUser(UserModel userModel) throws InvalidData {
+        if (!validator.validate(userModel)) {
+            return null;
+        }
+
+        final UserLocalModel model = usersByLogin.get(userModel.getLoginOrEmail());
+
+        if (model == null || !model.comparePassword(userModel.getPassword())) {
+            throw new InvalidData("Invalid login or password");
+        }
+
+        model.setEmail(userModel.getEmail());
+
+        final UserModel outputMode = new UserModel(userModel.getLoginOrEmail(), null);
+        outputMode.setEmail(userModel.getEmail());
+        return outputMode;
+    }
 }
