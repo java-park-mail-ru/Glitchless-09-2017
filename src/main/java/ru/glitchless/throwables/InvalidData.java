@@ -7,4 +7,8 @@ public class InvalidData extends RuntimeException {
         super(reason);
         this.reason = reason;
     }
+
+    public String getReason() {
+        return reason;
+    }
 }

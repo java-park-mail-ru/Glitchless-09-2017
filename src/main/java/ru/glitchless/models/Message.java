@@ -4,11 +4,11 @@ public class Message {
     private Object message;
     private boolean successfull = true;
 
-    public Message(Object message){
+    public Message(Object message) {
         this.message = message;
     }
 
-    public Message(Object message, boolean successfull){
+    public Message(Object message, boolean successfull) {
         this.message = message;
         this.successfull = successfull;
     }
@@ -21,10 +21,5 @@ public class Message {
     @SuppressWarnings("unused")
     public boolean isSuccessfull() {
         return successfull;
-    }
-
-    public Message setSuccessfull(boolean successfull) {
-        this.successfull = successfull;
-        return this;
     }
 }

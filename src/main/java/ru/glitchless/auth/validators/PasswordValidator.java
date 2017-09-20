@@ -6,7 +6,7 @@ public class PasswordValidator implements IPasswordValidator {
     private static final String PASSWORD_PATTERN = "([A-Za-z0-9])+";
 
     @Override
-    public boolean validate(String rawPassword) throws InvalidData {
+    public void validate(String rawPassword) throws InvalidData {
         if (rawPassword == null) {
             throw new InvalidData("Password can't be null");
         }
@@ -17,6 +17,5 @@ public class PasswordValidator implements IPasswordValidator {
         if (!rawPassword.matches(PASSWORD_PATTERN)) {
             throw new InvalidData("Invalid symbols! Password can contains only [A-Za-z0-9]");
         }
-        return true;
     }
 }
