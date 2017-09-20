@@ -13,10 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserService {
-
-    final IPropertiesFile propertiesFile;
-
-    final IUserValidator validator;
+    private final IPropertiesFile propertiesFile;
+    private final IUserValidator validator;
 
     private ConcurrentHashMap<String, UserLocalModel> usersByLogin = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, UserLocalModel> usersBySession = new ConcurrentHashMap<>();
@@ -27,10 +25,6 @@ public class UserService {
         this.validator = validator;
     }
 
-    /**
-     * @param userModel New user
-     * @return session Not-null if user sucs register
-     */
     public String registerUser(UserModel userModel) throws InvalidData {
         if (!validator.validate(userModel)) {
             return null;

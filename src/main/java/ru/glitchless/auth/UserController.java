@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 @RestController
 @CrossOrigin
 public class UserController {
-    UserService service;
+    private UserService service;
 
     public UserController(UserService service) {
         this.service = service;

@@ -40,8 +40,8 @@ public class UserLocalModel {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof UserLocalModel &&
-                loginOrEmail.equals(((UserLocalModel) obj).loginOrEmail) &&
-                passwordBCrypt.equals(((UserLocalModel) obj).passwordBCrypt);
+        return obj instanceof UserLocalModel
+                && loginOrEmail.equals(((UserLocalModel) obj).loginOrEmail)
+                && passwordBCrypt.equals(((UserLocalModel) obj).passwordBCrypt);
     }
 }

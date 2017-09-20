@@ -39,8 +39,8 @@ public class UserModel {
         return email;
     }
 
-    public UserModel setEmail(String email) {
-        this.email = email;
+    public UserModel setEmail(String userEmail) {
+        this.email = userEmail;
         return this;
     }
 
