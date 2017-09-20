@@ -1,10 +1,5 @@
 language: java
 
-cache:
-  directories:
-  - .autoconf
-  - $HOME/.m2
-
 deploy:
   skip_cleanup: true
   provider: heroku
