@@ -9,14 +9,13 @@ public class UserLocalModel {
 
     public UserLocalModel(String loginOrEmail, String password, String salt) {
         this.loginOrEmail = loginOrEmail;
-        this.passwordBCrypt = BCrypt.hashpw(password, salt);
+        setPassword(password, salt);
     }
 
     public String getLoginOrEmail() {
         return loginOrEmail;
     }
 
-    @SuppressWarnings("unused")
     public void setPassword(String password, String salt) {
         this.passwordBCrypt = BCrypt.hashpw(password, salt);
     }

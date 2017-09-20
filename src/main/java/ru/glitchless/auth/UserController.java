@@ -48,7 +48,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/api/logout")
+    @GetMapping("/api/logout")
     public ResponseEntity logout(HttpSession httpSession) {
         final String session = (String) httpSession.getAttribute("session");
         if (session == null) {

@@ -21,18 +21,8 @@ public class UserModel {
         return loginOrEmail;
     }
 
-    @SuppressWarnings("unused")
-    public void setLoginOrEmail(String loginOrEmail) {
-        this.loginOrEmail = loginOrEmail;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    @SuppressWarnings("unused")
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {

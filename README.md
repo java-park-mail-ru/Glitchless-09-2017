@@ -2,6 +2,8 @@
 
 # Deploy
 Тута: https://gltchless-java.herokuapp.com
+# Документация
+Swagger: https://static.glitchless.ru/java-swagger.json
 # Команда
 - Куликов Никита
 - Морозенков Олег
