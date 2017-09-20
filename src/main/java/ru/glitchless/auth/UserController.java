@@ -5,11 +5,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.glitchless.models.Message;
 import ru.glitchless.models.UserModel;
 import ru.glitchless.throwables.InvalidData;
+import ru.glitchless.utils.Constants;
 
 import javax.servlet.http.HttpSession;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(Constants.URL)
 public class UserController {
     private UserService service;
 
