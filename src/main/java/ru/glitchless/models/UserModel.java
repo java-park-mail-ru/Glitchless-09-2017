@@ -1,7 +1,5 @@
 package ru.glitchless.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class UserModel {
     private String login;
     private String password;
