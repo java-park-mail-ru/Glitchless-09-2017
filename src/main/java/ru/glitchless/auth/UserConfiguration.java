@@ -16,11 +16,16 @@ import java.util.concurrent.Executors;
 
 @Configuration
 public class UserConfiguration {
-    private ExecutorService service = Executors.newCachedThreadPool();
 
     @Bean
     @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-    IPropertiesFile getProperties() {
+    ExecutorService getService() {
+        return Executors.newCachedThreadPool();
+    }
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    IPropertiesFile getProperties(ExecutorService service) {
         return new PropertiesFile(service);
     }
 

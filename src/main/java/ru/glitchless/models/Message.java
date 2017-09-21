@@ -2,15 +2,15 @@ package ru.glitchless.models;
 
 public class Message {
     private Object message;
-    private boolean successfull = true;
+    private boolean successful = true;
 
     public Message(Object message) {
         this.message = message;
     }
 
-    public Message(Object message, boolean successfull) {
+    public Message(Object message, boolean successful) {
         this.message = message;
-        this.successfull = successfull;
+        this.successful = successful;
     }
 
     @SuppressWarnings("unused")
@@ -19,7 +19,7 @@ public class Message {
     }
 
     @SuppressWarnings("unused")
-    public boolean isSuccessfull() {
-        return successfull;
+    public boolean isSuccessful() {
+        return successful;
     }
 }
