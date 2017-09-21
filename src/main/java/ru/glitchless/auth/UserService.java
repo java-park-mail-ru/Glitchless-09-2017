@@ -30,16 +30,16 @@ public class UserService {
             return null;
         }
 
-        if (usersByLogin.containsKey(userModel.getLoginOrEmail())) {
+        if (usersByLogin.containsKey(userModel.getLogin())) {
             throw new InvalidData("User already exist");
         }
 
-        final UserLocalModel userLocalModel = new UserLocalModel(userModel.getLoginOrEmail(),
+        final UserLocalModel userLocalModel = new UserLocalModel(userModel.getLogin(),
                 userModel.getPassword(),
                 propertiesFile.getSalt());
         userLocalModel.setEmail(userModel.getEmail());
 
-        usersByLogin.put(userModel.getLoginOrEmail(), userLocalModel);
+        usersByLogin.put(userModel.getLogin(), userLocalModel);
 
         return getSession(userLocalModel);
     }
@@ -69,7 +69,7 @@ public class UserService {
             return null;
         }
 
-        final UserLocalModel model = usersByLogin.get(userModel.getLoginOrEmail());
+        final UserLocalModel model = usersByLogin.get(userModel.getLogin());
 
         if (model == null || !model.comparePassword(userModel.getPassword())) {
             throw new InvalidData("Invalid login or password");
@@ -83,7 +83,7 @@ public class UserService {
             return null;
         }
 
-        final UserLocalModel model = usersByLogin.get(userModel.getLoginOrEmail());
+        final UserLocalModel model = usersByLogin.get(userModel.getLogin());
 
         if (model == null || !model.comparePassword(userModel.getPassword())) {
             throw new InvalidData("Invalid login or password");
@@ -91,7 +91,7 @@ public class UserService {
 
         model.setEmail(userModel.getEmail());
 
-        final UserModel outputMode = new UserModel(userModel.getLoginOrEmail(), null);
+        final UserModel outputMode = new UserModel(userModel.getLogin(), null);
         outputMode.setEmail(userModel.getEmail());
         return outputMode;
     }

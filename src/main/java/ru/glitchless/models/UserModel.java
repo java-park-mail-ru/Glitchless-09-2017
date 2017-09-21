@@ -3,8 +3,7 @@ package ru.glitchless.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserModel {
-    @JsonProperty("login")
-    private String loginOrEmail;
+    private String login;
     private String password;
     private String email;
 
@@ -12,13 +11,13 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String loginOrEmail, String password) {
-        this.loginOrEmail = loginOrEmail;
+    public UserModel(String login, String password) {
+        this.login = login;
         this.password = password;
     }
 
-    public String getLoginOrEmail() {
-        return loginOrEmail;
+    public String getLogin() {
+        return login;
     }
 
     public String getPassword() {

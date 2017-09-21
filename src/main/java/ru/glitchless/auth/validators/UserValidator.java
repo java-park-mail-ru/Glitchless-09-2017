@@ -21,11 +21,11 @@ public class UserValidator implements IUserValidator {
 
     @Override
     public boolean validate(UserModel user) throws InvalidData {
-        if (user.getLoginOrEmail() == null
-                || user.getLoginOrEmail().isEmpty()) {
+        if (user.getLogin() == null
+                || user.getLogin().isEmpty()) {
             throw new InvalidData("Login can't be empty");
         }
-        if (!user.getLoginOrEmail().matches(LOGIN_PATTERN)) {
+        if (!user.getLogin().matches(LOGIN_PATTERN)) {
             throw new InvalidData("Invalid symblos! Login can be contains only [A-Za-z0-9]");
         }
         if (user.getEmail() != null && !user.getEmail().isEmpty() && user.getEmail().matches(EMAIL_PATTERN)) {
