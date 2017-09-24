@@ -1,10 +1,7 @@
 package ru.glitchless.auth;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.glitchless.models.Message;
 import ru.glitchless.models.UserModel;
 import ru.glitchless.throwables.InvalidData;
@@ -22,7 +19,7 @@ public class UserController {
     }
 
     @PostMapping("/api/signup")
-    public ResponseEntity signUp(UserModel userModel, HttpSession httpSession) {
+    public ResponseEntity signUp(@RequestBody(required = false) UserModel userModel, HttpSession httpSession) {
         if (userModel == null) {
             return ResponseEntity.badRequest().body(new Message("Empty field: password or login", false));
         }
@@ -37,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity login(UserModel userModel, HttpSession httpSession) {
+    public ResponseEntity login(@RequestBody(required = false) UserModel userModel, HttpSession httpSession) {
         if (userModel == null) {
             return ResponseEntity.badRequest().body(new Message("Empty field: password or login", false));
         }
