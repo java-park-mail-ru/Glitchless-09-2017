@@ -10,7 +10,7 @@ import ru.glitchless.utils.Constants;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@CrossOrigin(Constants.URL)
+@CrossOrigin //(Constants.URL)
 public class UserController {
     private UserService service;
 
