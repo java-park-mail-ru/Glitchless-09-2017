@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.glitchless.models.Message;
 import ru.glitchless.models.UserModel;
 import ru.glitchless.throwables.InvalidData;
-import ru.glitchless.utils.Constants;
+// import ru.glitchless.utils.Constants;
 
 import javax.servlet.http.HttpSession;
 
