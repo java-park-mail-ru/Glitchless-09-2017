@@ -1,9 +1,7 @@
 package ru.glitchless.auth;
 
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.glitchless.auth.validators.IPasswordValidator;
 import ru.glitchless.auth.validators.IUserValidator;
