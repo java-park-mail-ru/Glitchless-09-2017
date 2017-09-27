@@ -32,7 +32,7 @@ public class UserValidator implements IUserValidator {
         return true;
     }
 
-    boolean isValidEmail(String email) {
+    static boolean isValidEmail(String email) {
         boolean result = true;
         try {
             final InternetAddress emailAddr = new InternetAddress(email);
