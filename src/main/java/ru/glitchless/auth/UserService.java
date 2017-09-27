@@ -1,6 +1,5 @@
 package ru.glitchless.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.glitchless.auth.validators.IUserValidator;
 import ru.glitchless.models.UserLocalModel;
