@@ -14,6 +14,17 @@ public class UserValidator implements IUserValidator {
         this.validator = pswdValidator;
     }
 
+    static boolean isValidEmail(String email) {
+        boolean result = true;
+        try {
+            final InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
+
     @Override
     public boolean validate(UserModel user) throws InvalidData {
         if (user.getLogin() == null
@@ -30,16 +41,5 @@ public class UserValidator implements IUserValidator {
         }
         validator.validate(user.getPassword());
         return true;
-    }
-
-    static boolean isValidEmail(String email) {
-        boolean result = true;
-        try {
-            final InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
     }
 }

@@ -1,23 +1,23 @@
 package ru.glitchless.auth;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.glitchless.auth.validators.IUserValidator;
 import ru.glitchless.models.UserLocalModel;
 import ru.glitchless.models.UserModel;
 import ru.glitchless.throwables.InvalidData;
-import ru.glitchless.utils.IPropertiesFile;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class UserService {
-    private final IPropertiesFile propertiesFile;
     private final IUserValidator validator;
+    private final PasswordEncoder encoder;
 
     private ConcurrentHashMap<String, UserLocalModel> usersByLogin = new ConcurrentHashMap<>();
 
-    public UserService(IPropertiesFile propertiesFile, IUserValidator validator) {
-        this.propertiesFile = propertiesFile;
+    public UserService(PasswordEncoder passwordEncoder, IUserValidator validator) {
+        this.encoder = passwordEncoder;
         this.validator = validator;
     }
 
@@ -31,8 +31,7 @@ public class UserService {
         }
 
         final UserLocalModel userLocalModel = new UserLocalModel(userModel.getLogin(),
-                userModel.getPassword(),
-                propertiesFile.getSalt());
+                encoder.encode(userModel.getPassword()));
         userLocalModel.setEmail(userModel.getEmail());
 
         usersByLogin.put(userModel.getLogin(), userLocalModel);
@@ -47,7 +46,7 @@ public class UserService {
 
         final UserLocalModel model = usersByLogin.get(userModel.getLogin());
 
-        if (model == null || !model.comparePassword(userModel.getPassword())) {
+        if (model == null || !encoder.matches(userModel.getPassword(), model.getPasswordBCrypt())) {
             throw new InvalidData("Invalid login or password");
         }
 
@@ -61,7 +60,7 @@ public class UserService {
 
         final UserLocalModel model = usersByLogin.get(userModel.getLogin());
 
-        if (model == null || !model.comparePassword(userModel.getPassword())) {
+        if (model == null || !encoder.matches(userModel.getPassword(), model.getPasswordBCrypt())) {
             throw new InvalidData("Invalid login or password");
         }
 
