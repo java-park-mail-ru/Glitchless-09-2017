@@ -3,17 +3,17 @@ package ru.glitchless.models;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserLocalModel {
-    private final String loginOrEmail;
+    private final String login;
     private String passwordBCrypt;
     private String email;
 
-    public UserLocalModel(String loginOrEmail, String password, String salt) {
-        this.loginOrEmail = loginOrEmail;
+    public UserLocalModel(String login, String password, String salt) {
+        this.login = login;
         setPassword(password, salt);
     }
 
-    public String getLoginOrEmail() {
-        return loginOrEmail;
+    public String getLogin() {
+        return login;
     }
 
     public void setPassword(String password, String salt) {
@@ -34,13 +34,13 @@ public class UserLocalModel {
 
     @Override
     public int hashCode() {
-        return loginOrEmail.hashCode() * passwordBCrypt.hashCode();
+        return login.hashCode() * passwordBCrypt.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         return obj instanceof UserLocalModel
-                && loginOrEmail.equals(((UserLocalModel) obj).loginOrEmail)
+                && login.equals(((UserLocalModel) obj).login)
                 && passwordBCrypt.equals(((UserLocalModel) obj).passwordBCrypt);
     }
 }

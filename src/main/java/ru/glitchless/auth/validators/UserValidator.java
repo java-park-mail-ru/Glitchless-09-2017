@@ -10,8 +10,8 @@ public class UserValidator implements IUserValidator {
     private static final String LOGIN_PATTERN = "([A-Za-z0-9])+";
     private IPasswordValidator validator;
 
-    public UserValidator(IPasswordValidator validator) {
-        this.validator = validator;
+    public UserValidator(IPasswordValidator pswdValidator) {
+        this.validator = pswdValidator;
     }
 
     @Override

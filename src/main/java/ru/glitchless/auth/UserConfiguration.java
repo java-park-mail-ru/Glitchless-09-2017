@@ -4,11 +4,17 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.glitchless.auth.validators.IPasswordValidator;
 import ru.glitchless.auth.validators.IUserValidator;
 import ru.glitchless.auth.validators.PasswordValidator;
 import ru.glitchless.auth.validators.UserValidator;
+import ru.glitchless.models.UserLocalModel;
+import ru.glitchless.models.UserModel;
+import ru.glitchless.models.mappers.LocalUserMapperToServerModel;
+import ru.glitchless.models.mappers.Mapper;
 import ru.glitchless.utils.IPropertiesFile;
+import ru.glitchless.utils.MyWebMvcConfigurer;
 import ru.glitchless.utils.PropertiesFile;
 
 import java.util.concurrent.ExecutorService;
@@ -43,4 +49,15 @@ public class UserConfiguration {
         return new UserValidator(validator);
     }
 
+
+    @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+    Mapper<UserLocalModel, UserModel> getUserMapper() {
+        return new LocalUserMapperToServerModel();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new MyWebMvcConfigurer();
+    }
 }
