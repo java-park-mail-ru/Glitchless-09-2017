@@ -17,7 +17,6 @@ public class UserService {
 
     private ConcurrentHashMap<String, UserLocalModel> usersByLogin = new ConcurrentHashMap<>();
 
-    @Autowired
     public UserService(IPropertiesFile propertiesFile, IUserValidator validator) {
         this.propertiesFile = propertiesFile;
         this.validator = validator;
