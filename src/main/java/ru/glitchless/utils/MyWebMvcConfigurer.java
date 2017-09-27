@@ -10,12 +10,16 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
                 .allowCredentials(true).allowedOrigins(
                 "http://" + Constants.URL,
                 "http://" + Constants.URL_HEROKU,
+                "http://localhost/",
                 "http://www." + Constants.URL,
                 "http://www." + Constants.URL_HEROKU,
+                "http://www.localhost/",
                 "https://" + Constants.URL,
                 "https://" + Constants.URL_HEROKU,
+                "https://localhost/",
                 "https://www." + Constants.URL,
-                "https://www." + Constants.URL_HEROKU
+                "https://www." + Constants.URL_HEROKU,
+                "https://www.localhost/"
         ).allowedMethods("GET", "HEAD", "POST", "PATCH", "DELETE", "OPTIONS");
     }
 }
