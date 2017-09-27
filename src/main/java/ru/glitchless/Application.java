@@ -8,6 +8,5 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class Application {
     public static void main(String... args) {
         final ConfigurableApplicationContext app = SpringApplication.run(Application.class, args);
-        app.registerShutdownHook();
     }
 }
