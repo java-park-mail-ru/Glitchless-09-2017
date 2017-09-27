@@ -24,34 +24,29 @@ import java.util.concurrent.Executors;
 public class UserConfiguration {
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     ExecutorService getService() {
         return Executors.newCachedThreadPool();
     }
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     IPropertiesFile getProperties(ExecutorService service) {
         return new PropertiesFile(service);
     }
 
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     IPasswordValidator getPasswordValidator() {
         return new PasswordValidator();
     }
 
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     IUserValidator getUserValidator(IPasswordValidator validator) {
         return new UserValidator(validator);
     }
 
 
     @Bean
-    @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
     Mapper<UserLocalModel, UserModel> getUserMapper() {
         return new LocalUserMapperToServerModel();
     }
