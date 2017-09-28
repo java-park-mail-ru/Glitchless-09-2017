@@ -1,10 +1,7 @@
 package ru.glitchless.auth;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.glitchless.models.Message;
 import ru.glitchless.models.UserLocalModel;
 import ru.glitchless.models.UserModel;
@@ -15,6 +12,16 @@ import ru.glitchless.utils.Constants;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@CrossOrigin(origins = {
+        "https://glitchless.herokuapp.com/",
+        "https://glitchless.ru/",
+        "http://glitchless.herokuapp.com/",
+        "http://glitchless.ru/",
+        "http://localhost/",
+        "http://localhost:8080/",
+        "http://localhost:80",
+        "http://localhost:8081"
+})
 public class UserController {
     private final UserService service;
     private final Mapper<UserLocalModel, UserModel> mapper;
