@@ -20,6 +20,6 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
                 "https://www." + Constants.URL,
                 "https://www." + Constants.URL_HEROKU,
                 "https://www." + Constants.URL_DEBUG,
-        ).allowedMethods("GET", "HEAD", "POST", "PATCH", "DELETE", "OPTIONS");
+        ).allowedMethods("GET", "HEAD", "POST", "PATCH", "DELETE");
     }
 }
