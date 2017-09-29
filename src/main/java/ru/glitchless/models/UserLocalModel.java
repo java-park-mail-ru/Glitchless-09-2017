@@ -7,6 +7,7 @@ public class UserLocalModel {
 
     public UserLocalModel(String login, String password) {
         this.login = login;
+        this.passwordBCrypt = password;
     }
 
     public String getLogin() {
