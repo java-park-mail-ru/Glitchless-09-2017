@@ -19,6 +19,12 @@ import javax.servlet.http.HttpSession;
         "http://glitchless.ru/",
         "http://localhost/",
         "http://localhost:8080/",
+        "https://glitchless.herokuapp.com",
+        "https://glitchless.ru",
+        "http://glitchless.herokuapp.com",
+        "http://glitchless.ru",
+        "http://localhost",
+        "http://localhost:8080",
         "http://localhost:80",
         "http://localhost:8081"
 })
