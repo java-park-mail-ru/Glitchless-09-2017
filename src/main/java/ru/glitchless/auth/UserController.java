@@ -12,22 +12,6 @@ import ru.glitchless.utils.Constants;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@CrossOrigin(origins = {
-        "https://glitchless.herokuapp.com/",
-        "https://glitchless.ru/",
-        "http://glitchless.herokuapp.com/",
-        "http://glitchless.ru/",
-        "http://localhost/",
-        "http://localhost:8080/",
-        "https://glitchless.herokuapp.com",
-        "https://glitchless.ru",
-        "http://glitchless.herokuapp.com",
-        "http://glitchless.ru",
-        "http://localhost",
-        "http://localhost:8080",
-        "http://localhost:80",
-        "http://localhost:8081"
-})
 public class UserController {
     private final UserService service;
     private final Mapper<UserLocalModel, UserModel> mapper;
@@ -75,7 +59,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/api/logout")
+    @PostMapping("/api/logout")
     public ResponseEntity<?> logout(HttpSession httpSession) {
         httpSession.removeAttribute(Constants.SESSION_EXTRA_USER);
 
@@ -92,8 +76,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/api/user")
-    public ResponseEntity<?> currentUser(HttpSession httpSession) {
+    @PostMapping("/api/user")
+    public ResponseEntity<?> currentUser(@RequestBody(required = false) HttpSession httpSession) {
         final UserLocalModel user = (UserLocalModel) httpSession.getAttribute(Constants.SESSION_EXTRA_USER);
         if (user == null) {
             return ResponseEntity.badRequest().body(new Message("Not have current auth", false));
