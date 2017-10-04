@@ -1,7 +1,7 @@
-package ru.glitchless.models.mappers;
+package ru.glitchless.data.mappers;
 
-import ru.glitchless.models.UserLocalModel;
-import ru.glitchless.models.UserModel;
+import ru.glitchless.data.models.UserLocalModel;
+import ru.glitchless.data.models.UserModel;
 
 public class LocalUserMapperToServerModel implements Mapper<UserLocalModel, UserModel> {
     @Override

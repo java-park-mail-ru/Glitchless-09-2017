@@ -1,4 +1,4 @@
-package ru.glitchless.models.mappers;
+package ru.glitchless.data.mappers;
 
 import java.util.ArrayList;
 import java.util.List;

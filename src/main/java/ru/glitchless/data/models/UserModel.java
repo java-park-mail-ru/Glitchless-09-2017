@@ -1,4 +1,4 @@
-package ru.glitchless.models;
+package ru.glitchless.data.models;
 
 public class UserModel {
     private String login;

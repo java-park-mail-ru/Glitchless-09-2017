@@ -1,7 +1,7 @@
-package ru.glitchless.auth.validators;
+package ru.glitchless.repositories.auth.validators;
 
-import ru.glitchless.models.UserModel;
-import ru.glitchless.throwables.InvalidData;
+import ru.glitchless.data.models.UserModel;
+import ru.glitchless.data.throwables.InvalidLoginOrPassword;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -26,20 +26,19 @@ public class UserValidator implements IUserValidator {
     }
 
     @Override
-    public boolean validate(UserModel user) throws InvalidData {
+    public void validate(UserModel user) {
         if (user.getLogin() == null
                 || user.getLogin().isEmpty()) {
-            throw new InvalidData("Login can't be empty");
+            throw new InvalidLoginOrPassword("Login can't be empty");
         }
         if (!user.getLogin().matches(LOGIN_PATTERN)) {
-            throw new InvalidData("Invalid symblos! Login can be contains only [A-Za-z0-9]");
+            throw new InvalidLoginOrPassword("Invalid symblos! Login can be contains only [A-Za-z0-9]");
         }
         if (user.getEmail() != null && !user.getEmail().isEmpty()) {
             if (!isValidEmail(user.getEmail())) {
-                throw new InvalidData("Invalid email!");
+                throw new InvalidLoginOrPassword("Invalid email!");
             }
         }
         validator.validate(user.getPassword());
-        return true;
     }
 }
