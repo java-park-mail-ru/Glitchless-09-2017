@@ -6,13 +6,8 @@ import ru.glitchless.data.throwables.InvalidLoginOrPassword;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-public class UserValidator implements IUserValidator {
+public class UserValidator {
     private static final String LOGIN_PATTERN = "([A-Za-z0-9])+";
-    private IPasswordValidator validator;
-
-    public UserValidator(IPasswordValidator pswdValidator) {
-        this.validator = pswdValidator;
-    }
 
     static boolean isValidEmail(String email) {
         boolean result = true;
@@ -25,7 +20,6 @@ public class UserValidator implements IUserValidator {
         return result;
     }
 
-    @Override
     public void validate(UserModel user) {
         if (user.getLogin() == null
                 || user.getLogin().isEmpty()) {
@@ -39,6 +33,9 @@ public class UserValidator implements IUserValidator {
                 throw new InvalidLoginOrPassword("Invalid email!");
             }
         }
-        validator.validate(user.getPassword());
+
+        if (user.getPassword() == null) {
+            throw new InvalidLoginOrPassword("Password can't be null");
+        }
     }
 }

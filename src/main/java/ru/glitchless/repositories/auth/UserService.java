@@ -6,16 +6,16 @@ import ru.glitchless.data.models.UserLocalModel;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.stores.InMemmoryUserStorage;
 import ru.glitchless.data.throwables.InvalidLoginOrPassword;
-import ru.glitchless.repositories.auth.validators.IUserValidator;
+import ru.glitchless.repositories.auth.validators.UserValidator;
 
 @Service
 public class UserService {
-    private final IUserValidator validator;
+    private final UserValidator validator;
     private final PasswordEncoder encoder;
 
     private InMemmoryUserStorage userStorage = new InMemmoryUserStorage();
 
-    public UserService(PasswordEncoder passwordEncoder, IUserValidator validator) {
+    public UserService(PasswordEncoder passwordEncoder, UserValidator validator) {
         this.encoder = passwordEncoder;
         this.validator = validator;
     }
