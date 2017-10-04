@@ -34,7 +34,7 @@ public class UserController {
         final UserLocalModel model = service.registerUser(userModel);
         if (model != null) {
             httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
-            return ResponseEntity.ok(new Message(mapper.map(model), true));
+            return ResponseEntity.ok(new Message<>(true, mapper.map(model)));
         } else {
             return ResponseEntity.badRequest().body(new Message(false));
         }
@@ -49,7 +49,7 @@ public class UserController {
         final UserLocalModel model = service.authUser(userModel);
         if (model != null) {
             httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
-            return ResponseEntity.ok(new Message(mapper.map(model), true));
+            return ResponseEntity.ok(new Message<>(true, mapper.map(model)));
         } else {
             return ResponseEntity.badRequest().body(new Message(false));
         }
@@ -65,7 +65,7 @@ public class UserController {
     @PostMapping("/api/user/change")
     public ResponseEntity<Message> changeUser(UserModel user) {
         final UserModel userModel = service.changeUser(user);
-        return ResponseEntity.ok(new Message(userModel, true));
+        return ResponseEntity.ok(new Message<>(true, userModel));
     }
 
     @PostMapping("/api/user")
@@ -80,6 +80,6 @@ public class UserController {
             throw new NeedAuthorization();
         }
 
-        return ResponseEntity.ok(new Message(currentUser, true));
+        return ResponseEntity.ok(new Message<>(true, currentUser));
     }
 }

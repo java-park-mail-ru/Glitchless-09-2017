@@ -1,20 +1,21 @@
 package ru.glitchless.data.models;
 
-public class Message {
-    private Object message;
+public class Message<T> {
+    private T message;
     private boolean successful = true;
 
-    public Message(Object message) {
-        this.message = message;
+    public Message(boolean successful) {
+        this.successful = successful;
+        this.message = null;
     }
 
-    public Message(Object message, boolean successful) {
+    public Message(boolean successful, T message) {
         this.message = message;
         this.successful = successful;
     }
 
     @SuppressWarnings("unused")
-    public Object getMessage() {
+    public T getMessage() {
         return message;
     }
 
