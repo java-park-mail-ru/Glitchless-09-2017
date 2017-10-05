@@ -10,10 +10,9 @@ public class InMemmoryUserStorage {
     private ConcurrentHashMap<String, UserLocalModel> usersByLogin = new ConcurrentHashMap<>();
 
     public void addUser(UserLocalModel userLocalModel) {
-        if (usersByLogin.get(userLocalModel.getLogin()) != null) {
+        if (usersByLogin.putIfAbsent(userLocalModel.getLogin(), userLocalModel) != null) {
             throw new UserAlreadyExist();
         }
-        usersByLogin.put(userLocalModel.getLogin(), userLocalModel);
     }
 
     public UserLocalModel getUser(String login) {
