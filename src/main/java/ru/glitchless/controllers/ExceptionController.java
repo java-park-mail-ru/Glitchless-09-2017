@@ -21,7 +21,7 @@ public class ExceptionController {
             if (reason == null) {
                 reason = responseStatus.reason();
             }
-            return ResponseEntity.status(responseStatus.code()).body(new Message<>(false, responseStatus.reason()));
+            return ResponseEntity.status(responseStatus.code()).body(new Message<>(false, reason));
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Message<>(false, ex.getMessage()));
     }
