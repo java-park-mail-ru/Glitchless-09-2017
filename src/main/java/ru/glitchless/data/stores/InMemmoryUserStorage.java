@@ -4,10 +4,11 @@ import ru.glitchless.data.models.UserLocalModel;
 import ru.glitchless.data.throwables.UserAlreadyExist;
 import ru.glitchless.data.throwables.UserNotFound;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemmoryUserStorage {
-    private ConcurrentHashMap<String, UserLocalModel> usersByLogin = new ConcurrentHashMap<>();
+    private Map<String, UserLocalModel> usersByLogin = new ConcurrentHashMap<>();
 
     public void addUser(UserLocalModel userLocalModel) {
         if (usersByLogin.putIfAbsent(userLocalModel.getLogin(), userLocalModel) != null) {
