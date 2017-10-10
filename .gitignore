@@ -14,6 +14,8 @@ hs_err_pid*
 
 # Gradle:
 .idea/
+build/
+target
 
 ## File-based project format:
 *.iws
@@ -32,3 +34,4 @@ atlassian-ide-plugin.xml
 
 # Configs
 config.properties
+
