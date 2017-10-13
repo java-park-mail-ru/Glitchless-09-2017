@@ -1,0 +1,11 @@
+language: java
+
+deploy:
+  skip_cleanup: true
+  provider: heroku
+  api_key:
+    secure: hWvAKe189jKMGdI2t5iHWCdTUTi0NYODIB2y6nbLQhBe9SZtQE9YNIa++U44UipzZ+WY9IIhVhFkEKTNhRGJEptTiOaYlmqDrJ0aa4e12/Vi5JdSMMLPJhucHcCZN9Y2ZeCRZRH3/Wkiw5bd/tHtDK0Za3iq+gobdDivzMVgJJnkLuK3++E8SbvbzraJLcfTO2v2B4WDaK/lnN3TCbYnuVLIWHN8I1QqOjwdzRMlpzGSpiZgAmQZoNZyzpzLIl0G4cJ3rg9pig/9yJcH6AELhWCqK9uHW1wHHZxO4MY50G2EcnxuqFsiG4lOrH1CS/4eSiBpgk+ADWVGmUe4/JE2YHn1ECNm2rw2OOrC7hJjUycLnpuV5IlWijKzdjXJWuZfGVbTuwtJeW7mnJgXi6tCJlypwbBHPeYbANZLQaGKYvgkr0Qr6RuDjefPwexeUgFkjfBYlgY6gMx9K1n1Ar9mBOOdzMYM1rgJs3jzcA5qHQIudR+rNve2kqIka9nk2HCjeiLDQ6EPPMNzEp+G6rJlqurVARM5MCMl8u+jBmEVcdrm3nSSEokXdm5TjuOHyUCCwRSIhNLL6y00EqU4+QoRlaEUnL3SlzRVWZNEge3eBJQeKaPG34YzWXNfI4Xoyfk0+5AEST7yEKdwHd4Pfb/rFpbShDdWwO1IF3M30hs+LAM=
+  app: glitchless-java
+  on:
+    repo: java-park-mail-ru/Glitchless-09-2017
+    branch: dev
