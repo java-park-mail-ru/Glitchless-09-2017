@@ -1,4 +1,19 @@
 language: java
+jdk:
+  - oraclejdk8
+
+services:
+  - postgresql
+
+env:
+  - DATABASE_LOGIN=backend
+  - DATABASE_PASSWORD=qwerty
+  - DATABASE_NAME=glitchlessdb
+
+before_install:
+  - psql -c "CREATE USER $DATABASE_LOGIN WITH SUPERUSER PASSWORD $DATABASE_PASSWORD;" -U postgres
+  - psql -c "CREATE DATABASE $DATABASE_NAME;" -U postgres
+  - psql -c "GRANT ALL ON DATABASE $DATABASE_NAME TO $DATABASE_LOGIN;" -U postgres
 
 deploy:
   skip_cleanup: true
@@ -9,3 +24,6 @@ deploy:
   on:
     repo: java-park-mail-ru/Glitchless-09-2017
     branch: dev
+
+install:
+  - mvn clean install
