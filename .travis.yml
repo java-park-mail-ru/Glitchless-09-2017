@@ -6,9 +6,10 @@ services:
   - postgresql
 
 env:
-  - DATABASE_LOGIN=backend
-  - DATABASE_PASSWORD=qwerty
-  - DATABASE_NAME=glitchlessdb
+  global:
+    - DATABASE_LOGIN=backend
+    - DATABASE_PASSWORD=qwerty
+    - DATABASE_NAME=glitchlessdb
 
 before_install:
   - psql -c "CREATE USER $DATABASE_LOGIN WITH SUPERUSER PASSWORD $DATABASE_PASSWORD;" -U postgres
