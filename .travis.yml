@@ -8,7 +8,7 @@ services:
 env:
   global:
     - DATABASE_LOGIN=backend
-    - DATABASE_PASSWORD='qwerty'
+    - DATABASE_PASSWORD="'qwerty'"
     - DATABASE_NAME=glitchlessdb
 
 before_install:
