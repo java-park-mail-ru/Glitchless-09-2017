@@ -6,7 +6,9 @@ import ru.glitchless.data.models.UserModel;
 public class LocalUserMapperToServerModel implements Mapper<UserLocalModel, UserModel> {
     @Override
     public UserModel map(UserLocalModel localModel) {
-        return new UserModel(localModel.getLogin(), null)
-                .setEmail(localModel.getEmail());
+        return new UserModel(
+                localModel.getLogin(),
+                localModel.getPasswordBCrypt())
+                    .setEmail(localModel.getEmail());
     }
 }

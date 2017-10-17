@@ -1,5 +1,7 @@
 package ru.glitchless.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class UserModel {
     private String login;
     private String password;
@@ -18,6 +20,7 @@ public class UserModel {
         return login;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

@@ -34,7 +34,7 @@ public class UserValidator {
             }
         }
 
-        if (user.getPassword() == null) {
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
             throw new InvalidLoginOrPassword("Password can't be null");
         }
     }

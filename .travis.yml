@@ -28,3 +28,6 @@ deploy:
 
 install:
   - mvn clean install
+
+script:
+  mvn verify
