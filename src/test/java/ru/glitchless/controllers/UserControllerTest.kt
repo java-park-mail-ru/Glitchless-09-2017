@@ -57,6 +57,9 @@ open class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(ObjectMapper().writeValueAsString(existingUser)))
                 .andExpect(status().isForbidden)
+        mockMvc.perform(post(basePath + "/signup")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden)
     }
 
 
@@ -66,6 +69,15 @@ open class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"login\": \"BLABLA\", \"email\": \"Test@test.ru\", \"password\": \"123456789\"}"))
                 .andExpect(status().isNotFound)
+
+        mockMvc.perform(post(basePath + "/login")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden)
+
+        mockMvc.perform(post(basePath + "/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"login\": \"${existingUser.login}\", \"password\": \"BadPassword\"}"))
+                .andExpect(status().isForbidden)
     }
 
     @Test
@@ -74,6 +86,12 @@ open class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"login\": \"${existingUser.login}\", \"password\": \"${existingUser.password}\", \"email\": \"newemail@newemail.ru\"}"))
                 .andExpect(status().isOk)
+
+
+        mockMvc.perform(post(basePath + "/user/change")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"login\":\"unexistUser\", \"password\": \"${existingUser.password}\", \"email\": \"newemail@newemail.ru\"}"))
+                .andExpect(status().isNotFound)
     }
 
     @Test

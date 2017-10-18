@@ -29,12 +29,9 @@ public class UserController {
         }
 
         final UserModel model = service.registerUser(userModel);
-        if (model != null) {
-            httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
-            return ResponseEntity.ok(new Message<>(true, model));
-        } else {
-            return ResponseEntity.badRequest().body(new Message(false));
-        }
+
+        httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
+        return ResponseEntity.ok(new Message<>(true, model));
     }
 
     @PostMapping("/api/login")
@@ -44,12 +41,9 @@ public class UserController {
         }
 
         final UserModel model = service.authUser(userModel);
-        if (model != null) {
-            httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
-            return ResponseEntity.ok(new Message<>(true, model));
-        } else {
-            return ResponseEntity.badRequest().body(new Message(false));
-        }
+
+        httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
+        return ResponseEntity.ok(new Message<>(true, model));
     }
 
     @PostMapping("/api/logout")
