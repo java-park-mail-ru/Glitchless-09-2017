@@ -8,7 +8,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.stores.UserDao;
 import ru.glitchless.data.throwables.UserAlreadyExist;
-import ru.glitchless.utils.RandomString;
 
 import java.util.Random;
 
@@ -32,7 +31,7 @@ public class UserDaoTest {
         setAndGetCheckTest(tmpUser);
         citextValueTest(tmpUser);
 
-        tmpUser = new UserModel(new RandomString().nextString(), "sdfsdcsddcs");
+        tmpUser = new UserModel("ewjw3m0asdasvdsc", "sdfsdcsddcs");
         tmpUser.setEmail("123456789012345678901234567890");
         setAndGetCheckTest(tmpUser);
         citextValueTest(tmpUser);
