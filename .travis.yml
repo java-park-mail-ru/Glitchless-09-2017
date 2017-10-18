@@ -7,6 +7,7 @@ services:
 
 env:
   global:
+    - CODECOV_TOKEN=9a704f01-b13d-45e5-b55b-bd3787193dfa
     - DATABASE_LOGIN=backend
     - DATABASE_PASSWORD="'qwerty'"
     - DATABASE_NAME=glitchlessdb
@@ -28,6 +29,9 @@ deploy:
 
 install:
   - mvn clean install
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 script:
   mvn verify
