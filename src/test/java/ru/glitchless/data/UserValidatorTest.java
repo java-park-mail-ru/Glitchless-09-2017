@@ -1,11 +1,11 @@
 package ru.glitchless.data;
 
+import org.jetbrains.annotations.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.throwables.InvalidLoginOrPassword;
 import ru.glitchless.repositories.auth.validators.UserValidator;
-import ru.glitchless.utils.RandomString;
 
 import static org.junit.Assert.assertTrue;
 
@@ -49,13 +49,7 @@ public class UserValidatorTest {
     private void validEmailTest(String email) {
         final UserModel model = new UserModel("lionzxy", "123456789");
         model.setEmail(email);
-        try {
-            validator.validate(user);
-        } catch (InvalidLoginOrPassword ex) {
-            assertTrue("Выдало ошибку на " + email, false);
-            return;
-        }
-        assertTrue(true);
+        validator.validate(user);
     }
 
     @Test
@@ -69,7 +63,7 @@ public class UserValidatorTest {
         notValidLoginTest("L0XP*dor");
     }
 
-    private void notValidLoginTest(String login) {
+    private void notValidLoginTest(@Nullable String login) {
         final UserModel model = new UserModel(login, "123456789");
         try {
             validator.validate(model);
@@ -96,10 +90,9 @@ public class UserValidatorTest {
     public void testPasswordValidator() {
         validPasswordTest("1234567890");
         validPasswordTest("qwertyui");
-        RandomString randomString = new RandomString();
-        for (int i = 0; i < 1000; i++) {
-            validPasswordTest(randomString.nextString());
-        }
+        validPasswordTest("sdfkn[o943ij5gtrbipnvm[ac3904 r9j8[ofe4");
+        validPasswordTest("dsfmv349e386[059w4-[fq350v ddb86w[95304q9mg[)_I)J*EIN");
+        validPasswordTest("_");
         notValidPasswordTest(null);
         notValidPasswordTest("");
     }
