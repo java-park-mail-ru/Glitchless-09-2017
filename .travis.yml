@@ -1,21 +1,10 @@
-language: java
-jdk:
-  - oraclejdk8
+sudo: required
 
 services:
-  - postgresql
+  - docker
 
-env:
-  global:
-    - CODECOV_TOKEN=9a704f01-b13d-45e5-b55b-bd3787193dfa
-    - DATABASE_LOGIN=backend
-    - DATABASE_PASSWORD="'qwerty'"
-    - DATABASE_NAME=glitchlessdb
-
-before_install:
-  - psql -c "CREATE USER $DATABASE_LOGIN WITH SUPERUSER PASSWORD $DATABASE_PASSWORD;" -U postgres
-  - psql -c "CREATE DATABASE $DATABASE_NAME;" -U postgres
-  - psql -c "GRANT ALL ON DATABASE $DATABASE_NAME TO $DATABASE_LOGIN;" -U postgres
+script:
+  - docker-compose up --abort-on-container-exit
 
 deploy:
   skip_cleanup: true
@@ -26,12 +15,3 @@ deploy:
   on:
     repo: java-park-mail-ru/Glitchless-09-2017
     branch: dev
-
-install:
-  - mvn clean install
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
-script:
-  - mvn cobertura:cobertura
