@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import ru.glitchless.data.models.UserModel
 import ru.glitchless.data.stores.UserDao
 import ru.glitchless.repositories.auth.UserService
-import javax.servlet.http.HttpSession
 
 
 @SpringBootTest
@@ -33,7 +32,7 @@ open class UserControllerTest {
     @Autowired
     private lateinit var userService: UserService
     private lateinit var existingUser: UserModel
-    private var session: HttpSession? = null;
+    private var session: MockHttpSession? = null;
     val basePath: String = "/api"
 
     @Before
@@ -83,14 +82,14 @@ open class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"login\": \"${existingUser.login}\", \"password\": \"${existingUser.password}\"}"))
                 .andExpect(status().isOk)
-                .andDo { session = it.request.getSession(false) ?: session }
+                .andDo { session = it.request.getSession(false) as MockHttpSession }
     }
 
     @Test
     fun testCurrentUser() {
         testLogin()
         mockMvc.perform(post(basePath + "/user")
-                .session(session!!.toMock()))
+                .session(session!!))
                 .andExpect(status().isOk)
                 .andExpect(jsonPath("login").value(existingUser.login))
     }
@@ -99,26 +98,12 @@ open class UserControllerTest {
     fun testLogout() {
         testCurrentUser()
         mockMvc.perform(post(basePath + "/logout")
-                .session(session!!.toMock()))
+                .session(session!!))
                 .andExpect(status().isOk)
         mockMvc.perform(get(basePath + "/user")
-                .session(session!!.toMock()))
+                .session(session!!))
                 .andExpect(status().isUnauthorized)
     }
 
-    private fun HttpSession.toMock(): MockHttpSession {
-        return this as? MockHttpSession ?: createMockHttpSessionFromSession(this)!!
-    }
-
-
-    private fun createMockHttpSessionFromSession(session: HttpSession): MockHttpSession? {
-        val mockSession = MockHttpSession()
-        val attrNames = session.attributeNames
-        while (attrNames.hasMoreElements()) {
-            val name = attrNames.nextElement()
-            mockSession.setAttribute(name, session.getAttribute(name))
-        }
-        return mockSession
-    }
 
 }
