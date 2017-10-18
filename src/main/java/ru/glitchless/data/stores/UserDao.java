@@ -54,14 +54,11 @@ public class UserDao {
     }
 
     public UserModel updateUser(String login, String email) {
-        try {
-            return template.queryForObject("UPDATE users SET email = ? WHERE login = ?::CITEXT RETURNING *",
-                    USER_MAPPER,
-                    email,
-                    login);
-        } catch (EmptyResultDataAccessException e) {
-            throw new UserNotFound();
-        }
+        return template.queryForObject("UPDATE users SET email = ? WHERE login = ?::CITEXT RETURNING *",
+                USER_MAPPER,
+                email,
+                login);
+
     }
 
     public void clearAllTable() {

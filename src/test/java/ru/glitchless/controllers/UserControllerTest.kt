@@ -92,6 +92,11 @@ open class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"login\":\"unexistUser\", \"password\": \"${existingUser.password}\", \"email\": \"newemail@newemail.ru\"}"))
                 .andExpect(status().isNotFound)
+
+        mockMvc.perform(post(basePath + "/user/change")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"login\":\"${existingUser.login}\", \"password\": \"BadPassword\", \"email\": \"newemail@newemail.ru\"}"))
+                .andExpect(status().isForbidden)
     }
 
     @Test
