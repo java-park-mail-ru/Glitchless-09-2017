@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.glitchless.data.mappers.Mapper;
 import ru.glitchless.data.models.Message;
-import ru.glitchless.data.models.UserLocalModel;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.throwables.InvalidLoginOrPassword;
 import ru.glitchless.data.throwables.NeedAuthorization;
@@ -19,11 +17,9 @@ import javax.servlet.http.HttpSession;
 @RestController
 public class UserController {
     private final UserService service;
-    private final Mapper<UserLocalModel, UserModel> mapper;
 
-    public UserController(UserService service, Mapper<UserLocalModel, UserModel> mapper) {
+    public UserController(UserService service) {
         this.service = service;
-        this.mapper = mapper;
     }
 
     @PostMapping("/api/signup")
@@ -32,10 +28,10 @@ public class UserController {
             throw new InvalidLoginOrPassword("Empty field: password or login");
         }
 
-        final UserLocalModel model = service.registerUser(userModel);
+        final UserModel model = service.registerUser(userModel);
         if (model != null) {
             httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
-            return ResponseEntity.ok(new Message<>(true, mapper.map(model)));
+            return ResponseEntity.ok(new Message<>(true, model));
         } else {
             return ResponseEntity.badRequest().body(new Message(false));
         }
@@ -47,10 +43,10 @@ public class UserController {
             throw new InvalidLoginOrPassword("Empty field: password or login");
         }
 
-        final UserLocalModel model = service.authUser(userModel);
+        final UserModel model = service.authUser(userModel);
         if (model != null) {
             httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
-            return ResponseEntity.ok(new Message<>(true, mapper.map(model)));
+            return ResponseEntity.ok(new Message<>(true, model));
         } else {
             return ResponseEntity.badRequest().body(new Message(false));
         }
@@ -65,22 +61,17 @@ public class UserController {
 
     @PostMapping("/api/user/change")
     public ResponseEntity<Message> changeUser(@RequestBody(required = false) UserModel user) {
-        final UserModel userModel = mapper.map(service.changeUser(user));
+        final UserModel userModel = service.changeUser(user);
         return ResponseEntity.ok(new Message<>(true, userModel));
     }
 
     @GetMapping("/api/user")
     public ResponseEntity<Message> currentUser(HttpSession httpSession) {
-        final UserLocalModel user = (UserLocalModel) httpSession.getAttribute(Constants.SESSION_EXTRA_USER);
+        final UserModel user = (UserModel) httpSession.getAttribute(Constants.SESSION_EXTRA_USER);
         if (user == null) {
             throw new NeedAuthorization();
         }
 
-        final UserModel currentUser = mapper.map(user);
-        if (currentUser == null) {
-            throw new NeedAuthorization();
-        }
-
-        return ResponseEntity.ok(new Message<>(true, currentUser));
+        return ResponseEntity.ok(new Message<>(true, user));
     }
 }

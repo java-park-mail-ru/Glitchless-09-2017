@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.glitchless.data.models.UserLocalModel;
+import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.throwables.UserAlreadyExist;
 import ru.glitchless.data.throwables.UserNotFound;
 
@@ -18,8 +18,8 @@ public class UserDao {
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_EMAIL = "email";
 
-    private static final RowMapper<UserLocalModel> USER_MAPPER = (rs, num) ->
-            new UserLocalModel(
+    private static final RowMapper<UserModel> USER_MAPPER = (rs, num) ->
+            new UserModel(
                     rs.getInt(COLUMN_ID),
                     rs.getString(COLUMN_LOGIN),
                     rs.getString(COLUMN_PASSWORD),
@@ -31,19 +31,19 @@ public class UserDao {
         this.template = template;
     }
 
-    public UserLocalModel addUser(UserLocalModel userLocalModel) {
+    public UserModel addUser(UserModel userLocalModel) {
         try {
             return template.queryForObject("INSERT INTO users (login, password, email) VALUES (?, ?, ?) RETURNING *;",
                     USER_MAPPER,
                     userLocalModel.getLogin(),
-                    userLocalModel.getPasswordBCrypt(),
+                    userLocalModel.getPassword(),
                     userLocalModel.getEmail());
         } catch (DuplicateKeyException e) {
             throw new UserAlreadyExist();
         }
     }
 
-    public UserLocalModel getUser(String login) {
+    public UserModel getUser(String login) {
         try {
             return template.queryForObject("SELECT * FROM users WHERE login = ?::CITEXT;",
                     USER_MAPPER,
@@ -53,7 +53,7 @@ public class UserDao {
         }
     }
 
-    public UserLocalModel updateUser(String login, String email) {
+    public UserModel updateUser(String login, String email) {
         try {
             return template.queryForObject("UPDATE users SET email = ? WHERE login = ?::CITEXT RETURNING *",
                     USER_MAPPER,

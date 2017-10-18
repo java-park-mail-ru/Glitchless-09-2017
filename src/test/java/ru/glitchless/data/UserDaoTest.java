@@ -5,9 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-import ru.glitchless.Application;
-import ru.glitchless.data.models.UserLocalModel;
+import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.stores.UserDao;
 import ru.glitchless.data.throwables.UserAlreadyExist;
 import ru.glitchless.utils.RandomString;
@@ -21,40 +19,40 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class UserDaoTest {
+    private final Random random = new Random();
     @Autowired
     private UserDao userDao;
-    private final Random random = new Random();
 
     @Test
     public void testDao() {
-        setAndGetCheckTest(new UserLocalModel("123456789", "lmsdfpmsd;fm[psdmf"));
+        setAndGetCheckTest(new UserModel("123456789", "lmsdfpmsd;fm[psdmf"));
 
-        UserLocalModel tmpUser = new UserLocalModel("edsfsdvsdv", "sdfsdcsddcs");
+        UserModel tmpUser = new UserModel("edsfsdvsdv", "sdfsdcsddcs");
         tmpUser.setEmail("nisdfcsd");
         setAndGetCheckTest(tmpUser);
         citextValueTest(tmpUser);
 
-        tmpUser = new UserLocalModel(new RandomString().nextString(), "sdfsdcsddcs");
+        tmpUser = new UserModel(new RandomString().nextString(), "sdfsdcsddcs");
         tmpUser.setEmail("123456789012345678901234567890");
         setAndGetCheckTest(tmpUser);
         citextValueTest(tmpUser);
     }
 
-    private void setAndGetCheckTest(UserLocalModel model) {
+    private void setAndGetCheckTest(UserModel model) {
         userDao.clearAllTable();
         userDao.addUser(model);
-        final UserLocalModel fromBD = userDao.getUser(model.getLogin());
+        final UserModel fromBD = userDao.getUser(model.getLogin());
         assertEquals(fromBD.getLogin(), model.getLogin());
         assertEquals(fromBD.getEmail(), model.getEmail());
-        assertEquals(fromBD.getPasswordBCrypt(), model.getPasswordBCrypt());
+        assertEquals(fromBD.getPassword(), model.getPassword());
     }
 
-    private void citextValueTest(UserLocalModel model) {
+    private void citextValueTest(UserModel model) {
         userDao.clearAllTable();
-        UserLocalModel tmpModel = new UserLocalModel(randomizedString(model.getLogin()), model.getPasswordBCrypt());
+        UserModel tmpModel = new UserModel(randomizedString(model.getLogin()), model.getPassword());
         userDao.addUser(tmpModel);
 
-        assertEquals(userDao.getUser(model.getLogin()).getPasswordBCrypt(), model.getPasswordBCrypt());
+        assertEquals(userDao.getUser(model.getLogin()).getPassword(), model.getPassword());
         boolean checkLogin = false;
         try {
             userDao.addUser(model);
@@ -68,7 +66,7 @@ public class UserDaoTest {
         tmpModel.setEmail(randomizedString(model.getEmail()));
         userDao.addUser(tmpModel);
 
-        tmpModel = new UserLocalModel(tmpModel.getLogin() + "_test", tmpModel.getPasswordBCrypt());
+        tmpModel = new UserModel(tmpModel.getLogin() + "_test", tmpModel.getPassword());
         tmpModel.setEmail(model.getEmail());
 
         try {

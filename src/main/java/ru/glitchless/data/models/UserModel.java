@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserModel {
+    @JsonIgnore
+    private int localId;
     @JsonProperty("login")
     private String login;
     private String password;
@@ -17,6 +19,13 @@ public class UserModel {
     public UserModel(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+
+    public UserModel(int localId, String login, String password, String email) {
+        this.localId = localId;
+        this.login = login;
+        this.password = password;
+        this.email = email;
     }
 
     public String getLogin() {

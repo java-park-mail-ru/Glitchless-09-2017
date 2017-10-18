@@ -7,30 +7,13 @@ import java.util.Random;
 
 public class RandomString {
 
-    /**
-     * Generate a random string.
-     */
-    public String nextString() {
-        for (int idx = 0; idx < buf.length; ++idx) {
-            buf[idx] = symbols[random.nextInt(symbols.length)];
-        }
-        return new String(buf);
-    }
-
     public static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
     public static final String LOWER = UPPER.toLowerCase(Locale.ROOT);
-
     public static final String DIGITS = "0123456789";
-
     public static final String ALPHANUM = UPPER + LOWER + DIGITS;
-
     public static final int DEFAULT_LENGHT = 42;
-
     private final Random random;
-
     private final char[] symbols;
-
     private final char[] buf;
 
     public RandomString(int length, Random random, String symbols) {
@@ -64,6 +47,16 @@ public class RandomString {
      */
     public RandomString() {
         this(DEFAULT_LENGHT);
+    }
+
+    /**
+     * Generate a random string.
+     */
+    public String nextString() {
+        for (int idx = 0; idx < buf.length; ++idx) {
+            buf[idx] = symbols[random.nextInt(symbols.length)];
+        }
+        return new String(buf);
     }
 
 }

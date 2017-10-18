@@ -2,7 +2,6 @@ package ru.glitchless.repositories.auth;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.glitchless.data.models.UserLocalModel;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.stores.UserDao;
 import ru.glitchless.data.throwables.InvalidLoginOrPassword;
@@ -20,34 +19,34 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public UserLocalModel registerUser(UserModel userModel) {
+    public UserModel registerUser(UserModel userModel) {
         validator.validate(userModel);
 
-        final UserLocalModel userLocalModel = new UserLocalModel(userModel.getLogin(),
+        final UserModel userLocalModel = new UserModel(userModel.getLogin(),
                 encoder.encode(userModel.getPassword()));
         userLocalModel.setEmail(userModel.getEmail());
 
         return userDao.addUser(userLocalModel);
     }
 
-    public UserLocalModel authUser(UserModel userModel) {
+    public UserModel authUser(UserModel userModel) {
         validator.validate(userModel);
 
-        final UserLocalModel model = userDao.getUser(userModel.getLogin());
+        final UserModel model = userDao.getUser(userModel.getLogin());
 
-        if (model == null || !encoder.matches(userModel.getPassword(), model.getPasswordBCrypt())) {
+        if (model == null || !encoder.matches(userModel.getPassword(), model.getPassword())) {
             throw new InvalidLoginOrPassword();
         }
 
         return model;
     }
 
-    public UserLocalModel changeUser(UserModel userModel) {
+    public UserModel changeUser(UserModel userModel) {
         validator.validate(userModel);
 
-        final UserLocalModel model = userDao.getUser(userModel.getLogin());
+        final UserModel model = userDao.getUser(userModel.getLogin());
 
-        if (model == null || !encoder.matches(userModel.getPassword(), model.getPasswordBCrypt())) {
+        if (model == null || !encoder.matches(userModel.getPassword(), model.getPassword())) {
             throw new InvalidLoginOrPassword();
         }
 
