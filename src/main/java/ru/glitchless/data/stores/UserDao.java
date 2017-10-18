@@ -53,6 +53,17 @@ public class UserDao {
         }
     }
 
+    public UserLocalModel updateUser(String login, String email) {
+        try {
+            return template.queryForObject("UPDATE users SET email = ? WHERE login = ?::CITEXT RETURNING *",
+                    USER_MAPPER,
+                    email,
+                    login);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserNotFound();
+        }
+    }
+
     public void clearAllTable() {
         template.update("DELETE FROM users;");
     }

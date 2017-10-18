@@ -1,6 +1,7 @@
 package ru.glitchless.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,8 +64,8 @@ public class UserController {
     }
 
     @PostMapping("/api/user/change")
-    public ResponseEntity<Message> changeUser(UserModel user) {
-        final UserModel userModel = service.changeUser(user);
+    public ResponseEntity<Message> changeUser(@RequestBody(required = false) UserModel user) {
+        final UserModel userModel = mapper.map(service.changeUser(user));
         return ResponseEntity.ok(new Message<>(true, userModel));
     }
 

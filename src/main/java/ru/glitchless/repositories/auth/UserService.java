@@ -42,7 +42,7 @@ public class UserService {
         return model;
     }
 
-    public UserModel changeUser(UserModel userModel) {
+    public UserLocalModel changeUser(UserModel userModel) {
         validator.validate(userModel);
 
         final UserLocalModel model = userDao.getUser(userModel.getLogin());
@@ -53,9 +53,6 @@ public class UserService {
 
         model.setEmail(userModel.getEmail());
 
-        final UserModel outputMode = new UserModel(userModel.getLogin(), null);
-        outputMode.setEmail(userModel.getEmail());
-
-        return outputMode;
+        return userDao.updateUser(userModel.getLogin(), userModel.getEmail());
     }
 }

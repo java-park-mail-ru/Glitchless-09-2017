@@ -1,10 +1,13 @@
 package ru.glitchless.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserModel {
+    @JsonProperty("login")
     private String login;
     private String password;
+    @JsonProperty("email")
     private String email;
 
     @SuppressWarnings("unused")
@@ -23,6 +26,11 @@ public class UserModel {
     @JsonIgnore
     public String getPassword() {
         return password;
+    }
+
+    @JsonProperty("password")
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
