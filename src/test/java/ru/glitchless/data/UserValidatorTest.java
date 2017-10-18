@@ -1,4 +1,4 @@
-package application.data;
+package ru.glitchless.data;
 
 import org.junit.Before;
 import org.junit.Test;

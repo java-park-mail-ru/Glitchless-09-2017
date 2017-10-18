@@ -45,11 +45,15 @@ public class UserDao {
 
     public UserLocalModel getUser(String login) {
         try {
-            return template.queryForObject("SELECT * FROM users WHERE login = ?::CITEXT",
+            return template.queryForObject("SELECT * FROM users WHERE login = ?::CITEXT;",
                     USER_MAPPER,
                     login);
         } catch (EmptyResultDataAccessException e) {
             throw new UserNotFound();
         }
+    }
+
+    public void clearAllTable() {
+        template.update("DELETE FROM users;");
     }
 }

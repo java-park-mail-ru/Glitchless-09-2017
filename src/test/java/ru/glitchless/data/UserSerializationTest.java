@@ -1,4 +1,4 @@
-package application.data;
+package ru.glitchless.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
