@@ -51,8 +51,6 @@ public class UserService {
             throw new InvalidLoginOrPassword();
         }
 
-        model.setEmail(userModel.getEmail());
-
         return userDao.updateUser(userModel.getLogin(), userModel.getEmail());
     }
 }
