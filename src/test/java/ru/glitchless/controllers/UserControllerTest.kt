@@ -88,10 +88,10 @@ open class UserControllerTest {
     @Test
     fun testCurrentUser() {
         testLogin()
-        mockMvc.perform(post(basePath + "/user")
+        mockMvc.perform(get(basePath + "/user")
                 .session(session!!))
                 .andExpect(status().isOk)
-                .andExpect(jsonPath("login").value(existingUser.login))
+                .andExpect(jsonPath("message.login").value(existingUser.login))
     }
 
     @Test

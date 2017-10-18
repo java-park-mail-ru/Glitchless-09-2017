@@ -69,8 +69,8 @@ public class UserController {
         return ResponseEntity.ok(new Message<>(true, userModel));
     }
 
-    @PostMapping("/api/user")
-    public ResponseEntity<Message> currentUser(@RequestBody(required = false) HttpSession httpSession) {
+    @GetMapping("/api/user")
+    public ResponseEntity<Message> currentUser(HttpSession httpSession) {
         final UserLocalModel user = (UserLocalModel) httpSession.getAttribute(Constants.SESSION_EXTRA_USER);
         if (user == null) {
             throw new NeedAuthorization();
