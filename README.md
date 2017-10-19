@@ -3,6 +3,15 @@
 
 # Deploy
 Тута: https://glitchless-java.herokuapp.com
+
+Как запустить тесты:
+```sh
+# Install Docker using instructions for your system: https://docs.docker.com/engine/installation/
+# And install Docker Compose using instructions for your system: https://docs.docker.com/compose/install/
+
+docker-compose up --abort-on-container-exit
+```
+
 # Документация
 Swagger: https://static.glitchless.ru/java-swagger.json
 # Команда
