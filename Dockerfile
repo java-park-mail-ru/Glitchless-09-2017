@@ -1,6 +1,7 @@
 FROM maven:3.5-jdk-8
 
-WORKDIR /tmp/glitchless
+WORKDIR /glitchless
+RUN curl -s https://codecov.io/bash -o codecov && chmod +x codecov
 COPY . .
 
-CMD mvn install && mvn cobertura:cobertura && curl -s https://codecov.io/bash | bash
+CMD mvn install && mvn cobertura:cobertura && ./codecov
