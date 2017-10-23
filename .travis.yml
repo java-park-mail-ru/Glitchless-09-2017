@@ -1,4 +1,10 @@
-language: java
+sudo: required
+
+services:
+  - docker
+
+script:
+  - docker-compose up --abort-on-container-exit
 
 deploy:
   skip_cleanup: true

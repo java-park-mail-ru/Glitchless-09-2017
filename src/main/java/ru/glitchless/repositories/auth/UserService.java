@@ -2,9 +2,8 @@ package ru.glitchless.repositories.auth;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.glitchless.data.models.UserLocalModel;
 import ru.glitchless.data.models.UserModel;
-import ru.glitchless.data.stores.InMemmoryUserStorage;
+import ru.glitchless.data.stores.UserDao;
 import ru.glitchless.data.throwables.InvalidLoginOrPassword;
 import ru.glitchless.repositories.auth.validators.UserValidator;
 
@@ -12,32 +11,30 @@ import ru.glitchless.repositories.auth.validators.UserValidator;
 public class UserService {
     private final UserValidator validator;
     private final PasswordEncoder encoder;
+    private final UserDao userDao;
 
-    private InMemmoryUserStorage userStorage = new InMemmoryUserStorage();
-
-    public UserService(PasswordEncoder passwordEncoder, UserValidator validator) {
+    public UserService(PasswordEncoder passwordEncoder, UserValidator validator, UserDao userDao) {
         this.encoder = passwordEncoder;
         this.validator = validator;
+        this.userDao = userDao;
     }
 
-    public UserLocalModel registerUser(UserModel userModel) {
+    public UserModel registerUser(UserModel userModel) {
         validator.validate(userModel);
 
-        final UserLocalModel userLocalModel = new UserLocalModel(userModel.getLogin(),
+        final UserModel userLocalModel = new UserModel(userModel.getLogin(),
                 encoder.encode(userModel.getPassword()));
         userLocalModel.setEmail(userModel.getEmail());
 
-        userStorage.addUser(userLocalModel);
-
-        return userLocalModel;
+        return userDao.addUser(userLocalModel);
     }
 
-    public UserLocalModel authUser(UserModel userModel) {
+    public UserModel authUser(UserModel userModel) {
         validator.validate(userModel);
 
-        final UserLocalModel model = userStorage.getUser(userModel.getLogin());
+        final UserModel model = userDao.getUser(userModel.getLogin());
 
-        if (model == null || !encoder.matches(userModel.getPassword(), model.getPasswordBCrypt())) {
+        if (model == null || !encoder.matches(userModel.getPassword(), model.getPassword())) {
             throw new InvalidLoginOrPassword();
         }
 
@@ -47,17 +44,12 @@ public class UserService {
     public UserModel changeUser(UserModel userModel) {
         validator.validate(userModel);
 
-        final UserLocalModel model = userStorage.getUser(userModel.getLogin());
+        final UserModel model = userDao.getUser(userModel.getLogin());
 
-        if (model == null || !encoder.matches(userModel.getPassword(), model.getPasswordBCrypt())) {
+        if (model == null || !encoder.matches(userModel.getPassword(), model.getPassword())) {
             throw new InvalidLoginOrPassword();
         }
 
-        model.setEmail(userModel.getEmail());
-
-        final UserModel outputMode = new UserModel(userModel.getLogin(), null);
-        outputMode.setEmail(userModel.getEmail());
-
-        return outputMode;
+        return userDao.updateUser(userModel.getLogin(), userModel.getEmail());
     }
 }

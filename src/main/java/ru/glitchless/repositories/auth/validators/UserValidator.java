@@ -1,11 +1,13 @@
 package ru.glitchless.repositories.auth.validators;
 
+import org.springframework.stereotype.Component;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.throwables.InvalidLoginOrPassword;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+@Component
 public class UserValidator {
     private static final String LOGIN_PATTERN = "([A-Za-z0-9])+";
 
@@ -34,7 +36,7 @@ public class UserValidator {
             }
         }
 
-        if (user.getPassword() == null) {
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
             throw new InvalidLoginOrPassword("Password can't be null");
         }
     }
