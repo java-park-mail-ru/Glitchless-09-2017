@@ -51,8 +51,8 @@ class RetrofitTest {
 
         val response = api.me(session).execute()
         assertTrue(response.isSuccessful)
-        assertEquals(response.body()!!.message.login, user.login)
-        assertEquals(response.body()!!.message.email, user.email)
+        assertEquals(response.body()!!.message!!.login, user.login)
+        assertEquals(response.body()!!.message!!.email, user.email)
     }
 
     @Test
@@ -66,8 +66,8 @@ class RetrofitTest {
 
         val resposeOnFirstMe = api.me(session).execute()
         assertEquals(OK.value(), resposeOnFirstMe.code())
-        assertEquals(resposeOnFirstMe.body()!!.message.login, user.login)
-        assertEquals(resposeOnFirstMe.body()!!.message.email, user.email)
+        assertEquals(resposeOnFirstMe.body()!!.message!!.login, user.login)
+        assertEquals(resposeOnFirstMe.body()!!.message!!.email, user.email)
 
         val responseLogout = api.logout(session).execute()
         assertTrue(responseLogout.isSuccessful)
@@ -81,8 +81,8 @@ class RetrofitTest {
     fun testUpdate() {
         val responseLogin = api.login(user).execute()
         assertTrue(responseLogin.isSuccessful)
-        assertEquals(responseLogin.body()!!.message.login, user.login)
-        assertEquals(responseLogin.body()!!.message.email, user.email)
+        assertEquals(responseLogin.body()!!.message!!.login, user.login)
+        assertEquals(responseLogin.body()!!.message!!.email, user.email)
 
         val newUser = UserModel(user.login, user.password)
         newUser.email = "some.email@email.com"
@@ -92,9 +92,9 @@ class RetrofitTest {
 
         val responseSecondLogin = api.login(user).execute()
         assertTrue(responseSecondLogin.isSuccessful)
-        assertEquals(responseSecondLogin.body()!!.message.login, user.login)
-        assertNotEquals(responseSecondLogin.body()!!.message.email, user.email)
-        assertEquals(responseSecondLogin.body()!!.message.email, newUser.email)
+        assertEquals(responseSecondLogin.body()!!.message!!.login, user.login)
+        assertNotEquals(responseSecondLogin.body()!!.message!!.email, user.email)
+        assertEquals(responseSecondLogin.body()!!.message!!.email, newUser.email)
 
         api.update(user).execute()
     }
@@ -102,14 +102,14 @@ class RetrofitTest {
     private fun registration() {
         val response = api.signup(user).execute()
         assertTrue(response.isSuccessful)
-        assertEquals(response.body()!!.message.login, user.login)
-        assertEquals(response.body()!!.message.email, user.email)
+        assertEquals(response.body()!!.message!!.login, user.login)
+        assertEquals(response.body()!!.message!!.email, user.email)
     }
 
     private fun login(): String {
         val response = api.login(user).execute()
         assertTrue(response.isSuccessful)
-        assertEquals(response.body()!!.message.login, user.login)
+        assertEquals(response.body()!!.message!!.login, user.login)
 
         return response.headers()["Set-Cookie"]!!
     }
