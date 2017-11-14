@@ -28,4 +28,5 @@ public class ApplicationConfiguration {
         return new PerConnectionWebSocketHandler(SocketHandler.class);
     }
 
+
 }

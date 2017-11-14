@@ -1,6 +1,6 @@
 package ru.glitchless.di;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -9,9 +9,8 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 
 @EnableWebSocket
 public class WebsocketConfiguration implements WebSocketConfigurer {
-
     @NotNull
-    private final WebSocketHandler webSocketHandler;
+    private final  WebSocketHandler webSocketHandler;
 
     public WebsocketConfiguration(@NotNull WebSocketHandler webSocketHandler) {
         this.webSocketHandler = webSocketHandler;

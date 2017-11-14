@@ -1,6 +1,6 @@
 package ru.glitchless.controllers.websocket;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.models.WebSocketMessage;
 import ru.glitchless.data.throwables.HandleException;

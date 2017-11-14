@@ -1,8 +1,8 @@
 package ru.glitchless.controllers.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -12,6 +12,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.models.WebSocketMessage;
 import ru.glitchless.data.throwables.HandleException;
+import ru.glitchless.repositories.utils.ResourceFactory;
 import ru.glitchless.utils.Constants;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class SocketHandler extends TextWebSocketHandler {
     private ObjectMapper objectMapper;
 
     public SocketHandler(@NotNull SocketMessageHandlerManager manager,
+                         @NotNull ResourceFactory resourceFactory,
                          ObjectMapper objectMapper) {
         this.handlerManager = manager;
         this.objectMapper = objectMapper;
