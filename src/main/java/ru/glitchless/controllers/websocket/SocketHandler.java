@@ -15,7 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.models.WebSocketMessage;
 import ru.glitchless.data.models.game.WebSocketUser;
-import ru.glitchless.data.models.toclient.WebSocketMessageException;
+import ru.glitchless.data.models.toclient.WebSocketMessageError;
 import ru.glitchless.data.throwables.HandleException;
 import ru.glitchless.repositories.auth.UserService;
 import ru.glitchless.repositories.utils.ResourceFactory;
@@ -116,9 +116,9 @@ public class SocketHandler extends TextWebSocketHandler {
                 if (reason == null) {
                     reason = responseStatus.reason();
                 }
-                return objectMapper.writeValueAsString(new WebSocketMessageException().setReason(reason));
+                return objectMapper.writeValueAsString(new WebSocketMessageError().setReason(reason));
             }
-            return objectMapper.writeValueAsString(new WebSocketMessageException().setReason(ex.getMessage()));
+            return objectMapper.writeValueAsString(new WebSocketMessageError().setReason(ex.getMessage()));
         } catch (JsonProcessingException e) {
             return "Error in processing Exception";
         }

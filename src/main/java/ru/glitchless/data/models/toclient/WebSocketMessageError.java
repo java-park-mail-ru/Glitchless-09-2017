@@ -3,15 +3,15 @@ package ru.glitchless.data.models.toclient;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.data.models.WebSocketMessage;
 
-public class WebSocketMessageException extends WebSocketMessage {
+public class WebSocketMessageError extends WebSocketMessage {
     private String type;
     private String reason;
 
-    public WebSocketMessageException() {
-        this.type = "WebSocketMessageException";
+    public WebSocketMessageError() {
+        this.type = "WebSocketMessageError";
     }
 
-    public WebSocketMessageException(@JsonProperty("type") String type) {
+    public WebSocketMessageError(@JsonProperty("type") String type) {
         this.type = type;
     }
 
@@ -19,7 +19,7 @@ public class WebSocketMessageException extends WebSocketMessage {
         return reason;
     }
 
-    public WebSocketMessageException setReason(String inReason) {
+    public WebSocketMessageError setReason(String inReason) {
         this.reason = inReason;
         return this;
     }
