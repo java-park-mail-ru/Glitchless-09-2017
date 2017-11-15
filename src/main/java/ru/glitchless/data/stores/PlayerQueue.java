@@ -1,8 +1,8 @@
 package ru.glitchless.data.stores;
 
-import javafx.util.Pair;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
+import ru.glitchless.data.models.game.RoomUsers;
 import ru.glitchless.data.models.game.WebSocketUser;
 import ru.glitchless.data.throwables.HandleException;
 
@@ -17,7 +17,7 @@ public class PlayerQueue {
     }
 
     @Nullable
-    public Pair<WebSocketUser, WebSocketUser> addUser(WebSocketUser user) {
+    public RoomUsers addUser(WebSocketUser user) {
         if (!user.getSession().isOpen()) {
             throw new HandleException("Can't pair user with close session");
         }
@@ -41,6 +41,6 @@ public class PlayerQueue {
             return null;
         }
 
-        return new Pair<>(user, waitingUser);
+        return new RoomUsers(user, waitingUser);
     }
 }
