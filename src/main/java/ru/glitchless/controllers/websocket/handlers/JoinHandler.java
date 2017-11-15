@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ru.glitchless.controllers.websocket.SocketMessageHandler;
 import ru.glitchless.data.models.WebSocketMessage;
-import ru.glitchless.data.models.fromclient.ClientState;
-import ru.glitchless.data.models.fromclient.WantPlayMessage;
-import ru.glitchless.data.models.game.WebSocketUser;
+import ru.glitchless.data.models.WebSocketUser;
+import ru.glitchless.data.models.game.fromclient.ClientState;
+import ru.glitchless.data.models.game.fromclient.WantPlayMessage;
 import ru.glitchless.data.throwables.HandleException;
 import ru.glitchless.repositories.game.LobbyService;
 

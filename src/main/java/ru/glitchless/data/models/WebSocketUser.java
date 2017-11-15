@@ -1,10 +1,8 @@
-package ru.glitchless.data.models.game;
+package ru.glitchless.data.models;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ru.glitchless.data.models.UserModel;
-import ru.glitchless.data.models.WebSocketMessage;
 import ru.glitchless.utils.Constants;
 
 import java.io.IOException;

@@ -2,7 +2,7 @@ package ru.glitchless.controllers.websocket;
 
 import org.jetbrains.annotations.NotNull;
 import ru.glitchless.data.models.WebSocketMessage;
-import ru.glitchless.data.models.game.WebSocketUser;
+import ru.glitchless.data.models.WebSocketUser;
 import ru.glitchless.data.throwables.HandleException;
 
 public abstract class SocketMessageHandler<T extends WebSocketMessage> {

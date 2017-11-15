@@ -1,17 +1,13 @@
-package ru.glitchless.data.models.toclient;
+package ru.glitchless.data.models.game.fromclient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.data.models.WebSocketMessage;
 
-public class GameInitState extends WebSocketMessage {
+public class WantPlayMessage extends WebSocketMessage {
     private String type;
     private int state;
 
-    public GameInitState() {
-        this.type = "GameInitState";
-    }
-
-    public GameInitState(@JsonProperty("type") String type) {
+    public WantPlayMessage(@JsonProperty("type") String type) {
         this.type = type;
     }
 

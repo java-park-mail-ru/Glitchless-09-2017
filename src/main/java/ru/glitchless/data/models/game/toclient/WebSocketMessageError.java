@@ -1,4 +1,4 @@
-package ru.glitchless.data.models.toclient;
+package ru.glitchless.data.models.game.toclient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.data.models.WebSocketMessage;

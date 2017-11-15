@@ -3,7 +3,7 @@ package ru.glitchless.data.stores;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import ru.glitchless.data.models.game.RoomUsers;
-import ru.glitchless.data.models.game.WebSocketUser;
+import ru.glitchless.data.models.WebSocketUser;
 import ru.glitchless.data.throwables.HandleException;
 
 import java.util.concurrent.ConcurrentLinkedQueue;

@@ -14,8 +14,8 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.models.WebSocketMessage;
-import ru.glitchless.data.models.game.WebSocketUser;
-import ru.glitchless.data.models.toclient.WebSocketMessageError;
+import ru.glitchless.data.models.WebSocketUser;
+import ru.glitchless.data.models.game.toclient.WebSocketMessageError;
 import ru.glitchless.data.throwables.HandleException;
 import ru.glitchless.repositories.auth.UserService;
 import ru.glitchless.repositories.utils.ResourceFactory;
@@ -63,8 +63,13 @@ public class SocketHandler extends TextWebSocketHandler {
             closeSessionSilently(session, ACCESS_DENIED);
             return;
         }
+        WebSocketUser wsUser = (WebSocketUser) session.getAttributes().get(Constants.SESSION_EXTRA_USERWS);
+        if (wsUser == null) {
+            wsUser = new WebSocketUser(session, user);
+            session.getAttributes().put(Constants.SESSION_EXTRA_USERWS, wsUser);
+        }
         try {
-            handleMessage(new WebSocketUser(session, user), message);
+            handleMessage(wsUser, message);
         } catch (Throwable e) {
             session.sendMessage(new TextMessage(exceptionToJson(e)));
         }

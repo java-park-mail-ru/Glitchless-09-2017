@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.glitchless.controllers.websocket.handlers.JoinHandler;
 import ru.glitchless.data.models.WebSocketMessage;
-import ru.glitchless.data.models.fromclient.WantPlayMessage;
-import ru.glitchless.data.models.game.WebSocketUser;
+import ru.glitchless.data.models.game.fromclient.WantPlayMessage;
+import ru.glitchless.data.models.WebSocketUser;
 import ru.glitchless.data.throwables.HandleException;
 
 import java.util.HashMap;
