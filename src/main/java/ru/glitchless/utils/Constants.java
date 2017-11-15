@@ -6,5 +6,6 @@ public class Constants {
             "https://glitchless.ru",
             "http://localhost:8080",
     };
+    public static final int MAGIC_NUMBER = 31;
     public static final String SESSION_EXTRA_USER = "user";
 }

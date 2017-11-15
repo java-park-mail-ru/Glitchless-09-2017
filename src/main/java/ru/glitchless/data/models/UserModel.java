@@ -51,4 +51,14 @@ public class UserModel {
         return this;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof UserModel
+                && ((UserModel) obj).login.equals(login);
+    }
+
+    @Override
+    public int hashCode() {
+        return login.hashCode();
+    }
 }

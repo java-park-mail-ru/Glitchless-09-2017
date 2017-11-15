@@ -52,4 +52,12 @@ public class UserService {
 
         return userDao.updateUser(userModel.getLogin(), userModel.getEmail());
     }
+
+    public boolean isContains(UserModel userModel) {
+        validator.validate(userModel);
+
+        final UserModel model = userDao.getUser(userModel.getLogin());
+
+        return model != null;
+    }
 }

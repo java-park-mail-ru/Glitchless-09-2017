@@ -10,7 +10,7 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 @EnableWebSocket
 public class WebsocketConfiguration implements WebSocketConfigurer {
     @NotNull
-    private final  WebSocketHandler webSocketHandler;
+    private final WebSocketHandler webSocketHandler;
 
     public WebsocketConfiguration(@NotNull WebSocketHandler webSocketHandler) {
         this.webSocketHandler = webSocketHandler;

@@ -1,8 +1,8 @@
 package ru.glitchless.controllers.websocket;
 
 import org.jetbrains.annotations.NotNull;
-import ru.glitchless.data.models.UserModel;
 import ru.glitchless.data.models.WebSocketMessage;
+import ru.glitchless.data.models.game.WebSocketUser;
 import ru.glitchless.data.throwables.HandleException;
 
 public abstract class SocketMessageHandler<T extends WebSocketMessage> {
@@ -13,7 +13,7 @@ public abstract class SocketMessageHandler<T extends WebSocketMessage> {
         this.clazz = clazz;
     }
 
-    public void handleMessage(@NotNull WebSocketMessage message, @NotNull UserModel forUser) throws HandleException {
+    public void handleMessage(@NotNull WebSocketMessage message, @NotNull WebSocketUser forUser) throws HandleException {
         try {
             handle(clazz.cast(message), forUser);
         } catch (ClassCastException ex) {
@@ -21,5 +21,5 @@ public abstract class SocketMessageHandler<T extends WebSocketMessage> {
         }
     }
 
-    public abstract void handle(@NotNull T message, @NotNull UserModel forUser) throws HandleException;
+    public abstract void handle(@NotNull T message, @NotNull WebSocketUser forUser) throws HandleException;
 }

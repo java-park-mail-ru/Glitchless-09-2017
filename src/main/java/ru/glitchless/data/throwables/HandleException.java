@@ -1,6 +1,6 @@
 package ru.glitchless.data.throwables;
 
-public class HandleException extends Exception {
+public class HandleException extends RuntimeException {
     public HandleException(String message, Throwable cause) {
         super(message, cause);
     }
