@@ -27,8 +27,11 @@ public class SendMessageService implements Runnable {
     private ObjectMapper objectMapper;
 
     public SendMessageService(ObjectMapper objectMapper) {
-        executor.execute(this); // Add more workers for perfomance
         this.objectMapper = objectMapper;
+    }
+
+    public void init() {
+        executor.execute(this); // Add more workers for perfomance
     }
 
     public boolean sendMessage(ProcessingCommit<WebSocketMessage> commit) {

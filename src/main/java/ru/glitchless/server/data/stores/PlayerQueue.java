@@ -1,16 +1,17 @@
 package ru.glitchless.server.data.stores;
 
+import com.google.common.collect.Sets;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.models.game.RoomUsers;
 import ru.glitchless.server.data.throwables.HandleException;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.Set;
 
 @Service
 public class PlayerQueue {
-    private ConcurrentLinkedQueue<WebSocketUser> userQueue = new ConcurrentLinkedQueue<>();
+    private Set<WebSocketUser> userQueue = Sets.newConcurrentHashSet();
 
     public PlayerQueue() {
 
@@ -22,18 +23,14 @@ public class PlayerQueue {
             throw new HandleException("Can't pair user with close session");
         }
 
-        if (userQueue.contains(user)) {
+        if (!userQueue.add(user)) {
             throw new HandleException("User already in queue");
         }
 
-        if (userQueue.isEmpty()) {
-            userQueue.add(user);
-            return null;
-        }
+        WebSocketUser waitingUser = poolFromSet(userQueue);
 
-        WebSocketUser waitingUser = userQueue.poll();
         while ((waitingUser == null || !waitingUser.getSession().isOpen()) && !userQueue.isEmpty()) {
-            waitingUser = userQueue.poll();
+            waitingUser = poolFromSet(userQueue);
         }
 
         if (waitingUser == null && userQueue.isEmpty()) {
@@ -42,5 +39,15 @@ public class PlayerQueue {
         }
 
         return new RoomUsers(user, waitingUser);
+    }
+
+    @Nullable
+    private WebSocketUser poolFromSet(Set<WebSocketUser> set) {
+        for (WebSocketUser user : set) {
+            if (set.remove(user)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

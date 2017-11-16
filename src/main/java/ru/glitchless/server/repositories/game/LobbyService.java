@@ -37,6 +37,7 @@ public class LobbyService {
         this.objectMapper = objectMapper;
         this.roomService = roomService;
         this.sendMessageService = sendMessageService;
+        this.sendMessageService.init();
     }
 
     public WebSocketMessage onInitUser(WebSocketUser user) {
