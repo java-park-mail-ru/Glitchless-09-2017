@@ -4,7 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
+import ru.glitchless.server.controllers.websocket.handlers.GameCommitHandler;
 import ru.glitchless.server.controllers.websocket.handlers.JoinHandler;
 import ru.glitchless.server.data.models.WebSocketMessage;
 import ru.glitchless.server.data.models.WebSocketUser;
@@ -19,8 +21,10 @@ public class SocketMessageHandlerManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketMessageHandlerManager.class);
     private final Map<Class<?>, SocketMessageHandler<?>> handlers = new HashMap<>();
 
-    public SocketMessageHandlerManager(JoinHandler joinHandler) {
+    public SocketMessageHandlerManager(JoinHandler joinHandler,
+                                       GameCommitHandler gameCommitHandler) {
         registerHandler(WantPlayMessage.class, joinHandler);
+        registerHandler(ClientCommitMessage.class, gameCommitHandler);
     }
 
     public void handle(@NotNull WebSocketMessage message, @NotNull WebSocketUser forUser) throws HandleException {

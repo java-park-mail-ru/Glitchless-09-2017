@@ -25,15 +25,18 @@ public class LobbyService {
     private RoomsStore roomsStore;
     private ObjectMapper objectMapper;
     private RoomService roomService;
+    private SendMessageService sendMessageService;
 
     public LobbyService(PlayerQueue playerQueue,
                         RoomsStore roomsStore,
                         ObjectMapper objectMapper,
-                        RoomService roomService) {
+                        RoomService roomService,
+                        SendMessageService sendMessageService) {
         this.playerQueue = playerQueue;
         this.roomsStore = roomsStore;
         this.objectMapper = objectMapper;
         this.roomService = roomService;
+        this.sendMessageService = sendMessageService;
     }
 
     public WebSocketMessage onInitUser(WebSocketUser user) {
@@ -100,7 +103,7 @@ public class LobbyService {
     }
 
     private WebSocketMessage initRoom(GameRoom gameRoom, RoomUsers roomUsers) {
-        final GameMechanic mechanic = new GameMechanic(roomUsers);
+        final GameMechanic mechanic = new GameMechanic(roomUsers, sendMessageService);
         gameRoom.init(mechanic);
 
         final WebSocketMessage fullSwapScene = mechanic.firstSetting();
