@@ -64,6 +64,11 @@ public class GameRoom implements Runnable {
                 mechanic.tick(lastFrameMillis);
 
                 final long after = clock.millis();
+
+                if ((after - before) > STEP_TIME) {
+                    LOGGER.warn("Laggs!");
+                }
+
                 try {
                     final long sleepingTime = Math.max(0, STEP_TIME - (after - before));
                     Thread.sleep(sleepingTime);

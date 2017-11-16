@@ -1,10 +1,12 @@
 package ru.glitchless.game.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Vector {
     private int diffX;
     private int diffY;
 
-    public Vector(int diffX, int diffY) {
+    public Vector(@JsonProperty("x") int diffX, @JsonProperty("y") int diffY) {
         this.diffX = diffX;
         this.diffY = diffY;
     }
@@ -13,15 +15,7 @@ public class Vector {
         return diffX;
     }
 
-    public void setDiffX(int diffX) {
-        this.diffX = diffX;
-    }
-
     public int getDiffY() {
         return diffY;
-    }
-
-    public void setDiffY(int diffY) {
-        this.diffY = diffY;
     }
 }
