@@ -4,20 +4,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.server.utils.Constants;
 
 public class Point {
-    private int posX;
-    private int posY;
+    private float posX;
+    private float posY;
 
-    public Point(@JsonProperty("x") int posX, @JsonProperty("y") int posY) {
+    public Point(@JsonProperty("x") float posX, @JsonProperty("y") float posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
-    public int getPosX() {
+    public float getPosX() {
         return posX;
     }
 
-    public int getPosY() {
+    public float getPosY() {
         return posY;
+    }
+
+    public Point plus(Point point) {
+        return new Point(posX + point.posX,
+                posY + point.posY);
+    }
+
+    public Point apply(Vector vector) {
+        return new Point(posX + vector.getDiffX(),
+                posY + vector.getDiffY());
     }
 
     @Override
@@ -39,8 +49,8 @@ public class Point {
 
     @Override
     public int hashCode() {
-        int result = posX;
+        float result = posX;
         result = Constants.MAGIC_NUMBER * result + posY;
-        return result;
+        return (int) result;
     }
 }

@@ -4,20 +4,29 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.server.utils.Constants;
 
 public class Vector {
-    private int diffX;
-    private int diffY;
+    private float diffX;
+    private float diffY;
 
-    public Vector(@JsonProperty("x") int diffX, @JsonProperty("y") int diffY) {
+    public Vector(@JsonProperty("x") float diffX, @JsonProperty("y") float diffY) {
         this.diffX = diffX;
         this.diffY = diffY;
     }
 
-    public int getDiffX() {
+    public float getDiffX() {
         return diffX;
     }
 
-    public int getDiffY() {
+    public float getDiffY() {
         return diffY;
+    }
+
+    public Vector multipy(long multiplexer) {
+        return new Vector(diffX * multiplexer,
+                diffY * multiplexer);
+    }
+
+    public Point toPoint() {
+        return new Point(diffX, diffY);
     }
 
     @Override
@@ -39,8 +48,8 @@ public class Vector {
 
     @Override
     public int hashCode() {
-        int result = diffX;
+        float result = diffX;
         result = Constants.MAGIC_NUMBER * result + diffY;
-        return result;
+        return (int) result;
     }
 }

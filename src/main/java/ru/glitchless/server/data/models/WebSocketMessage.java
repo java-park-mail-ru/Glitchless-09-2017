@@ -6,6 +6,8 @@ import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.game.data.packages.toclient.*;
 
+import java.sql.Timestamp;
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(WantPlayMessage.class),
@@ -17,4 +19,13 @@ import ru.glitchless.game.data.packages.toclient.*;
         @JsonSubTypes.Type(LightServerSnapMessage.class),
 })
 public abstract class WebSocketMessage {
+    private long timestamp; // In Millis
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

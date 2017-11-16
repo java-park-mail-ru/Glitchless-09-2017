@@ -12,6 +12,7 @@ import ru.glitchless.server.data.models.WebSocketMessage;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.throwables.HandleException;
 
+import java.time.Clock;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class SocketMessageHandlerManager {
     @NotNull
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketMessageHandlerManager.class);
     private final Map<Class<?>, SocketMessageHandler<?>> handlers = new HashMap<>();
+    private Clock clock = Clock.systemDefaultZone();
 
     public SocketMessageHandlerManager(JoinHandler joinHandler,
                                        GameCommitHandler gameCommitHandler) {
@@ -28,6 +30,7 @@ public class SocketMessageHandlerManager {
     }
 
     public void handle(@NotNull WebSocketMessage message, @NotNull WebSocketUser forUser) throws HandleException {
+        message.setTimestamp(clock.millis());
         final SocketMessageHandler<?> messageHandler = handlers.get(message.getClass());
         if (messageHandler == null) {
             throw new HandleException("No handlers for message of " + message.getClass().getName() + " type");

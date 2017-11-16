@@ -32,6 +32,13 @@ public class RoomUsers {
         return firstUser.getSession().isOpen() && secondUser.getSession().isOpen();
     }
 
+    public WebSocketUser getComanion(WebSocketUser currentUser) {
+        if (firstUser.equals(currentUser)) {
+            return secondUser;
+        }
+        return firstUser;
+    }
+
     public void sendToUsers(WebSocketMessage message, ObjectMapper objectMapper) {
         try {
             firstUser.sendToUser(message, objectMapper);

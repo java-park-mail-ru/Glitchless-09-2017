@@ -7,6 +7,7 @@ import ru.glitchless.server.data.models.WebSocketMessage;
 public class LightServerSnapMessage extends WebSocketMessage {
     private String type;
     private int objectId;
+    private int commitId;
     @JsonProperty("coord")
     private Point point;
 
@@ -36,5 +37,13 @@ public class LightServerSnapMessage extends WebSocketMessage {
 
     public void setPoint(Point point) {
         this.point = point;
+    }
+
+    public int getCommitId() {
+        return commitId;
+    }
+
+    public void setCommitId(int commitId) {
+        this.commitId = commitId;
     }
 }
