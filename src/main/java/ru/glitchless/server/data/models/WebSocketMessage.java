@@ -6,8 +6,6 @@ import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.game.data.packages.toclient.*;
 
-import java.sql.Timestamp;
-
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(WantPlayMessage.class),

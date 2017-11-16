@@ -105,7 +105,10 @@ public class GameMechanic implements IGameMechanic {
         idToObject.put(platform2.getObjectId(), platform2);
         scene.put("platform_2", new SnapObject(platform2));
 
-        final Kirkle circle = new Kirkle(new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2, Constants.GAME_FIELD_SIZE.getPosY() / 2), idCounter.getAndIncrement());
+        final Kirkle circle = new Kirkle(
+                new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
+                        Constants.GAME_FIELD_SIZE.getPosY() / 2),
+                idCounter.getAndIncrement());
         idToObject.put(circle.getObjectId(), circle);
         scene.put("kirkle_1", new SnapObject(circle));
 

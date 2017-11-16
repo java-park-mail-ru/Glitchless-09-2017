@@ -3,8 +3,8 @@ package ru.glitchless.game.data.physics.base;
 import ru.glitchless.game.data.Point;
 
 public class PhysicObject {
-    protected Point point;
-    protected float rotation = 0;
+    private Point point;
+    private float rotation = 0;
     private boolean forDestroy = false;
     private int objectId = 0;
 
