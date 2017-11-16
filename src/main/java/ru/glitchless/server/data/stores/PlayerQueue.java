@@ -26,6 +26,7 @@ public class PlayerQueue {
         if (!userQueue.add(user)) {
             throw new HandleException("User already in queue");
         }
+        userQueue.remove(user);
 
         WebSocketUser waitingUser = poolFromSet(userQueue);
 
