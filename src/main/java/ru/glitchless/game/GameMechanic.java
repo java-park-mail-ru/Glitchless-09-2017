@@ -33,7 +33,7 @@ public class GameMechanic implements IGameMechanic {
 
     @Override
     public void onNewPacket(ClientCommitMessage message, WebSocketUser webSocketUser) {
-
+        waitProcessCommit.add(new ProcessingCommit<>(message, webSocketUser));
     }
 
     @Override
