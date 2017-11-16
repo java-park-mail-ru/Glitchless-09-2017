@@ -1,27 +1,27 @@
 package ru.glitchless.game.data;
 
 public class Vector {
-    private int x;
-    private int y;
+    private int diffX;
+    private int diffY;
 
-    public Vector(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Vector(int diffX, int diffY) {
+        this.diffX = diffX;
+        this.diffY = diffY;
     }
 
-    public int getX() {
-        return x;
+    public int getDiffX() {
+        return diffX;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setDiffX(int diffX) {
+        this.diffX = diffX;
     }
 
-    public int getY() {
-        return y;
+    public int getDiffY() {
+        return diffY;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setDiffY(int diffY) {
+        this.diffY = diffY;
     }
 }
