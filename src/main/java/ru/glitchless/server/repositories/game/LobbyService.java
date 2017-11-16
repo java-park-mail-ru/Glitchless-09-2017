@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.glitchless.game.GameMechanic;
+import ru.glitchless.game.data.packages.fromclient.ClientState;
+import ru.glitchless.game.data.packages.toclient.GameInitState;
 import ru.glitchless.server.data.models.WebSocketMessage;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.models.game.GameRoom;
 import ru.glitchless.server.data.models.game.RoomUsers;
-import ru.glitchless.server.data.models.game.fromclient.ClientState;
-import ru.glitchless.game.GameMechanic;
-import ru.glitchless.server.data.models.game.toclient.GameInitState;
 import ru.glitchless.server.data.stores.PlayerQueue;
 import ru.glitchless.server.data.stores.RoomsStore;
 import ru.glitchless.server.data.throwables.ServerIsFull;
@@ -100,7 +100,7 @@ public class LobbyService {
     }
 
     private WebSocketMessage initRoom(GameRoom gameRoom, RoomUsers roomUsers) {
-        final GameMechanic mechanic = new GameMechanic();
+        final GameMechanic mechanic = new GameMechanic(roomUsers);
         gameRoom.init(mechanic);
 
         final WebSocketMessage fullSwapScene = mechanic.firstSetting();

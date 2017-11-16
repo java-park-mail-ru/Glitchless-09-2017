@@ -4,9 +4,9 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.server.controllers.websocket.handlers.JoinHandler;
 import ru.glitchless.server.data.models.WebSocketMessage;
-import ru.glitchless.server.data.models.game.fromclient.WantPlayMessage;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.throwables.HandleException;
 

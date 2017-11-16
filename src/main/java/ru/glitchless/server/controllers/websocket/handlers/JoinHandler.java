@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import ru.glitchless.game.data.packages.fromclient.ClientState;
+import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.server.controllers.websocket.SocketMessageHandler;
 import ru.glitchless.server.data.models.WebSocketMessage;
 import ru.glitchless.server.data.models.WebSocketUser;
-import ru.glitchless.server.data.models.game.fromclient.ClientState;
-import ru.glitchless.server.data.models.game.fromclient.WantPlayMessage;
 import ru.glitchless.server.data.throwables.HandleException;
 import ru.glitchless.server.repositories.game.LobbyService;
 

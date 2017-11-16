@@ -1,4 +1,4 @@
-package ru.glitchless.server.data.models.game.fromclient;
+package ru.glitchless.game.data.packages.fromclient;
 
 public enum ClientState {
     INIT(1),
