@@ -14,9 +14,8 @@ public class FullSwapScene extends WebSocketMessage {
     public void put(String type, SnapObject object) {
         hashMap.put(type, object);
     }
-
     @JsonAnyGetter
-    public Object anyGet(String name) {
-        return hashMap.get(name);
+    public Map<String, SnapObject> getMap() {
+        return hashMap;
     }
 }

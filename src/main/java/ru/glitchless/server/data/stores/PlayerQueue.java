@@ -13,9 +13,7 @@ import java.util.Set;
 public class PlayerQueue {
     private Set<WebSocketUser> userQueue = Sets.newConcurrentHashSet();
 
-    public PlayerQueue() {
-
-    }
+    public PlayerQueue() {}
 
     @Nullable
     public RoomUsers addUser(WebSocketUser user) {
