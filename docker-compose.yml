@@ -25,5 +25,7 @@ services:
       - db
 
 volumes:
-  artifacts: /glitchless/target
   maven-repo:
+
+volumes:
+  - ./target:/glitchless/target
