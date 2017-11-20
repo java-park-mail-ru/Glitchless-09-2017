@@ -8,8 +8,8 @@ import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.network.IPacketHandler;
 import ru.glitchless.server.utils.Pair;
 
-public class PlatfromHandler extends IPacketHandler<Platform> {
-    public PlatfromHandler() {
+public class PlatformHandler extends IPacketHandler<Platform> {
+    public PlatformHandler() {
         super(Platform.class);
     }
 

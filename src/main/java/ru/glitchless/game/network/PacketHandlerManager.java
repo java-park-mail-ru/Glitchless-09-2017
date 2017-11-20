@@ -7,7 +7,7 @@ import ru.glitchless.game.data.packages.toclient.LightServerSnapMessage;
 import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicObject;
-import ru.glitchless.game.network.handlers.PlatfromHandler;
+import ru.glitchless.game.network.handlers.PlatformHandler;
 import ru.glitchless.server.utils.Pair;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class PacketHandlerManager {
 
     public PacketHandlerManager(HashMap<Integer, PhysicObject> idToObject) {
         this.idToObject = idToObject;
-        packetHandlers.put(Platform.class, new PlatfromHandler());
+        packetHandlers.put(Platform.class, new PlatformHandler());
     }
 
     public Pair<LightServerSnapMessage, ServerSnapMessage> processPacket(ProcessingCommit<ClientCommitMessage> commit) {
