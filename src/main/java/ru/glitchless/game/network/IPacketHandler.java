@@ -15,7 +15,10 @@ public abstract class IPacketHandler<T extends PhysicObject> {
         this.clazz = clazz;
     }
 
-    public Pair<LightServerSnapMessage, ServerSnapMessage> processPacket(PhysicObject gameObject, ClientCommitMessage clientCommitMessage, WebSocketUser user) {
+    public Pair<LightServerSnapMessage, ServerSnapMessage>
+    processPacket(PhysicObject gameObject,
+                  ClientCommitMessage clientCommitMessage,
+                  WebSocketUser user) {
         try {
             return handle(clazz.cast(gameObject), clientCommitMessage, user);
         } catch (ClassCastException e) {
@@ -23,5 +26,8 @@ public abstract class IPacketHandler<T extends PhysicObject> {
         }
     }
 
-    public abstract Pair<LightServerSnapMessage, ServerSnapMessage> handle(T gameObject, ClientCommitMessage clientCommitMessage, WebSocketUser user);
+    public abstract Pair<LightServerSnapMessage, ServerSnapMessage>
+    handle(T gameObject,
+           ClientCommitMessage clientCommitMessage,
+           WebSocketUser user);
 }

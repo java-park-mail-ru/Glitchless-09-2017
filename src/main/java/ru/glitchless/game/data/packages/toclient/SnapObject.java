@@ -37,8 +37,8 @@ public class SnapObject {
         return additionalInfo;
     }
 
-    public SnapObject setAdditionalInfo(Object additionalInfo) {
-        this.additionalInfo = additionalInfo;
+    public SnapObject setAdditionalInfo(Object addInfo) {
+        this.additionalInfo = addInfo;
         return this;
     }
 }

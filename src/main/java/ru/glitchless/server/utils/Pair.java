@@ -18,20 +18,53 @@ public class Pair<F, S> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
-        final Pair<?, ?> pair = (Pair<?, ?>) o;
+        final Pair<?, ?> pair = (Pair<?, ?>) obj;
 
-        return (first != null ? first.equals(pair.first) : pair.first == null)
-                && (second != null ? second.equals(pair.second) : pair.second == null);
+        if (first != null) {
+            if (!first.equals(pair.first)) {
+                return false;
+            }
+        } else {
+            if (pair.first != null) {
+                return false;
+            }
+        }
+
+        if (second != null) {
+            if (!second.equals(pair.second)) {
+                return false;
+            }
+        } else {
+            if (pair.second != null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = first != null ? first.hashCode() : 0;
-        result = Constants.MAGIC_NUMBER * result + (second != null ? second.hashCode() : 0);
+        int result = 0;
+
+        if (first != null) {
+            result = first.hashCode();
+        }
+
+        if (second != null) {
+            result = Constants.MAGIC_NUMBER * result + second.hashCode();
+        } else {
+            result = Constants.MAGIC_NUMBER * result;
+        }
+
         return result;
     }
 }

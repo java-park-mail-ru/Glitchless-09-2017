@@ -16,7 +16,10 @@ public class PlatformHandler extends IPacketHandler<Platform> {
     }
 
     @Override
-    public Pair<LightServerSnapMessage, ServerSnapMessage> handle(Platform gameObject, ClientCommitMessage clientCommitMessage, WebSocketUser user) {
+    public Pair<LightServerSnapMessage, ServerSnapMessage>
+    handle(Platform gameObject,
+           ClientCommitMessage clientCommitMessage,
+           WebSocketUser user) {
         if (!gameObject.valid(user, clientCommitMessage)) {
             throw new GameException("Permission denied");
         }

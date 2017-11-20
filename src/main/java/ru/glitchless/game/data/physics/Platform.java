@@ -1,7 +1,6 @@
 package ru.glitchless.game.data.physics;
 
 import ru.glitchless.game.data.Point;
-import ru.glitchless.game.data.exceptions.GameException;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.server.data.models.WebSocketUser;
@@ -32,7 +31,7 @@ public class Platform extends PhysicEntity {
     }
 
     public boolean valid(WebSocketUser user, ClientCommitMessage clientCommitMessage) {
-        if(!user.equals(platformUser)){
+        if (!user.equals(platformUser)) {
             return false;
         }
 
