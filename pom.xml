@@ -21,6 +21,7 @@
         <version>1.5.7.RELEASE</version>
         <relativePath/>
     </parent>
+
     <dependencies>
 
         <!-- Spring Boot -->
@@ -189,6 +190,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
             </plugin>
 
             <plugin>

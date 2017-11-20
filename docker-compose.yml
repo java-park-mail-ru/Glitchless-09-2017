@@ -1,5 +1,6 @@
 version: '3'
 
+
 services:
   db:
     image: postgres
@@ -25,3 +26,5 @@ services:
 
 volumes:
   maven-repo:
+    external:
+        name: glitchless-docker
