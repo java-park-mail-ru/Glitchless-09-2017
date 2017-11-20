@@ -2,6 +2,8 @@ package ru.glitchless.game.data.packages.toclient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.game.data.Point;
+import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
+import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.server.data.models.WebSocketMessage;
 
 public class LightServerSnapMessage extends WebSocketMessage {
@@ -10,9 +12,22 @@ public class LightServerSnapMessage extends WebSocketMessage {
     private int commitId;
     @JsonProperty("coord")
     private Point point;
+    private float rotation;
 
     public LightServerSnapMessage() {
         this.type = "ServerSnapMessage";
+    }
+
+    public LightServerSnapMessage(ClientCommitMessage commitMessage) {
+        this();
+        this.commitId = commitMessage.getCommitNumber();
+        this.objectId = commitMessage.getObjectId();
+    }
+
+    public LightServerSnapMessage(PhysicObject physicObject, ClientCommitMessage commitMessage) {
+        this(commitMessage);
+        this.point = physicObject.getPoint();
+        this.rotation = physicObject.getRotation();
     }
 
     public int getObjectId() {
@@ -45,5 +60,13 @@ public class LightServerSnapMessage extends WebSocketMessage {
 
     public void setCommitId(int commitId) {
         this.commitId = commitId;
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
     }
 }

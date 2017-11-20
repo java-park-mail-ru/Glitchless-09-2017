@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.server.utils.Constants;
 
 public class Point {
-    private float posX;
-    private float posY;
+    private final float posX;
+    private final float posY;
 
     public Point(@JsonProperty("x") float posX, @JsonProperty("y") float posY) {
         this.posX = posX;

@@ -13,12 +13,14 @@ import ru.glitchless.game.data.physics.Kirkle;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.game.data.physics.base.PhysicObject;
+import ru.glitchless.game.network.PacketHandlerManager;
 import ru.glitchless.game.physics.VectorToPointTick;
 import ru.glitchless.server.data.models.IGameMechanic;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.models.game.RoomUsers;
 import ru.glitchless.server.repositories.game.SendMessageService;
 import ru.glitchless.server.utils.Constants;
+import ru.glitchless.server.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,11 +43,13 @@ public class GameMechanic implements IGameMechanic {
     private HashMap<Integer, PhysicObject> idToObject = new HashMap<>();
     //Loops
     private VectorToPointTick vectorTick;
+    private PacketHandlerManager packetHandlerManager;
 
     public GameMechanic(RoomUsers roomUsers, SendMessageService sendMessageService) {
         this.roomUsers = roomUsers;
         this.sendMessageService = sendMessageService;
         this.vectorTick = new VectorToPointTick(physicEntities);
+        this.packetHandlerManager = new PacketHandlerManager(idToObject);
     }
 
     @Override
@@ -65,20 +69,11 @@ public class GameMechanic implements IGameMechanic {
 
     private void processMessage(ProcessingCommit<ClientCommitMessage> cmtMessage) {
         if (cmtMessage.getMessage().isValidForUser(cmtMessage.getUser())) {
-            final PhysicEntity physicEntity = (PhysicEntity) idToObject.get(cmtMessage.getMessage().getObjectId());
-            physicEntity.setSpeed(cmtMessage.getMessage().getVector());
+            final Pair<LightServerSnapMessage, ServerSnapMessage> snapMessagePair
+                    = packetHandlerManager.processPacket(cmtMessage);
 
-            final LightServerSnapMessage lightServerSnapMessage = new LightServerSnapMessage();
-            lightServerSnapMessage.setCommitId(cmtMessage.getMessage().getCommitNumber());
-            lightServerSnapMessage.setObjectId(cmtMessage.getMessage().getObjectId());
-            lightServerSnapMessage.setPoint(physicEntity.getPoint());
-            sendMessageService.sendMessage(lightServerSnapMessage, cmtMessage.getUser());
-
-            final ServerSnapMessage serverSnapMessage = new ServerSnapMessage();
-            serverSnapMessage.setObjectId(cmtMessage.getMessage().getObjectId());
-            serverSnapMessage.setPoint(physicEntity.getPoint());
-            serverSnapMessage.setVector(physicEntity.getSpeed());
-            sendMessageService.sendMessage(serverSnapMessage, roomUsers.getComanion(cmtMessage.getUser()));
+            sendMessageService.sendMessage(snapMessagePair.getFirst(), cmtMessage.getUser());
+            sendMessageService.sendMessage(snapMessagePair.getSecond(), roomUsers.getComanion(cmtMessage.getUser()));
         }
     }
 
@@ -95,23 +90,46 @@ public class GameMechanic implements IGameMechanic {
     public FullSwapScene firstSetting() {
         final FullSwapScene scene = new FullSwapScene();
 
-        final Platform platform1 = new Platform(new Point(0, 0), idCounter.getAndIncrement());
-        platform1.setRotation((float) Constants.GAME_START_PLATFORM1);
-        idToObject.put(platform1.getObjectId(), platform1);
-        scene.put("platform_1", new SnapObject(platform1));
-
-        final Platform platform2 = new Platform(new Point(0, 0), idCounter.getAndIncrement());
-        platform1.setRotation((float) Constants.GAME_START_PLATFORM1);
-        idToObject.put(platform2.getObjectId(), platform2);
-        scene.put("platform_2", new SnapObject(platform2));
-
         final Kirkle circle = new Kirkle(
                 new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
                         Constants.GAME_FIELD_SIZE.getPosY() / 2),
                 idCounter.getAndIncrement());
-        idToObject.put(circle.getObjectId(), circle);
-        scene.put("kirkle_1", new SnapObject(circle));
+        scene.put("kirkle", new SnapObject(circle));
+        putObject(circle);
+
+        final Platform platform1 = new Platform(new Point(0, 0),
+                idCounter.getAndIncrement(),
+                roomUsers.getFirstUser(),
+                circle);
+        platform1.setRotation(Constants.GAME_START_PLATFORM1);
+        scene.put("platform_1", new SnapObject(platform1)
+                .setAdditionalInfo(roomUsers
+                        .getFirstUser()
+                        .getUserModel()
+                        .getLogin()));
+        putObject(platform1);
+
+        final Platform platform2 = new Platform(new Point(0, 0),
+                idCounter.getAndIncrement(),
+                roomUsers.getSecondUser(),
+                circle);
+        platform2.setRotation(Constants.GAME_START_PLATFORM2);
+        scene.put("platform_2", new SnapObject(platform2)
+                .setAdditionalInfo(roomUsers
+                        .getSecondUser()
+                        .getUserModel()
+                        .getLogin()));
+        putObject(platform2);
+
 
         return scene; // Init all game element
+    }
+
+    private void putObject(PhysicObject physicObject) {
+        idToObject.put(physicObject.getObjectId(), physicObject);
+
+        if (physicObject instanceof PhysicEntity) {
+            physicEntities.add((PhysicEntity) physicObject);
+        }
     }
 }
