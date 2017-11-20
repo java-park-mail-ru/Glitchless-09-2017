@@ -8,6 +8,7 @@ import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.game.network.handlers.PlatformHandler;
+import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.utils.Pair;
 
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class PacketHandlerManager {
         packetHandlers.put(Platform.class, new PlatformHandler());
     }
 
-    public Pair<LightServerSnapMessage, ServerSnapMessage> processPacket(ProcessingCommit<ClientCommitMessage> commit) {
+    public Pair<LightServerSnapMessage, ServerSnapMessage> processPacket(ProcessingCommit<ClientCommitMessage> commit, WebSocketUser user) {
         final PhysicObject object = idToObject.get(commit.getMessage().getObjectId());
         if (object == null) {
             throw new GameException("Not found object with id: " + commit.getMessage().getObjectId());
@@ -32,6 +33,6 @@ public class PacketHandlerManager {
             throw new GameException("Not found handlers for " + object.getClass());
         }
 
-        return handler.processPacket(object, commit.getMessage());
+        return handler.processPacket(object, commit.getMessage(), user);
     }
 }

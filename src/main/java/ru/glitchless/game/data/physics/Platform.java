@@ -1,6 +1,8 @@
 package ru.glitchless.game.data.physics;
 
 import ru.glitchless.game.data.Point;
+import ru.glitchless.game.data.exceptions.GameException;
+import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.utils.Constants;
@@ -27,5 +29,14 @@ public class Platform extends PhysicEntity {
                 .getPoint()
                 .plus(new Point(deltaX, deltaY))
         );
+    }
+
+    public boolean valid(WebSocketUser user, ClientCommitMessage clientCommitMessage) {
+        if(!user.equals(platformUser)){
+            return false;
+        }
+
+        // TODO check speed
+        return true;
     }
 }

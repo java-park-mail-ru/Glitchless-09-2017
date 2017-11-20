@@ -39,8 +39,4 @@ public class ClientCommitMessage extends WebSocketMessage {
     public void setVector(Vector vector) {
         this.vector = vector;
     }
-
-    public boolean isValidForUser(WebSocketUser user) {
-        return true;
-    }
 }

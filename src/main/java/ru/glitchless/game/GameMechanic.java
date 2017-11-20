@@ -68,13 +68,11 @@ public class GameMechanic implements IGameMechanic {
     }
 
     private void processMessage(ProcessingCommit<ClientCommitMessage> cmtMessage) {
-        if (cmtMessage.getMessage().isValidForUser(cmtMessage.getUser())) {
-            final Pair<LightServerSnapMessage, ServerSnapMessage> snapMessagePair
-                    = packetHandlerManager.processPacket(cmtMessage);
+        final Pair<LightServerSnapMessage, ServerSnapMessage> snapMessagePair
+                = packetHandlerManager.processPacket(cmtMessage, cmtMessage.getUser());
 
-            sendMessageService.sendMessage(snapMessagePair.getFirst(), cmtMessage.getUser());
-            sendMessageService.sendMessage(snapMessagePair.getSecond(), roomUsers.getComanion(cmtMessage.getUser()));
-        }
+        sendMessageService.sendMessage(snapMessagePair.getFirst(), cmtMessage.getUser());
+        sendMessageService.sendMessage(snapMessagePair.getSecond(), roomUsers.getComanion(cmtMessage.getUser()));
     }
 
     @Override
