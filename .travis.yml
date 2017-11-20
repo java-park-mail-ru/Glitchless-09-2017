@@ -5,7 +5,7 @@ services:
 
 script:
   - docker-compose up --abort-on-container-exit
-  - tree .
+  - ls
 
 deploy:
   skip_cleanup: true
