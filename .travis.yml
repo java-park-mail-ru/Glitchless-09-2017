@@ -8,8 +8,8 @@ addons:
 
 script:
 - docker-compose up --abort-on-container-exit
-- mv target/glitchless-backend-*.jar target/glitchless-backend.jar
-- ls target
+- mv target/glitchless-backend-*.jar glitchless-backend.jar
+
 
 deploy:
   - provider: heroku
@@ -22,7 +22,7 @@ deploy:
       branch: dev
   - provider: script
     skip_cleanup: true
-    script: scp ./target/glitchless-backend.jar baeldung@145.239.82.63:/nginx/api/ && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
+    script: scp $TRAVIS_BUILD_DIR/glitchless-backend.jar baeldung@145.239.82.63:/nginx/api/ && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
     on:
       branch: dev
 
