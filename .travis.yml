@@ -5,8 +5,7 @@ services:
 
 script:
   - docker-compose up --abort-on-container-exit
-  - docker cp artifacts:./* .
-  - ls
+  - ls target
 
 deploy:
   skip_cleanup: true

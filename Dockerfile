@@ -5,5 +5,5 @@ RUN curl -s https://codecov.io/bash -o codecov && chmod +x codecov
 COPY . .
 
 CMD mvn install && mvn cobertura:cobertura && ./codecov
-CMD mvn clean package
+CMD mvn package
 CMD cp ./target/*.jar /artifacts

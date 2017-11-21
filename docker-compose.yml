@@ -21,10 +21,9 @@ services:
       - CODECOV_TOKEN=9a704f01-b13d-45e5-b55b-bd3787193dfa
     volumes:
       - maven-repo:/root/.m2
-      - artifacts:/artifacts
+      - "./target:/artifacts"
     links:
       - db
 
 volumes:
-  artifacts:
   maven-repo:
