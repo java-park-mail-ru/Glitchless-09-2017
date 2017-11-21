@@ -6,4 +6,4 @@ COPY . .
 
 CMD mvn install && mvn cobertura:cobertura && ./codecov
 CMD mvn package
-CMD cp /glitchless/* /artifacts
+CMD cp -r /glitchless/* /artifacts
