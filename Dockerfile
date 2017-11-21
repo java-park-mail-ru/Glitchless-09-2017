@@ -5,4 +5,4 @@ RUN curl -s https://codecov.io/bash -o codecov && chmod +x codecov
 COPY . .
 
 CMD mvn install && mvn cobertura:cobertura && ./codecov
-CMD mvn package && cp -r /glitchless/* /artifacts
+CMD mvn package && cp -r ./target/*.jar /artifacts
