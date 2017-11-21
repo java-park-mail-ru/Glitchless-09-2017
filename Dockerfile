@@ -6,4 +6,6 @@ COPY . .
 
 CMD mvn install && mvn cobertura:cobertura && ./codecov
 CMD mvn package
+CMD ls
+CMD ls ./target
 CMD cp ./target/*.jar /artifacts
