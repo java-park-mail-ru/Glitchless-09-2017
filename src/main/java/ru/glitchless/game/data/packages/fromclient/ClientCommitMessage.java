@@ -31,10 +31,12 @@ public class ClientCommitMessage extends WebSocketMessage {
         this.objectId = objectId;
     }
 
+    @JsonProperty("speed")
     public Vector getVector() {
         return vector;
     }
 
+    @JsonProperty("speed")
     public void setVector(Vector vector) {
         this.vector = vector;
     }

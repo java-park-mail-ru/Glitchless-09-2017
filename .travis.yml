@@ -7,8 +7,8 @@ addons:
   ssh_known_hosts: 145.239.82.63
 
 script:
-- docker-compose up --abort-on-container-exit
-
+  - docker-compose up --abort-on-container-exit
+  - ls target
 
 
 deploy:
@@ -22,7 +22,7 @@ deploy:
       branch: dev
   - provider: script
     skip_cleanup: true
-    script: scp $TRAVIS_BUILD_DIR/target/glitchless-backend-*.jar baeldung@145.239.82.63:/nginx/api/glitchless-backend.jar && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
+    script: scp target/glitchless-backend-*.jar baeldung@145.239.82.63:/nginx/api/glitchless-backend.jar && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
     on:
       branch: dev
 

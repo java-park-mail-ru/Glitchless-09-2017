@@ -30,7 +30,6 @@ public class SocketMessageHandlerManager {
     }
 
     public void handle(@NotNull WebSocketMessage message, @NotNull WebSocketUser forUser) throws HandleException {
-        message.setTimestamp(clock.millis());
         final SocketMessageHandler<?> messageHandler = handlers.get(message.getClass());
         if (messageHandler == null) {
             throw new HandleException("No handlers for message of " + message.getClass().getName() + " type");

@@ -10,7 +10,7 @@ import ru.glitchless.server.data.models.WebSocketMessage;
 public class ServerSnapMessage extends WebSocketMessage {
     private String type;
     private int objectId;
-    @JsonProperty("diff")
+    @JsonProperty("speed")
     private Vector vector;
     private float rotationSpeed;
     @JsonProperty("coord")

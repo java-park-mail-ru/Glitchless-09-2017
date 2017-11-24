@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.server.utils.Constants;
 
 public class Vector {
+    @JsonProperty("x")
     private final float diffX;
+    @JsonProperty("y")
     private final float diffY;
 
     public Vector(@JsonProperty("x") float diffX, @JsonProperty("y") float diffY) {

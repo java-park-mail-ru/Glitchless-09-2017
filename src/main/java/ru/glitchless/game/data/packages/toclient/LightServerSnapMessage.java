@@ -15,7 +15,7 @@ public class LightServerSnapMessage extends WebSocketMessage {
     private float rotation;
 
     public LightServerSnapMessage() {
-        this.type = "ServerSnapMessage";
+        this.type = "LightServerSnapMessage";
     }
 
     public LightServerSnapMessage(ClientCommitMessage commitMessage) {
