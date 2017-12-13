@@ -4,20 +4,20 @@ import org.jetbrains.annotations.Nullable;
 import org.junit.Before;
 import org.junit.Test;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.newserver.interractor.auth.UserInterractor;
+import ru.glitchless.newserver.interactor.auth.UserInteractor;
 import ru.glitchless.server.data.throwables.InvalidLoginOrPassword;
 
 import static org.junit.Assert.assertTrue;
 
 public class UserValidatorTest {
     private UserModel user;
-    private UserInterractor validator;
+    private UserInteractor validator;
 
     @Before
     public void setup() {
         user = new UserModel("lionzxy", "123456789");
         user.setEmail("lol@lol.ru");
-        validator = new UserInterractor(null);
+        validator = new UserInteractor(null);
     }
 
     @Test

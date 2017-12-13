@@ -1,4 +1,4 @@
-package ru.glitchless.newserver.interractor.auth;
+package ru.glitchless.newserver.interactor.auth;
 
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.stereotype.Component;
@@ -10,11 +10,11 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 @Component
-public class UserInterractor {
+public class UserInteractor {
     private static final String LOGIN_PATTERN = "([A-Za-z0-9])+";
     private final UserRepository userRepository;
 
-    public UserInterractor(UserRepository userRepository) {
+    public UserInteractor(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

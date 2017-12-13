@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import ru.glitchless.newserver.data.model.UserModel
 import ru.glitchless.newserver.data.stores.UserDao
-import ru.glitchless.newserver.interractor.auth.UserInterractor
+import ru.glitchless.newserver.interactor.auth.UserInteractor
 
 
 @SpringBootTest
@@ -30,7 +30,7 @@ open class UserControllerTest {
     @Autowired
     private lateinit var userDao: UserDao
     @Autowired
-    private lateinit var userInterractor: UserInterractor
+    private lateinit var userInteractor: UserInteractor
     private lateinit var existingUser: UserModel
     private var session: MockHttpSession? = null;
     val basePath: String = "/api"
@@ -40,7 +40,7 @@ open class UserControllerTest {
         userDao.clearAllTable()
         existingUser = UserModel("lionzxy", "123456789")
         existingUser.setEmail("nikita@kulikof.ru")
-        userInterractor.registerUser(existingUser)
+        userInteractor.registerUser(existingUser)
     }
 
     @Test

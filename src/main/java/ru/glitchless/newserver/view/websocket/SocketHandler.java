@@ -14,7 +14,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.glitchless.game.data.packages.toclient.WebSocketMessageError;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.newserver.interractor.auth.UserInterractor;
+import ru.glitchless.newserver.interactor.auth.UserInteractor;
 import ru.glitchless.server.data.models.WebSocketMessage;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.throwables.HandleException;
@@ -30,21 +30,21 @@ public class SocketHandler extends TextWebSocketHandler {
     private static final CloseStatus ACCESS_DENIED = new CloseStatus(4500, "Not logged in. Access denied");
     private SocketMessageHandlerManager handlerManager;
     private ObjectMapper objectMapper;
-    private UserInterractor userInterractor;
+    private UserInteractor userInteractor;
 
     public SocketHandler(@NotNull SocketMessageHandlerManager manager,
                          @NotNull ResourceFactory resourceFactory,
-                         @NotNull UserInterractor service,
+                         @NotNull UserInteractor service,
                          ObjectMapper objectMapper) {
         this.handlerManager = manager;
         this.objectMapper = objectMapper;
-        this.userInterractor = service;
+        this.userInteractor = service;
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         final UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
-        if (user == null || !userInterractor.isContains(user)) {
+        if (user == null || !userInteractor.isContains(user)) {
             LOGGER.warn("User requested websocket is not registred or not logged in. Openning websocket session is denied.");
             closeSessionSilently(session, ACCESS_DENIED);
             return;

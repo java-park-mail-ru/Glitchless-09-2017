@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.glitchless.newserver.data.model.Message;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.newserver.interractor.auth.UserInterractor;
+import ru.glitchless.newserver.interactor.auth.UserInteractor;
 import ru.glitchless.server.data.throwables.InvalidLoginOrPassword;
 import ru.glitchless.server.data.throwables.NeedAuthorization;
 import ru.glitchless.newserver.utils.Constants;
@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class UserController {
-    private final UserInterractor userInterractor;
+    private final UserInteractor userInteractor;
 
-    public UserController(UserInterractor userInterractor) {
-        this.userInterractor = userInterractor;
+    public UserController(UserInteractor userInteractor) {
+        this.userInteractor = userInteractor;
     }
 
     @PostMapping("/api/signup")
@@ -28,7 +28,7 @@ public class UserController {
             throw new InvalidLoginOrPassword("Empty field: password or login");
         }
 
-        final UserModel model = userInterractor.registerUser(userModel);
+        final UserModel model = userInteractor.registerUser(userModel);
 
         httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
         return ResponseEntity.ok(new Message<>(true, model));
@@ -40,7 +40,7 @@ public class UserController {
             throw new InvalidLoginOrPassword("Empty field: password or login");
         }
 
-        final UserModel model = userInterractor.authUser(userModel);
+        final UserModel model = userInteractor.authUser(userModel);
 
         httpSession.setAttribute(Constants.SESSION_EXTRA_USER, model);
         return ResponseEntity.ok(new Message<>(true, model));
@@ -55,7 +55,7 @@ public class UserController {
 
     @PostMapping("/api/user/change")
     public ResponseEntity<Message> changeUser(@RequestBody(required = false) UserModel user) {
-        final UserModel userModel = userInterractor.changeUser(user);
+        final UserModel userModel = userInteractor.changeUser(user);
         return ResponseEntity.ok(new Message<>(true, userModel));
     }
 
