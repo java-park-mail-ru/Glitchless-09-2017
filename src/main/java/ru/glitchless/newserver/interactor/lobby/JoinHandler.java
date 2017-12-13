@@ -36,9 +36,8 @@ public class JoinHandler extends SocketMessageHandler<WantPlayMessage> {
         if (state == null) {
             state = templateWaitState;
             playerRepository.putPlayerState(forUser, state);
-            sendMessageService.sendMessageSync(state.getMessageForState(), forUser);
         }
 
-
+        state.processPacket(message, forUser);
     }
 }

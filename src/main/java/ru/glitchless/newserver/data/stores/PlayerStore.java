@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class PlayerStore {
-    private final Map<WebSocketUser, IPlayerState> playerStateMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<WebSocketUser, IPlayerState> playerStateMap = new ConcurrentHashMap<>();
 
     public void putPlayer(@NotNull WebSocketUser webSocketUser, @NotNull IPlayerState state) {
         playerStateMap.put(webSocketUser, state);

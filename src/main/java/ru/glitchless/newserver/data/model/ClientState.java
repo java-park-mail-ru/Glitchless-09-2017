@@ -2,7 +2,7 @@ package ru.glitchless.newserver.data.model;
 
 public enum ClientState {
     WAITING_USER(2),
-    WAITING_ROOM(3),
+    PREPARING_RESOURCE(3),
     READY(10);
 
     private int id;
