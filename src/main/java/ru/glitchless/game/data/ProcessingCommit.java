@@ -1,7 +1,7 @@
 package ru.glitchless.game.data;
 
-import ru.glitchless.server.data.models.WebSocketMessage;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 
 public class ProcessingCommit<T extends WebSocketMessage> {
     private T message;

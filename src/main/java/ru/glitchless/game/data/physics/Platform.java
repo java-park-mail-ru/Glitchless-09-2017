@@ -3,7 +3,7 @@ package ru.glitchless.game.data.physics;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 
 public class Platform extends PhysicEntity {

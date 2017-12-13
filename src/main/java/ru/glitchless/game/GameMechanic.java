@@ -15,12 +15,12 @@ import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.game.network.PacketHandlerManager;
 import ru.glitchless.game.physics.VectorToPointTick;
-import ru.glitchless.server.data.models.IGameMechanic;
-import ru.glitchless.server.data.models.WebSocketUser;
-import ru.glitchless.server.data.models.game.RoomUsers;
-import ru.glitchless.server.repositories.game.SendMessageService;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 import ru.glitchless.newserver.utils.Pair;
+import ru.glitchless.newserver.utils.SendMessageService;
+import ru.glitchless.server.data.models.IGameMechanic;
+import ru.glitchless.server.data.models.game.RoomUsers;
 
 import java.util.ArrayList;
 import java.util.HashMap;

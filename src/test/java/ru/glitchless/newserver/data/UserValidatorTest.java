@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.glitchless.newserver.data.model.UserModel;
 import ru.glitchless.newserver.interactor.auth.UserInteractor;
-import ru.glitchless.server.data.throwables.InvalidLoginOrPassword;
+import ru.glitchless.newserver.data.throwables.InvalidLoginOrPassword;
 
 import static org.junit.Assert.assertTrue;
 

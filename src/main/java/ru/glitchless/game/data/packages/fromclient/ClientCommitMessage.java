@@ -2,7 +2,7 @@ package ru.glitchless.game.data.packages.fromclient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.game.data.Vector;
-import ru.glitchless.server.data.models.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class ClientCommitMessage extends WebSocketMessage {
     private String type;

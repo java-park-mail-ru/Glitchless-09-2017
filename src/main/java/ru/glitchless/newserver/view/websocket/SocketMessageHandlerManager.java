@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
-import ru.glitchless.newserver.view.websocket.handlers.GameCommitHandler;
-import ru.glitchless.newserver.view.websocket.handlers.JoinHandler;
-import ru.glitchless.server.data.models.WebSocketMessage;
-import ru.glitchless.server.data.models.WebSocketUser;
-import ru.glitchless.server.data.throwables.HandleException;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketUser;
+import ru.glitchless.newserver.interactor.game.GameCommitHandler;
+import ru.glitchless.newserver.interactor.lobby.JoinHandler;
+import ru.glitchless.newserver.data.throwables.HandleException;
 
 import java.time.Clock;
 import java.util.HashMap;

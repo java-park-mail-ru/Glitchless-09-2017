@@ -1,6 +1,7 @@
 package ru.glitchless.server.data.models;
 
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 
 public interface IGameMechanic {
 

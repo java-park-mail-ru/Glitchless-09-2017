@@ -7,7 +7,7 @@ import ru.glitchless.game.data.packages.toclient.LightServerSnapMessage;
 import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.network.IPacketHandler;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Pair;
 
 public class PlatformHandler extends IPacketHandler<Platform> {

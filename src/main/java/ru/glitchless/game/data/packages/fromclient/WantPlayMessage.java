@@ -1,7 +1,7 @@
 package ru.glitchless.game.data.packages.fromclient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.glitchless.server.data.models.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class WantPlayMessage extends WebSocketMessage {
     private String type;

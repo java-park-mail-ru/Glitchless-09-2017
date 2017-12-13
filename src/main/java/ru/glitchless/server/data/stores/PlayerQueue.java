@@ -3,9 +3,9 @@ package ru.glitchless.server.data.stores;
 import com.google.common.collect.Sets;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.server.data.models.game.RoomUsers;
-import ru.glitchless.server.data.throwables.HandleException;
+import ru.glitchless.newserver.data.throwables.HandleException;
 
 import java.util.Set;
 

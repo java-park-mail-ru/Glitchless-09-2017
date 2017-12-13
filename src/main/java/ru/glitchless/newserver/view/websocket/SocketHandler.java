@@ -14,12 +14,12 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 import ru.glitchless.game.data.packages.toclient.WebSocketMessageError;
 import ru.glitchless.newserver.data.model.UserModel;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.interactor.auth.UserInteractor;
-import ru.glitchless.server.data.models.WebSocketMessage;
-import ru.glitchless.server.data.models.WebSocketUser;
-import ru.glitchless.server.data.throwables.HandleException;
-import ru.glitchless.newserver.utils.ResourceFactory;
 import ru.glitchless.newserver.utils.Constants;
+import ru.glitchless.newserver.utils.ResourceFactory;
+import ru.glitchless.newserver.data.throwables.HandleException;
 
 import java.io.IOException;
 

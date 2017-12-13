@@ -3,8 +3,8 @@ package ru.glitchless.server.data.models.game;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.glitchless.server.data.models.IGameMechanic;
 import ru.glitchless.newserver.utils.Constants;
+import ru.glitchless.server.data.models.IGameMechanic;
 
 import java.time.Clock;
 import java.util.ArrayList;

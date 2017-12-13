@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.server.data.throwables.UserAlreadyExist;
-import ru.glitchless.server.data.throwables.UserNotFound;
+import ru.glitchless.newserver.data.throwables.UserAlreadyExist;
+import ru.glitchless.newserver.data.throwables.UserNotFound;
 
 @Service
 @Transactional

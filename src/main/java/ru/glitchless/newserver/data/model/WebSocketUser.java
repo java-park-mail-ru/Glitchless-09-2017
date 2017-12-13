@@ -1,12 +1,12 @@
-package ru.glitchless.server.data.models;
+package ru.glitchless.newserver.data.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ru.glitchless.newserver.data.model.UserModel;
 import ru.glitchless.newserver.utils.Constants;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class WebSocketUser {
     private WebSocketSession session;
@@ -28,7 +28,8 @@ public class WebSocketUser {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof WebSocketUser
-                && ((WebSocketUser) obj).userModel.equals(userModel);
+                && ((WebSocketUser) obj).userModel.equals(userModel)
+                && Objects.equals(session.getId(), ((WebSocketUser) obj).session.getId());
     }
 
     @Override

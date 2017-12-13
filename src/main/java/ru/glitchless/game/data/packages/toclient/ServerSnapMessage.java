@@ -5,7 +5,7 @@ import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.Vector;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.game.data.physics.base.PhysicObject;
-import ru.glitchless.server.data.models.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class ServerSnapMessage extends WebSocketMessage {
     private String type;

@@ -1,10 +1,10 @@
 package ru.glitchless.server.data.stores;
 
 import org.springframework.stereotype.Service;
+import ru.glitchless.newserver.utils.Constants;
 import ru.glitchless.server.data.models.game.GameRoom;
 import ru.glitchless.server.data.models.game.IWaitAllocateResource;
-import ru.glitchless.server.data.throwables.ServerIsFull;
-import ru.glitchless.newserver.utils.Constants;
+import ru.glitchless.newserver.data.throwables.ServerIsFull;
 
 import java.util.List;
 import java.util.Queue;

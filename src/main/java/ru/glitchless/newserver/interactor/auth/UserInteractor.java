@@ -2,9 +2,9 @@ package ru.glitchless.newserver.interactor.auth;
 
 import com.google.common.annotations.VisibleForTesting;
 import org.springframework.stereotype.Component;
-import ru.glitchless.newserver.repository.auth.UserRepository;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.server.data.throwables.InvalidLoginOrPassword;
+import ru.glitchless.newserver.repository.auth.UserRepository;
+import ru.glitchless.newserver.data.throwables.InvalidLoginOrPassword;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;

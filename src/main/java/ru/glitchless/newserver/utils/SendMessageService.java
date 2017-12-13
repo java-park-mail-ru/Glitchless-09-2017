@@ -1,4 +1,4 @@
-package ru.glitchless.server.repositories.game;
+package ru.glitchless.newserver.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import ru.glitchless.game.data.ProcessingCommit;
-import ru.glitchless.server.data.models.WebSocketMessage;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
@@ -46,6 +46,27 @@ public class SendMessageService implements Runnable {
         return sendMessage(new ProcessingCommit<>(message, user));
     }
 
+    public boolean sendMessageSync(WebSocketMessage message, WebSocketUser user) {
+        return sendMessageSync(new ProcessingCommit<>(message, user));
+    }
+
+    public boolean sendMessageSync(ProcessingCommit<WebSocketMessage> commit) {
+        if (!commit.getUser().getSession().isOpen()) {
+            return false;
+        }
+
+        try {
+            commit.getUser().getSession().sendMessage(
+                    new TextMessage(objectMapper.writeValueAsString(commit.getMessage())));
+        } catch (IOException e) {
+            LOGGER.error("Error while sending message. Socket is open: "
+                    + commit.getUser().getSession().isOpen(), e);
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     @SuppressWarnings("OverlyBroadCatchBlock")
     public void run() {
@@ -53,14 +74,7 @@ public class SendMessageService implements Runnable {
             try {
                 ProcessingCommit<WebSocketMessage> commit;
                 while ((commit = waitSendingCommit.take()) != null) {
-                    final WebSocketMessage message = commit.getMessage();
-                    try {
-                        commit.getUser().getSession().sendMessage(
-                                new TextMessage(objectMapper.writeValueAsString(message)));
-                    } catch (IOException e) {
-                        LOGGER.error("Error while sending message. Socket is open: "
-                                + commit.getUser().getSession().isOpen(), e);
-                    }
+                    sendMessageSync(commit);
                 }
             } catch (Exception e) {
                 LOGGER.error("Error in worker loop", e);

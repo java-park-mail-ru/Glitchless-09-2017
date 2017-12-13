@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.physics.base.PhysicObject;
-import ru.glitchless.server.data.models.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class LightServerSnapMessage extends WebSocketMessage {
     private String type;

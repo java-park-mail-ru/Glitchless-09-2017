@@ -1,4 +1,4 @@
-package ru.glitchless.server.data.models;
+package ru.glitchless.newserver.data.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

@@ -1,8 +1,7 @@
-package ru.glitchless.game.data.packages.fromclient;
+package ru.glitchless.newserver.data.model;
 
 public enum ClientState {
-    INIT(1),
-    WAITING_PLAYER(2),
+    WAITING_USER(2),
     WAITING_ROOM(3),
     READY(10);
 

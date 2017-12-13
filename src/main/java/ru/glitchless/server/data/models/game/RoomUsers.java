@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.glitchless.server.data.models.WebSocketMessage;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketMessage;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 
 import java.io.IOException;
 

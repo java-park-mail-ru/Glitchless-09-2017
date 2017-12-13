@@ -7,8 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.handler.PerConnectionWebSocketHandler;
-import ru.glitchless.newserver.view.websocket.SocketHandler;
 import ru.glitchless.newserver.utils.MyWebMvcConfigurer;
+import ru.glitchless.newserver.view.websocket.SocketHandler;
 
 @Configuration
 public class ApplicationConfiguration {

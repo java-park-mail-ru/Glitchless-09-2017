@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.glitchless.newserver.data.model.UserModel;
 import ru.glitchless.newserver.data.stores.UserDao;
-import ru.glitchless.server.data.throwables.UserAlreadyExist;
+import ru.glitchless.newserver.data.throwables.UserAlreadyExist;
 
 import java.util.Random;
 

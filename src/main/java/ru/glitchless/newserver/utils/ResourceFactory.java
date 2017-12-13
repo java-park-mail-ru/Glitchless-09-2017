@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import org.springframework.stereotype.Service;
 import ru.glitchless.newserver.data.stores.Resource;
-import ru.glitchless.server.data.throwables.ResourceException;
+import ru.glitchless.newserver.data.throwables.ResourceException;
 
 import java.io.IOException;
 

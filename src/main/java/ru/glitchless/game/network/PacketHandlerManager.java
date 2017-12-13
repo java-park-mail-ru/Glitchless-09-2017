@@ -8,7 +8,7 @@ import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.game.network.handlers.PlatformHandler;
-import ru.glitchless.server.data.models.WebSocketUser;
+import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Pair;
 
 import java.util.HashMap;
