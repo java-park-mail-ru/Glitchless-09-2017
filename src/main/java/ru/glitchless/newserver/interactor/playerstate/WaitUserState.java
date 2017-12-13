@@ -29,8 +29,8 @@ public class WaitUserState implements IPlayerState {
             return;
         }
 
-        playerRepository.putPlayerState(forUser, new PreparingResourceState(secondUser));
-        playerRepository.putPlayerState(secondUser, new PreparingResourceState(forUser));
+        playerRepository.putPlayerState(forUser, new PreparingResourceState(playerRepository, secondUser));
+        playerRepository.putPlayerState(secondUser, new PreparingResourceState(playerRepository, forUser));
     }
 
     @Override
