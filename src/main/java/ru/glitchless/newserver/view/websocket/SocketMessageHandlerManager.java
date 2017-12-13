@@ -8,9 +8,9 @@ import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 import ru.glitchless.newserver.data.model.WebSocketUser;
+import ru.glitchless.newserver.data.throwables.HandleException;
 import ru.glitchless.newserver.interactor.game.GameCommitHandler;
 import ru.glitchless.newserver.interactor.lobby.JoinHandler;
-import ru.glitchless.newserver.data.throwables.HandleException;
 
 import java.time.Clock;
 import java.util.HashMap;

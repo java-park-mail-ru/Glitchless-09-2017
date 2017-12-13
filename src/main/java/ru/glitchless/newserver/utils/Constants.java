@@ -2,6 +2,8 @@ package ru.glitchless.newserver.utils;
 
 import ru.glitchless.game.data.Point;
 
+import java.util.concurrent.TimeUnit;
+
 public class Constants {
     public static final String[] TRUSTED_URLS = new String[]{
             "https://glitchless.herokuapp.com",
@@ -23,4 +25,5 @@ public class Constants {
     public static final float GAME_RADIUS_PLATFORM_PADDING = 105f / 4;
 
     public static final int TPS = 20;
+    public static final long STEP_TIME = TimeUnit.SECONDS.toMillis(1) / Constants.TPS;
 }

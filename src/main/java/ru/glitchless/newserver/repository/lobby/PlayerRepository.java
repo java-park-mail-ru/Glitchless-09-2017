@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.data.stores.PlayerStore;
 import ru.glitchless.newserver.interactor.playerstate.IPlayerState;
-import ru.glitchless.newserver.interactor.playerstate.WaitUserState;
 import ru.glitchless.newserver.utils.SendMessageService;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class PlayerRepository {
 
     @Nullable
     public WebSocketUser getPlayerWithState(@Nullable WebSocketUser currentUser, IPlayerState state) {
-        // TODO: BUG. Race condition.
+        // TODO BUG. Race condition.
         final List<WebSocketUser> users = playerStore.getPlayersByState(state);
         users.remove(currentUser);
 

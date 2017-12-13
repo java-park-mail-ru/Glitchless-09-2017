@@ -2,20 +2,32 @@ package ru.glitchless.newserver.interactor.playerstate;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.glitchless.game.GameMechanic;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
+import ru.glitchless.game.data.packages.toclient.FullSwapScene;
 import ru.glitchless.game.data.packages.toclient.GameInitState;
 import ru.glitchless.newserver.data.model.ClientState;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 import ru.glitchless.newserver.data.model.WebSocketUser;
+import ru.glitchless.newserver.data.stores.GameStore;
+import ru.glitchless.newserver.repository.game.GameRepository;
 import ru.glitchless.newserver.repository.lobby.PlayerRepository;
+import ru.glitchless.newserver.utils.SendMessageService;
 
 public class PreparingResourceState implements IPlayerState {
     private final WebSocketUser secondUser;
     private final PlayerRepository playerRepository;
+    private final GameRepository gameRepository;
+    private final SendMessageService sendMessageService;
 
-    public PreparingResourceState(PlayerRepository playerRepository, WebSocketUser secondUser) {
+    public PreparingResourceState(PlayerRepository playerRepository,
+                                  WebSocketUser secondUser,
+                                  GameRepository gameRepository,
+                                  SendMessageService sendMessageService) {
         this.secondUser = secondUser;
         this.playerRepository = playerRepository;
+        this.gameRepository = gameRepository;
+        this.sendMessageService = sendMessageService;
     }
 
     @Override
@@ -35,7 +47,19 @@ public class PreparingResourceState implements IPlayerState {
         final IPlayerState enemyState = playerRepository.getPlayerState(secondUser);
 
         if (enemyState instanceof WaitingEnemyState) {
-            //TODO ЗАПУСКАЕМ ИГРУ
+            final IPlayerState state;
+            final GameStore gameStore = this.gameRepository.initNewGame(forUser, secondUser);
+            state = new PlayingState(gameStore, sendMessageService);
+
+            playerRepository.putPlayerState(forUser, state);
+            playerRepository.putPlayerState(secondUser, state);
+
+            if (gameStore.getGameMechanic() instanceof GameMechanic) {
+                final FullSwapScene fullSwapScene = ((GameMechanic) gameStore.getGameMechanic()).firstSetting();
+
+                sendMessageService.sendMessage(fullSwapScene, forUser);
+                sendMessageService.sendMessage(fullSwapScene, secondUser);
+            }
         }
     }
 

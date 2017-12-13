@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.glitchless.newserver.data.model.Message;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.newserver.interactor.auth.UserInteractor;
-import ru.glitchless.newserver.utils.Constants;
 import ru.glitchless.newserver.data.throwables.InvalidLoginOrPassword;
 import ru.glitchless.newserver.data.throwables.NeedAuthorization;
+import ru.glitchless.newserver.interactor.auth.UserInteractor;
+import ru.glitchless.newserver.utils.Constants;
 
 import javax.servlet.http.HttpSession;
 
