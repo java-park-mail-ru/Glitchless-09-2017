@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.glitchless.server.data.models.game.GameRoom;
 import ru.glitchless.server.data.models.game.IWaitAllocateResource;
 import ru.glitchless.server.data.throwables.ServerIsFull;
-import ru.glitchless.server.utils.Constants;
+import ru.glitchless.newserver.utils.Constants;
 
 import java.util.List;
 import java.util.Queue;

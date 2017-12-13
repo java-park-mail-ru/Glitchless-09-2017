@@ -19,8 +19,8 @@ import ru.glitchless.server.data.models.IGameMechanic;
 import ru.glitchless.server.data.models.WebSocketUser;
 import ru.glitchless.server.data.models.game.RoomUsers;
 import ru.glitchless.server.repositories.game.SendMessageService;
-import ru.glitchless.server.utils.Constants;
-import ru.glitchless.server.utils.Pair;
+import ru.glitchless.newserver.utils.Constants;
+import ru.glitchless.newserver.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -3,7 +3,8 @@ package ru.glitchless.server.data.models;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import ru.glitchless.server.utils.Constants;
+import ru.glitchless.newserver.data.model.UserModel;
+import ru.glitchless.newserver.utils.Constants;
 
 import java.io.IOException;
 

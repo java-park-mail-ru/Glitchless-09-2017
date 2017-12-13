@@ -2,7 +2,7 @@ package ru.glitchless.game.data.physics;
 
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.physics.base.PhysicObject;
-import ru.glitchless.server.utils.Constants;
+import ru.glitchless.newserver.utils.Constants;
 
 public class Kirkle extends PhysicObject {
     private int radius = Constants.CIRCLE_RADIUS;

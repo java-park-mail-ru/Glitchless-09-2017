@@ -2,7 +2,7 @@ package ru.glitchless.game.physics;
 
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
-import ru.glitchless.server.utils.Constants;
+import ru.glitchless.newserver.utils.Constants;
 
 import java.util.List;
 

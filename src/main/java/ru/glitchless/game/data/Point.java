@@ -1,7 +1,7 @@
 package ru.glitchless.game.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.glitchless.server.utils.Constants;
+import ru.glitchless.newserver.utils.Constants;
 
 public class Point {
     private final float posX;

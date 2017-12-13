@@ -6,7 +6,7 @@ import ru.glitchless.game.data.packages.toclient.LightServerSnapMessage;
 import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.server.data.models.WebSocketUser;
-import ru.glitchless.server.utils.Pair;
+import ru.glitchless.newserver.utils.Pair;
 
 public abstract class IPacketHandler<T extends PhysicObject> {
     private Class<T> clazz;
