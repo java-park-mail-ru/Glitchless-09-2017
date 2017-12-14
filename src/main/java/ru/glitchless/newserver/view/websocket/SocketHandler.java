@@ -20,6 +20,7 @@ import ru.glitchless.newserver.data.throwables.HandleException;
 import ru.glitchless.newserver.interactor.auth.UserInteractor;
 import ru.glitchless.newserver.utils.Constants;
 import ru.glitchless.newserver.utils.ResourceFactory;
+import ru.glitchless.newserver.utils.SendMessageService;
 
 import java.io.IOException;
 
@@ -35,10 +36,12 @@ public class SocketHandler extends TextWebSocketHandler {
     public SocketHandler(@NotNull SocketMessageHandlerManager manager,
                          @NotNull ResourceFactory resourceFactory,
                          @NotNull UserInteractor service,
+                         @NotNull SendMessageService sendMessageService,
                          ObjectMapper objectMapper) {
         this.handlerManager = manager;
         this.objectMapper = objectMapper;
         this.userInteractor = service;
+        sendMessageService.init();
     }
 
     @Override

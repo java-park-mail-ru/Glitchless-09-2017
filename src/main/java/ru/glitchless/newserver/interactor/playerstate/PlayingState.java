@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
+import ru.glitchless.game.data.packages.toclient.FullSwapScene;
 import ru.glitchless.game.data.packages.toclient.GameInitState;
 import ru.glitchless.newserver.data.model.ClientState;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
@@ -14,6 +15,7 @@ import ru.glitchless.newserver.utils.SendMessageService;
 public class PlayingState implements IPlayerState {
     private final GameStore gameStore;
     private final SendMessageService sendMessageService;
+    private FullSwapScene fullSwapScene;
 
     public PlayingState(GameStore gameStore, SendMessageService sendMessageService) {
         this.gameStore = gameStore;
@@ -31,7 +33,7 @@ public class PlayingState implements IPlayerState {
         }
 
         if (message instanceof WantPlayMessage) {
-            sendMessageService.sendMessageSync(message, forUser);
+            sendMessageService.sendMessageSync(getMessageForState(), forUser);
         }
     }
 

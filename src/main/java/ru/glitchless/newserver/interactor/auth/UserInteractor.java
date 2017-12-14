@@ -18,6 +18,17 @@ public class UserInteractor {
         this.userRepository = userRepository;
     }
 
+    private static boolean isValidEmail(String email) {
+        boolean result = true;
+        try {
+            final InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
+
     public UserModel registerUser(UserModel userModel) {
         validate(userModel);
 
@@ -40,17 +51,6 @@ public class UserInteractor {
         validate(userModel);
 
         return userRepository.isContains(userModel);
-    }
-
-    private static boolean isValidEmail(String email) {
-        boolean result = true;
-        try {
-            final InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
     }
 
     private void validate(UserModel user) {
