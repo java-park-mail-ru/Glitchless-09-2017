@@ -13,7 +13,8 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class GameRepository {
-    private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+    private final ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(
+            Runtime.getRuntime().availableProcessors() * 2);
     private final SendMessageService sendMessageService;
 
     public GameRepository(SendMessageService sendMessageService) {

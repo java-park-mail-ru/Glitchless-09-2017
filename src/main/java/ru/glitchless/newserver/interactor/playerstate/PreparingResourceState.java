@@ -51,9 +51,8 @@ public class PreparingResourceState implements IPlayerState {
         final IPlayerState enemyState = playerRepository.getPlayerState(secondUser);
 
         if (enemyState instanceof WaitingEnemyState) {
-            final IPlayerState state;
             final GameStore gameStore = this.gameRepository.initNewGame(forUser, secondUser);
-            state = new PlayingState(gameStore, sendMessageService);
+            final IPlayerState state = new PlayingState(gameStore, sendMessageService);
 
             playerRepository.putPlayerState(forUser, state);
             playerRepository.putPlayerState(secondUser, state);
