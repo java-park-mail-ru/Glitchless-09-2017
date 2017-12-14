@@ -32,18 +32,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class GameMechanic implements IGameMechanic {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameMechanic.class);
 
-    private Queue<ProcessingCommit<ClientCommitMessage>> waitProcessCommit
+    private final Queue<ProcessingCommit<ClientCommitMessage>> waitProcessCommit
             = new ConcurrentLinkedQueue<>();
-    private SendMessageService sendMessageService;
-    private RoomUsers roomUsers;
+    private final SendMessageService sendMessageService;
+    private final RoomUsers roomUsers;
 
-    private List<PhysicEntity> physicEntities = new ArrayList<>();
+    private final List<PhysicEntity> physicEntities = new ArrayList<>();
 
-    private AtomicInteger idCounter = new AtomicInteger();
-    private HashMap<Integer, PhysicObject> idToObject = new HashMap<>();
+    private final AtomicInteger idCounter = new AtomicInteger();
+    private final HashMap<Integer, PhysicObject> idToObject = new HashMap<>();
     //Loops
-    private VectorToPointTick vectorTick;
-    private PacketHandlerManager packetHandlerManager;
+    private final VectorToPointTick vectorTick;
+    private final PacketHandlerManager packetHandlerManager;
 
     public GameMechanic(RoomUsers roomUsers, SendMessageService sendMessageService) {
         this.roomUsers = roomUsers;
