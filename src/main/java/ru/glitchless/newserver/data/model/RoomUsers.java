@@ -10,8 +10,8 @@ import java.io.IOException;
 public class RoomUsers {
     private static final Logger LOGGER = LoggerFactory.getLogger(RoomUsers.class);
 
-    private WebSocketUser firstUser;
-    private WebSocketUser secondUser;
+    private final WebSocketUser firstUser;
+    private final WebSocketUser secondUser;
 
     public RoomUsers(WebSocketUser firstUser, @Nullable WebSocketUser secondUser) {
         this.firstUser = firstUser;

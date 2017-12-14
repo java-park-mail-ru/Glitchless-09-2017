@@ -14,8 +14,8 @@ import ru.glitchless.newserver.utils.Pair;
 import java.util.HashMap;
 
 public class PacketHandlerManager {
-    private HashMap<Integer, PhysicObject> idToObject;
-    private HashMap<Class, IPacketHandler> packetHandlers = new HashMap<>();
+    private final HashMap<Integer, PhysicObject> idToObject;
+    private final HashMap<Class, IPacketHandler> packetHandlers = new HashMap<>();
 
     public PacketHandlerManager(HashMap<Integer, PhysicObject> idToObject) {
         this.idToObject = idToObject;

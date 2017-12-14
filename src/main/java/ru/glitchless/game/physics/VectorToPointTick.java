@@ -7,7 +7,7 @@ import ru.glitchless.newserver.utils.Constants;
 import java.util.List;
 
 public class VectorToPointTick {
-    private List<PhysicEntity> physicEntityList;
+    private final List<PhysicEntity> physicEntityList;
 
     public VectorToPointTick(List<PhysicEntity> physicEntityList) {
         this.physicEntityList = physicEntityList;

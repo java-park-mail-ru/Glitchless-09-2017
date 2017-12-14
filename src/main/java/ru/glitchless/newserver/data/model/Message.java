@@ -1,7 +1,7 @@
 package ru.glitchless.newserver.data.model;
 
 public class Message<T> {
-    private T message;
+    private final T message;
     private boolean successful = true;
 
     public Message(boolean successful) {

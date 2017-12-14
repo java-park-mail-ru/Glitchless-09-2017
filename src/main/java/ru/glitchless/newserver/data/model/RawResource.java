@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RawResource extends Resource {
-    private String type;
+    private final String type;
 
-    private Map<String, Object> properties = new HashMap<>();
+    private final Map<String, Object> properties = new HashMap<>();
 
     public RawResource(@JsonProperty("type") String type) {
         this.type = type;

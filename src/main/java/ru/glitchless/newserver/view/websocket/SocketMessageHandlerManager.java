@@ -21,7 +21,7 @@ public class SocketMessageHandlerManager {
     @NotNull
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketMessageHandlerManager.class);
     private final Map<Class<?>, SocketMessageHandler<?>> handlers = new HashMap<>();
-    private Clock clock = Clock.systemDefaultZone();
+    private final Clock clock = Clock.systemDefaultZone();
 
     public SocketMessageHandlerManager(JoinHandler joinHandler,
                                        GameCommitHandler gameCommitHandler) {

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FullSwapScene extends WebSocketMessage {
-    private Map<String, SnapObject> hashMap = new HashMap<>();
+    private final Map<String, SnapObject> hashMap = new HashMap<>();
 
     @JsonAnySetter
     public void put(String type, SnapObject object) {

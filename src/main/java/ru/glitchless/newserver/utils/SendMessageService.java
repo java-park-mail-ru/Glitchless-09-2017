@@ -20,11 +20,11 @@ public class SendMessageService implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendMessageService.class);
 
     private final Object lockObject = new Object();
-    private BlockingQueue<ProcessingCommit<WebSocketMessage>> waitSendingCommit
+    private final BlockingQueue<ProcessingCommit<WebSocketMessage>> waitSendingCommit
             = new LinkedBlockingQueue<>();
 
-    private Executor executor = Executors.newSingleThreadExecutor();
-    private ObjectMapper objectMapper;
+    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final ObjectMapper objectMapper;
 
     public SendMessageService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;

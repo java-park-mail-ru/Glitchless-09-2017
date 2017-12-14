@@ -9,7 +9,7 @@ import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Pair;
 
 public abstract class IPacketHandler<T extends PhysicObject> {
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     public IPacketHandler(Class<T> clazz) {
         this.clazz = clazz;

@@ -9,8 +9,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class WebSocketUser {
-    private WebSocketSession session;
-    private UserModel userModel;
+    private final WebSocketSession session;
+    private final UserModel userModel;
 
     public WebSocketUser(WebSocketSession session, UserModel userModel) {
         this.session = session;

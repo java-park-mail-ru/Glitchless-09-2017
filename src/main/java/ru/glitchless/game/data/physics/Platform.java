@@ -7,8 +7,8 @@ import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 
 public class Platform extends PhysicEntity {
-    private WebSocketUser platformUser;
-    private Kirkle circle;
+    private final WebSocketUser platformUser;
+    private final Kirkle circle;
 
     public Platform(Point point, int objectId, WebSocketUser webSocketUser, Kirkle circle) {
         super(point, objectId);

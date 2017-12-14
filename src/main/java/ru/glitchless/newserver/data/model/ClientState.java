@@ -6,7 +6,7 @@ public enum ClientState {
     WAITING_ENEMY_RESOURCE(4),
     PLAYING(10);
 
-    private int id;
+    private final int id;
 
     ClientState(int id) {
         this.id = id;
