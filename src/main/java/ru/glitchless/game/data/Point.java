@@ -41,10 +41,7 @@ public class Point {
 
         final Point point = (Point) obj;
 
-        if (posX != point.posX) {
-            return false;
-        }
-        return posY == point.posY;
+        return !(posX != point.posX) && posY == point.posY;
     }
 
     @Override

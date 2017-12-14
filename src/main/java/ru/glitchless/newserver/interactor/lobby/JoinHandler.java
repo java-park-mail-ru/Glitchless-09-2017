@@ -18,13 +18,12 @@ public class JoinHandler extends SocketMessageHandler<WantPlayMessage> {
     private static final Logger LOGGER = LoggerFactory.getLogger(JoinHandler.class);
 
     private final PlayerRepository playerRepository;
-    private final SendMessageService sendMessageService;
     private final WaitUserState templateWaitState;
 
     public JoinHandler(PlayerRepository playerRepository, SendMessageService sendMessageService, WaitUserState waitUserState) {
         super(WantPlayMessage.class);
         this.playerRepository = playerRepository;
-        this.sendMessageService = sendMessageService;
+        SendMessageService sendMessageService1 = sendMessageService;
         this.templateWaitState = waitUserState;
     }
 

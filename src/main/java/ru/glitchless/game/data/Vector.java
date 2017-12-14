@@ -42,10 +42,7 @@ public class Vector {
 
         final Vector vector = (Vector) obj;
 
-        if (diffX != vector.diffX) {
-            return false;
-        }
-        return diffY == vector.diffY;
+        return !(diffX != vector.diffX) && diffY == vector.diffY;
     }
 
     @Override

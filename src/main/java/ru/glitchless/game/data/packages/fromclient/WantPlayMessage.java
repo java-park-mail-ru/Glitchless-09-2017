@@ -4,11 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class WantPlayMessage extends WebSocketMessage {
-    private final String type;
     private int state;
 
     public WantPlayMessage(@JsonProperty("type") String type) {
-        this.type = type;
+        String type1 = type;
     }
 
     public int getState() {

@@ -3,7 +3,6 @@ package ru.glitchless.newserver.view.websocket;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -49,8 +48,7 @@ public class SocketHandler extends TextWebSocketHandler {
         final UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
         if (user == null || !userInteractor.isContains(user)) {
             LOGGER.warn("User requested websocket is not registred or not logged in. Openning websocket session is denied.");
-            closeSessionSilently(session, ACCESS_DENIED);
-            return;
+            closeSessionSilently(session);
         }
     }
 
@@ -63,7 +61,7 @@ public class SocketHandler extends TextWebSocketHandler {
         final UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
         if (user == null) {
             LOGGER.warn("User requested websocket is not registred or not logged in. Openning websocket session is denied.");
-            closeSessionSilently(session, ACCESS_DENIED);
+            closeSessionSilently(session);
             return;
         }
         WebSocketUser wsUser = (WebSocketUser) session.getAttributes().get(Constants.SESSION_EXTRA_USERWS);
@@ -102,8 +100,8 @@ public class SocketHandler extends TextWebSocketHandler {
     }
 
     @SuppressWarnings("OverlyBroadCatchBlock")
-    private void closeSessionSilently(@NotNull WebSocketSession session, @Nullable CloseStatus closeStatus) {
-        CloseStatus status = closeStatus;
+    private void closeSessionSilently(@NotNull WebSocketSession session) {
+        CloseStatus status = SocketHandler.ACCESS_DENIED;
         if (status == null) {
             status = SERVER_ERROR;
         }

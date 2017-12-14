@@ -5,14 +5,13 @@ import ru.glitchless.game.data.Vector;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class ClientCommitMessage extends WebSocketMessage {
-    private final String type;
     private int commitNumber = 0;
     private int objectId;
     @JsonProperty("speed")
     private Vector vector;
 
     public ClientCommitMessage(@JsonProperty("type") String type) {
-        this.type = type;
+        String type1 = type;
     }
 
     public int getCommitNumber() {

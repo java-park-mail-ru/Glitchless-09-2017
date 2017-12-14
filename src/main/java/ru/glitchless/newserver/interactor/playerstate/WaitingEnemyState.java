@@ -9,11 +9,10 @@ import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.repository.lobby.PlayerRepository;
 
 public class WaitingEnemyState implements IPlayerState {
-    private final WebSocketUser secondUser;
     private final PlayerRepository playerRepository;
 
     public WaitingEnemyState(PlayerRepository playerRepository, WebSocketUser secondUser) {
-        this.secondUser = secondUser;
+        WebSocketUser secondUser1 = secondUser;
         this.playerRepository = playerRepository;
     }
 
