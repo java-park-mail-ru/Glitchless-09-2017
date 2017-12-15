@@ -28,7 +28,7 @@ script:
 deploy:
   - provider: script
     script:
-      - docker login http://registry.glitchless.ru:5000
+      - docker login http://registry.glitchless.ru -u null -p null
       - docker push rhythm_blast/backend
       - ssh ansible@54.36.181.198 "cd ansible && ansible-playbook playbook.yml"
     on:
