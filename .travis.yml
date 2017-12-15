@@ -21,7 +21,7 @@ deploy:
     branch: dev
 - provider: script
   skip_cleanup: true
-  script: scp target/glitchless-backend-*.jar baeldung@145.239.82.63:/nginx/api/glitchless-backend.jar
+  script: scp target/glitchless-backend-*.jar baeldung@54.36.181.198:/nginx/api/glitchless-backend.jar
     && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
   on:
     branch: dev
