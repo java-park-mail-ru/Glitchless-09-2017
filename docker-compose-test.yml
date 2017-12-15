@@ -1,6 +1,5 @@
 version: '3'
 
-
 services:
   db:
     image: postgres
@@ -20,10 +19,6 @@ services:
       - DATABASE_URL=jdbc:postgresql://db/glitchlessdb
       - CODECOV_TOKEN=9a704f01-b13d-45e5-b55b-bd3787193dfa
     volumes:
-      - maven-repo:/root/.m2
-      - "./target:/artifacts"
+      - /home/travis/.m2:/root/.m2
     links:
       - db
-
-volumes:
-  maven-repo:
