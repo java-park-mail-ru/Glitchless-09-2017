@@ -11,7 +11,7 @@ cache:
     - /home/travis/.m2
 
 script:
-  - docker build -t rhythm_blast/backend .
+  - docker build -t backend .
   - docker run
         --name db
         -d 
@@ -22,15 +22,16 @@ script:
         $(bash <(curl -s https://codecov.io/env))
         -v /home/travis/.m2:/root/.m2 
         --link db 
-        rhythm_blast/backend 
+        backend 
         bash -c 'mvn cobertura:cobertura -B -q && bash <(curl -s https://codecov.io/bash)'
 
 deploy:
   - provider: script
     script:
-      - docker login https://registry.glitchless.ru -u null -p null
-      - docker push rhythm_blast/backend
-      - ssh ansible@54.36.181.198 "cd ansible && ansible-playbook playbook.yml"
+      - docker login https://registry.glitchless.ru -u null -p null &&
+            docker tag backend registry.glitchless.ru/rhythm_blast/backend:latest &&
+            docker push registry.glitchless.ru/rhythm_blast/backend:latest &&
+            ssh ansible@54.36.181.198 "cd ansible && ansible-playbook playbook.yml"
     on:
       branch: dev
 
