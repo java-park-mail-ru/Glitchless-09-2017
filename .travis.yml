@@ -4,30 +4,31 @@ services:
 - docker
 
 addons:
-  ssh_known_hosts: 145.239.82.63
+  ssh_known_hosts: 54.36.181.198
 
 script:
-  - docker-compose up --abort-on-container-exit
-  - ls target
-
+ - docker-compose up --abort-on-container-exit
+ - ls target
 
 deploy:
-  - provider: heroku
-    skip_cleanup: true
-    api_key:
-      secure: hWvAKe189jKMGdI2t5iHWCdTUTi0NYODIB2y6nbLQhBe9SZtQE9YNIa++U44UipzZ+WY9IIhVhFkEKTNhRGJEptTiOaYlmqDrJ0aa4e12/Vi5JdSMMLPJhucHcCZN9Y2ZeCRZRH3/Wkiw5bd/tHtDK0Za3iq+gobdDivzMVgJJnkLuK3++E8SbvbzraJLcfTO2v2B4WDaK/lnN3TCbYnuVLIWHN8I1QqOjwdzRMlpzGSpiZgAmQZoNZyzpzLIl0G4cJ3rg9pig/9yJcH6AELhWCqK9uHW1wHHZxO4MY50G2EcnxuqFsiG4lOrH1CS/4eSiBpgk+ADWVGmUe4/JE2YHn1ECNm2rw2OOrC7hJjUycLnpuV5IlWijKzdjXJWuZfGVbTuwtJeW7mnJgXi6tCJlypwbBHPeYbANZLQaGKYvgkr0Qr6RuDjefPwexeUgFkjfBYlgY6gMx9K1n1Ar9mBOOdzMYM1rgJs3jzcA5qHQIudR+rNve2kqIka9nk2HCjeiLDQ6EPPMNzEp+G6rJlqurVARM5MCMl8u+jBmEVcdrm3nSSEokXdm5TjuOHyUCCwRSIhNLL6y00EqU4+QoRlaEUnL3SlzRVWZNEge3eBJQeKaPG34YzWXNfI4Xoyfk0+5AEST7yEKdwHd4Pfb/rFpbShDdWwO1IF3M30hs+LAM=
-    app: glitchless-java
-    on:
-      repo: java-park-mail-ru/Glitchless-09-2017
-      branch: dev
-  - provider: script
-    skip_cleanup: true
-    script: scp target/glitchless-backend-*.jar baeldung@145.239.82.63:/nginx/api/glitchless-backend.jar && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
-    on:
-      branch: dev
+- provider: heroku
+  skip_cleanup: true
+  api_key:
+    secure: hWvAKe189jKMGdI2t5iHWCdTUTi0NYODIB2y6nbLQhBe9SZtQE9YNIa++U44UipzZ+WY9IIhVhFkEKTNhRGJEptTiOaYlmqDrJ0aa4e12/Vi5JdSMMLPJhucHcCZN9Y2ZeCRZRH3/Wkiw5bd/tHtDK0Za3iq+gobdDivzMVgJJnkLuK3++E8SbvbzraJLcfTO2v2B4WDaK/lnN3TCbYnuVLIWHN8I1QqOjwdzRMlpzGSpiZgAmQZoNZyzpzLIl0G4cJ3rg9pig/9yJcH6AELhWCqK9uHW1wHHZxO4MY50G2EcnxuqFsiG4lOrH1CS/4eSiBpgk+ADWVGmUe4/JE2YHn1ECNm2rw2OOrC7hJjUycLnpuV5IlWijKzdjXJWuZfGVbTuwtJeW7mnJgXi6tCJlypwbBHPeYbANZLQaGKYvgkr0Qr6RuDjefPwexeUgFkjfBYlgY6gMx9K1n1Ar9mBOOdzMYM1rgJs3jzcA5qHQIudR+rNve2kqIka9nk2HCjeiLDQ6EPPMNzEp+G6rJlqurVARM5MCMl8u+jBmEVcdrm3nSSEokXdm5TjuOHyUCCwRSIhNLL6y00EqU4+QoRlaEUnL3SlzRVWZNEge3eBJQeKaPG34YzWXNfI4Xoyfk0+5AEST7yEKdwHd4Pfb/rFpbShDdWwO1IF3M30hs+LAM=
+  app: glitchless-java
+  on:
+    repo: java-park-mail-ru/Glitchless-09-2017
+    branch: dev
+- provider: script
+  skip_cleanup: true
+  script: scp target/glitchless-backend-*.jar baeldung@145.239.82.63:/nginx/api/glitchless-backend.jar
+    && ssh baeldung@145.239.82.63 '/nginx/api/start.sh'
+  on:
+    branch: dev
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_3d67278d59c8_key -iv $encrypted_3d67278d59c8_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
-  - eval "$(ssh-agent -s)"
-  - chmod 600 /tmp/deploy_rsa
-  - ssh-add /tmp/deploy_rsa
+- openssl aes-256-cbc -K $encrypted_e9c1276c6ee9_key -iv $encrypted_e9c1276c6ee9_iv
+  -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 /tmp/deploy_rsa
+- ssh-add /tmp/deploy_rsa
