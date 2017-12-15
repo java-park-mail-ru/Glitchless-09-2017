@@ -23,7 +23,7 @@ script:
         -v /home/travis/.m2:/root/.m2 
         --link db 
         rhythm_blast/backend 
-        "mvn cobertura:cobertura && bash <(curl -s https://codecov.io/bash)"
+        "/usr/bin/mvn cobertura:cobertura && bash <(curl -s https://codecov.io/bash)"
 
 deploy:
   - provider: script
