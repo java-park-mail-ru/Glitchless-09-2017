@@ -19,11 +19,11 @@ script:
         postgres
   - docker run 
         -e DATABASE_USER=backend -e DATABASE_PASSWORD=qwerty -e DATABASE_URL=jdbc:postgresql://db/glitchlessdb
-        -e CODECOV_TOKEN=9a704f01-b13d-45e5-b55b-bd3787193dfa
+        $(bash <(curl -s https://codecov.io/env))
         -v /home/travis/.m2:/root/.m2 
         --link db 
         rhythm_blast/backend 
-        "bash -c 'mvn cobertura:cobertura && bash <(curl -s https://codecov.io/bash)'"
+        'mvn cobertura:cobertura && sh <(curl -s https://codecov.io/bash)'
 
 deploy:
   - provider: script
