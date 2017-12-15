@@ -12,15 +12,17 @@ cache:
 
 script:
   - docker build -t rhythm_blast/backend .
-  - docker run postgres 
+  - docker run
         --name db
         -d 
         -e POSTGRES_USER=backend -e POSTGRES_PASSWORD=qwerty -e POSTGRES_DB=glitchlessdb
-  - docker run rhythm_blast/backend 
+        postgres
+  - docker run 
         -e DATABASE_USER=backend -e DATABASE_PASSWORD=qwerty -e DATABASE_URL=jdbc:postgresql://db/glitchlessdb
         -e CODECOV_TOKEN=9a704f01-b13d-45e5-b55b-bd3787193dfa
         -v /home/travis/.m2:/root/.m2 
         --link db 
+        rhythm_blast/backend 
         "mvn cobertura:cobertura && bash <(curl -s https://codecov.io/bash)"
 
 deploy:
