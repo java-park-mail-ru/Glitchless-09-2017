@@ -6,17 +6,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.glitchless.newserver.data.model.Message;
+import ru.glitchless.newserver.data.model.ScoreModel;
 import ru.glitchless.newserver.data.model.UserModel;
+import ru.glitchless.newserver.data.model.UserScore;
 import ru.glitchless.newserver.data.throwables.InvalidLoginOrPassword;
 import ru.glitchless.newserver.data.throwables.NeedAuthorization;
 import ru.glitchless.newserver.interactor.auth.UserInteractor;
 import ru.glitchless.newserver.utils.Constants;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class UserController {
     private final UserInteractor userInteractor;
+    private final List<UserScore> leaderBoard = new ArrayList<UserScore>(); // TODO fix mock
+
+    public static final long SCORE = 9999L;
+
+    {
+        leaderBoard.add(new UserScore("LionZXY", SCORE));
+        leaderBoard.add(new UserScore("reo7sp", SCORE));
+        leaderBoard.add(new UserScore("LionZXY", SCORE));
+        leaderBoard.add(new UserScore("LionZXY", SCORE));
+        leaderBoard.add(new UserScore("LionZXY", SCORE));
+        leaderBoard.add(new UserScore("LionZXY", SCORE));
+    }
 
     public UserController(UserInteractor userInteractor) {
         this.userInteractor = userInteractor;
@@ -67,5 +83,17 @@ public class UserController {
         }
 
         return ResponseEntity.ok(new Message<>(true, user));
+    }
+
+    @GetMapping("/api/leaderboard")
+    public ResponseEntity<Message> getLeaders() {
+        return ResponseEntity.ok(new Message<>(true, leaderBoard));
+    }
+
+    @PostMapping("/api/leaderboard")
+    public ResponseEntity<Message> putScore(ScoreModel scoreModel) {
+        leaderBoard.add(new UserScore("reo7sp", scoreModel.getScore()));
+
+        return ResponseEntity.ok(new Message<>(true));
     }
 }
