@@ -6,10 +6,9 @@ import org.springframework.web.socket.WebSocketSession;
 import ru.glitchless.newserver.utils.Constants;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class WebSocketUser {
-    private final WebSocketSession session;
+    private WebSocketSession session;
     private final UserModel userModel;
 
     public WebSocketUser(WebSocketSession session, UserModel userModel) {
@@ -28,16 +27,19 @@ public class WebSocketUser {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof WebSocketUser
-                && ((WebSocketUser) obj).userModel.equals(userModel)
-                && Objects.equals(session.getId(), ((WebSocketUser) obj).session.getId());
+                && ((WebSocketUser) obj).userModel.equals(userModel);
     }
 
     @Override
     public int hashCode() {
-        return session.getId().hashCode() * Constants.MAGIC_NUMBER + userModel.hashCode();
+        return Constants.MAGIC_NUMBER * userModel.hashCode();
     }
 
     public void sendToUser(WebSocketMessage message, ObjectMapper objectMapper) throws IOException {
         session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+    }
+
+    public void replaceSession(WebSocketSession webSocketSession) {
+        this.session = webSocketSession;
     }
 }

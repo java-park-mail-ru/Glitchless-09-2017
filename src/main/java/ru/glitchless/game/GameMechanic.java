@@ -93,6 +93,11 @@ public class GameMechanic implements IGameMechanic {
         return entityStorage.fullSwapScene(roomUsers.getFirstUser(), roomUsers.getSecondUser());
     }
 
+    @Override
+    public RoomUsers getPlayers() {
+        return roomUsers;
+    }
+
     private void firstSetting() {
         final Kirkle circle = new Kirkle(
                 new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
@@ -129,6 +134,7 @@ public class GameMechanic implements IGameMechanic {
 
     @Override
     public boolean isDestroy() {
-        return !roomUsers.isAllUserActive();
+        return !(roomUsers.getFirstUser().getSession().isOpen()
+                || roomUsers.getSecondUser().getSession().isOpen());
     }
 }

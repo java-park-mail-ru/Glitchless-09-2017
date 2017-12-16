@@ -7,6 +7,7 @@ import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.game.data.packages.toclient.GameInitState;
 import ru.glitchless.newserver.data.IGameMechanic;
 import ru.glitchless.newserver.data.model.ClientState;
+import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.data.stores.GameStore;
@@ -27,6 +28,8 @@ public class PlayingState implements IPlayerState {
             return;
         }
 
+        checkAndReplaceOnCurrentSession(forUser);
+
         if (message instanceof ClientCommitMessage) {
             gameStore.getGameMechanic().onNewPacket((ClientCommitMessage) message, forUser);
         }
@@ -36,6 +39,18 @@ public class PlayingState implements IPlayerState {
             if (gameMechanic != null) {
                 sendMessageService.sendMessageSync(gameMechanic.dumpSwapScene(), forUser);
             }
+        }
+    }
+
+    private void checkAndReplaceOnCurrentSession(WebSocketUser webSocketUser) {
+        final RoomUsers roomUsers = gameStore.getGameMechanic().getPlayers();
+
+        if (roomUsers.getFirstUser().getUserModel().equals(webSocketUser.getUserModel())) {
+            roomUsers.getFirstUser().replaceSession(webSocketUser.getSession());
+        }
+
+        if (roomUsers.getSecondUser().getUserModel().equals(webSocketUser.getUserModel())) {
+            roomUsers.getSecondUser().replaceSession(webSocketUser.getSession());
         }
     }
 

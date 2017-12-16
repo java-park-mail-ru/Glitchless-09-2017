@@ -2,6 +2,7 @@ package ru.glitchless.newserver.data;
 
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.toclient.FullSwapScene;
+import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 
 public interface IGameMechanic {
@@ -15,4 +16,6 @@ public interface IGameMechanic {
     void onDestroy();
 
     FullSwapScene dumpSwapScene();
+
+    RoomUsers getPlayers();
 }

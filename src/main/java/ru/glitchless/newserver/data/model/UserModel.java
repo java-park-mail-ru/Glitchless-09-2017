@@ -20,7 +20,6 @@ public class UserModel {
     }
 
     public UserModel(int localId, String login, String password, String email) {
-        int localId1 = localId;
         this.login = login;
         this.password = password;
         this.email = email;
