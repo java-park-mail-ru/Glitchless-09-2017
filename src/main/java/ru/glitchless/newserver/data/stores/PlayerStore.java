@@ -32,4 +32,8 @@ public class PlayerStore {
         });
         return users;
     }
+
+    public void removeUser(WebSocketUser webSocketUser) {
+        playerStateMap.remove(webSocketUser);
+    }
 }

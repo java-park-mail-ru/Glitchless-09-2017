@@ -2,8 +2,12 @@ package ru.glitchless.newserver.data.stores;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.glitchless.game.GameMechanic;
 import ru.glitchless.newserver.data.IGameMechanic;
+import ru.glitchless.newserver.data.model.RoomUsers;
+import ru.glitchless.newserver.repository.lobby.PlayerRepository;
 import ru.glitchless.newserver.utils.Constants;
+import ru.glitchless.newserver.utils.SendMessageService;
 
 import java.time.Clock;
 
@@ -14,8 +18,15 @@ public class GameStore implements Runnable {
     private final IGameMechanic gameMechanic;
     private long lastFrameMillis = Constants.STEP_TIME;
 
-    public GameStore(IGameMechanic gameMechanic) {
-        this.gameMechanic = gameMechanic;
+    private final PlayerRepository playerRepository;
+    private final RoomUsers roomUsers;
+    private final SendMessageService sendMessageService;
+
+    public GameStore(RoomUsers roomUsers, SendMessageService sendMessageService, PlayerRepository playerRepository) {
+        this.gameMechanic = new GameMechanic(roomUsers, sendMessageService);
+        this.playerRepository = playerRepository;
+        this.roomUsers = roomUsers;
+        this.sendMessageService = sendMessageService;
     }
 
     @Override
@@ -46,15 +57,23 @@ public class GameStore implements Runnable {
             }
 
             if (isDestroy) {
-                gameMechanic.onDestroy();
-                throw new RuntimeException("Tick end"); // Грязный, но действенный способ
+                onDestroy();
             }
             final long afterSleep = clock.millis();
             lastFrameMillis = afterSleep - before;
         } catch (RuntimeException e) {
             LOGGER.error("Mechanics executor was reseted due to exception", e);
-            gameMechanic.onDestroy();
+            onDestroy();
         }
+    }
+
+    private void onDestroy() {
+        gameMechanic.onDestroy();
+
+        playerRepository.logoutUser(roomUsers.getFirstUser());
+        playerRepository.logoutUser(roomUsers.getSecondUser());
+
+        throw new RuntimeException("Tick end"); // Грязный, но действенный способ
     }
 
     public IGameMechanic getGameMechanic() {

@@ -2,13 +2,13 @@ package ru.glitchless.game;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.glitchless.game.data.EntityStorage;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.ProcessingCommit;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.toclient.FullSwapScene;
 import ru.glitchless.game.data.packages.toclient.LightServerSnapMessage;
 import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
-import ru.glitchless.game.data.packages.toclient.SnapObject;
 import ru.glitchless.game.data.physics.Kirkle;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
@@ -41,15 +41,19 @@ public class GameMechanic implements IGameMechanic {
 
     private final AtomicInteger idCounter = new AtomicInteger();
     private final HashMap<Integer, PhysicObject> idToObject = new HashMap<>();
+    private final EntityStorage entityStorage = new EntityStorage();
+
     //Loops
     private final VectorToPointTick vectorTick;
     private final PacketHandlerManager packetHandlerManager;
+
 
     public GameMechanic(RoomUsers roomUsers, SendMessageService sendMessageService) {
         this.roomUsers = roomUsers;
         this.sendMessageService = sendMessageService;
         this.vectorTick = new VectorToPointTick(physicEntities);
         this.packetHandlerManager = new PacketHandlerManager(idToObject);
+        this.firstSetting();
     }
 
     @Override
@@ -85,42 +89,33 @@ public class GameMechanic implements IGameMechanic {
 
     }
 
-    public FullSwapScene firstSetting() {
-        final FullSwapScene scene = new FullSwapScene();
+    public FullSwapScene dumpSwapScene() {
+        return entityStorage.fullSwapScene(roomUsers.getFirstUser(), roomUsers.getSecondUser());
+    }
 
+    private void firstSetting() {
         final Kirkle circle = new Kirkle(
                 new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
                         Constants.GAME_FIELD_SIZE.getPosY() / 2),
                 idCounter.getAndIncrement());
-        scene.put("kirkle", new SnapObject(circle));
         putObject(circle);
+        this.entityStorage.setCircle(circle);
 
         final Platform platform1 = new Platform(new Point(0, 0),
                 idCounter.getAndIncrement(),
                 roomUsers.getFirstUser(),
                 circle);
         platform1.setRotation(Constants.GAME_START_PLATFORM1);
-        scene.put("platform_1", new SnapObject(platform1)
-                .setAdditionalInfo(roomUsers
-                        .getFirstUser()
-                        .getUserModel()
-                        .getLogin()));
         putObject(platform1);
+        this.entityStorage.setFirstPlatform(platform1);
 
         final Platform platform2 = new Platform(new Point(0, 0),
                 idCounter.getAndIncrement(),
                 roomUsers.getSecondUser(),
                 circle);
         platform2.setRotation(Constants.GAME_START_PLATFORM2);
-        scene.put("platform_2", new SnapObject(platform2)
-                .setAdditionalInfo(roomUsers
-                        .getSecondUser()
-                        .getUserModel()
-                        .getLogin()));
         putObject(platform2);
-
-
-        return scene; // Init all game element
+        this.entityStorage.setSecondPlatform(platform2);
     }
 
     private void putObject(PhysicObject physicObject) {
@@ -129,5 +124,11 @@ public class GameMechanic implements IGameMechanic {
         if (physicObject instanceof PhysicEntity) {
             physicEntities.add((PhysicEntity) physicObject);
         }
+    }
+
+
+    @Override
+    public boolean isDestroy() {
+        return !roomUsers.isAllUserActive();
     }
 }

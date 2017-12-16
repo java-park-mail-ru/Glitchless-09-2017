@@ -29,6 +29,10 @@ public class PlayerRepository {
         sendMessageService.sendMessageSync(state.getMessageForState(), user);
     }
 
+    public void logoutUser(WebSocketUser user) {
+        playerStore.removeUser(user);
+    }
+
     @Nullable
     public WebSocketUser getPlayerWithState(@Nullable WebSocketUser currentUser, IPlayerState state) {
         // TODO BUG. Race condition.

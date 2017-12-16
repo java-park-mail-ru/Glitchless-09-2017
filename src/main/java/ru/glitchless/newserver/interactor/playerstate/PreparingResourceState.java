@@ -58,7 +58,7 @@ public class PreparingResourceState implements IPlayerState {
             playerRepository.putPlayerState(secondUser, state);
 
             if (gameStore.getGameMechanic() instanceof GameMechanic) {
-                final FullSwapScene fullSwapScene = ((GameMechanic) gameStore.getGameMechanic()).firstSetting();
+                final FullSwapScene fullSwapScene = gameStore.getGameMechanic().dumpSwapScene();
 
                 sendMessageService.sendMessage(fullSwapScene, forUser);
                 sendMessageService.sendMessage(fullSwapScene, secondUser);
