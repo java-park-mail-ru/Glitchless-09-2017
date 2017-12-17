@@ -1,7 +1,8 @@
 FROM maven:3.5-jdk-8
 
-WORKDIR /glitchless
-RUN curl -s https://codecov.io/bash -o codecov && chmod +x codecov
+WORKDIR /app
 COPY . .
 
-CMD mvn install && mvn cobertura:cobertura && ./codecov
+RUN mvn install -B -q -DskipTests
+
+CMD ["java", "-jar", "target/glitchless-backend-1.0-SNAPSHOT.jar"]
