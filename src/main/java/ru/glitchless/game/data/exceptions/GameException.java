@@ -5,7 +5,7 @@ public class GameException extends RuntimeException {
         super(message);
     }
 
-    public GameException(String message, Exception exceptionFuckLint) {
-        super(message, exceptionFuckLint);
+    public GameException(String message, Exception cause) {
+        super(message, cause);
     }
 }
