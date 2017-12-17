@@ -18,6 +18,12 @@ public class Platform extends PhysicEntity {
 
     @Override
     public void setRotation(float rotation) {
+        if (rotation < 0) {
+            rotation = Constants.CIRCLE_ANGEL + rotation;
+        }
+
+        rotation = rotation % Constants.CIRCLE_ANGEL;
+
         super.setRotation(rotation);
         final float radius = circle.getRadius() - Constants.GAME_RADIUS_PLATFORM_PADDING;
         final float rotationRadian = rotation / Constants.GAME_ROTATION_COEFFICIENT;

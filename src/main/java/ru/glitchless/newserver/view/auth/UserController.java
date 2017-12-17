@@ -20,10 +20,9 @@ import java.util.List;
 
 @RestController
 public class UserController {
+    public static final long SCORE = 9999L;
     private final UserInteractor userInteractor;
     private final List<UserScore> leaderBoard = new ArrayList<UserScore>(); // TODO fix mock
-
-    public static final long SCORE = 9999L;
 
     {
         leaderBoard.add(new UserScore("LionZXY", SCORE));

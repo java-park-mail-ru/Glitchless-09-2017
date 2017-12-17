@@ -8,8 +8,8 @@ import ru.glitchless.newserver.utils.Constants;
 import java.io.IOException;
 
 public class WebSocketUser {
-    private WebSocketSession session;
     private final UserModel userModel;
+    private WebSocketSession session;
 
     public WebSocketUser(WebSocketSession session, UserModel userModel) {
         this.session = session;
