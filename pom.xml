@@ -11,7 +11,7 @@
     <properties>
         <flyway.version>4.0.3</flyway.version>
         <java.version>1.8</java.version>
-        <kotlin.version>1.1.51</kotlin.version>
+        <kotlin.version>1.2.10</kotlin.version>
         <retrofit.version>2.3.0</retrofit.version>
     </properties>
 
@@ -104,7 +104,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jre8</artifactId>
             <version>${kotlin.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Test dependency -->
