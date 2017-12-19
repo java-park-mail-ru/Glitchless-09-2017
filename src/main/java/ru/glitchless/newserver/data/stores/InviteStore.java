@@ -1,9 +1,8 @@
 package ru.glitchless.newserver.data.stores;
 
-import com.mifmif.common.regex.Generex;
 import org.springframework.stereotype.Component;
 import ru.glitchless.newserver.data.model.WebSocketUser;
-import ru.glitchless.newserver.utils.Constants;
+import ru.glitchless.newserver.utils.RandomString;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,13 +10,13 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class InviteStore {
     private final Map<String, WebSocketUser> invites = new ConcurrentHashMap<>();
-    private final Generex generex = new Generex("[a-zA-Z0-9]");
+    private final RandomString randomString = new RandomString();
 
     public String generateInvite(WebSocketUser webSocketUser) {
         String inviteLink;
         do {
-            inviteLink = generex.random(Constants.REFERENCE_LENGHT);
-        } while (inviteLink.contains(inviteLink));
+            inviteLink = randomString.nextString();
+        } while (invites.get(inviteLink) != null);
         invites.put(inviteLink, webSocketUser);
         return inviteLink;
     }

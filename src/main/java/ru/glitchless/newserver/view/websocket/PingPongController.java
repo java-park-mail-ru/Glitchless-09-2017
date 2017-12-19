@@ -22,7 +22,7 @@ public class PingPongController {
     }
 
     @Scheduled(fixedDelay = Constants.PING_TIMEOUT)
-    void sendPong() {
+    void sendPing() {
         playerStore.getAllUser().forEach(item -> {
             if (!item.getSession().isOpen()) {
                 return;

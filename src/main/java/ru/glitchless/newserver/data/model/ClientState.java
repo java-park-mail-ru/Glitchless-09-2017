@@ -4,6 +4,7 @@ public enum ClientState {
     WAITING_USER(2),
     PREPARING_RESOURCE(3),
     WAITING_ENEMY_RESOURCE(4),
+    WAITING_USER_BY_INVITE(5),
     PLAYING(10);
 
     private final int id;

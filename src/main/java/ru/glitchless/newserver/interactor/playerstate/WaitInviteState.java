@@ -10,7 +10,7 @@ import ru.glitchless.newserver.repository.lobby.InviteRepository;
 
 public class WaitInviteState implements IPlayerState {
     private final InviteRepository inviteRepository;
-    private final String refLink;
+    private String refLink;
 
     public WaitInviteState(InviteRepository inviteRepository, WebSocketUser webSocketUser) {
         this.inviteRepository = inviteRepository;
@@ -29,7 +29,7 @@ public class WaitInviteState implements IPlayerState {
     @Override
     public GameInitState getMessageForState() {
         final GameInitState gameInitState = new GameInitState();
-        gameInitState.setState(ClientState.WAITING_USER.getId());
+        gameInitState.setState(ClientState.WAITING_USER_BY_INVITE.getId());
         gameInitState.setData("ref:" + refLink);
         return gameInitState;
     }
