@@ -36,4 +36,12 @@ public class PlayerStore {
     public void removeUser(WebSocketUser webSocketUser) {
         playerStateMap.remove(webSocketUser);
     }
+
+    public List<WebSocketUser> getAllUser() {
+        final List<WebSocketUser> users = new ArrayList<>();
+        playerStateMap.forEach((key, value) -> {
+                users.add(key);
+        });
+        return users;
+    }
 }

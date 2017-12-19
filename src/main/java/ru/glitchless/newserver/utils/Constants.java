@@ -11,6 +11,8 @@ public class Constants {
             "http://localhost:8080",
     };
     public static final int MAGIC_NUMBER = 31;
+    public static final int REFERENCE_LENGHT = 20;
+    public static final long PING_TIMEOUT = 10000L;
     public static final String SESSION_EXTRA_USER = "user";
     public static final String SESSION_EXTRA_USERWS = "userws";
 

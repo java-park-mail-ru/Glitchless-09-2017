@@ -3,11 +3,13 @@ package ru.glitchless.newserver.interactor.playerstate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Component;
+import ru.glitchless.game.data.packages.fromclient.WantPlayMessage;
 import ru.glitchless.game.data.packages.toclient.GameInitState;
 import ru.glitchless.newserver.data.model.ClientState;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.repository.game.GameRepository;
+import ru.glitchless.newserver.repository.lobby.InviteRepository;
 import ru.glitchless.newserver.repository.lobby.PlayerRepository;
 import ru.glitchless.newserver.utils.SendMessageService;
 
@@ -16,13 +18,16 @@ public class WaitUserState implements IPlayerState {
     private final PlayerRepository playerRepository;
     private final GameRepository gameRepository;
     private final SendMessageService sendMessageService;
+    private final InviteRepository inviteRepository;
 
     public WaitUserState(PlayerRepository playerRepository,
                          GameRepository gameRepository,
-                         SendMessageService sendMessageService) {
+                         SendMessageService sendMessageService,
+                         InviteRepository inviteRepository) {
         this.playerRepository = playerRepository;
         this.gameRepository = gameRepository;
         this.sendMessageService = sendMessageService;
+        this.inviteRepository = inviteRepository;
     }
 
     @Override
@@ -31,9 +36,26 @@ public class WaitUserState implements IPlayerState {
             return;
         }
 
-        final WebSocketUser secondUser = this.playerRepository.getPlayerWithState(forUser, this);
+        final WebSocketUser secondUser;
 
-        if (secondUser == null) {
+        if (checkToInvite(message)) {
+            final String reflink = (String) ((WantPlayMessage) message).getData();
+            final String[] refParts = reflink.split(":");
+            if (refParts.length == 1) {
+                playerRepository.putPlayerState(forUser, new WaitInviteState(inviteRepository, forUser));
+                return;
+            }
+            secondUser = this.inviteRepository.getUserAndRemoveByInvite(refParts[1]);
+            if (!secondUser.getSession().isOpen()) {
+                playerRepository.putPlayerState(forUser, new WaitInviteState(inviteRepository, forUser));
+                return;
+            }
+        } else {
+            secondUser = this.playerRepository.getPlayerWithState(forUser, this);
+        }
+
+
+        if (secondUser == null || !secondUser.getSession().isOpen()) {
             return;
         }
 
@@ -41,6 +63,26 @@ public class WaitUserState implements IPlayerState {
                 new PreparingResourceState(playerRepository, secondUser, gameRepository, sendMessageService));
         playerRepository.putPlayerState(secondUser,
                 new PreparingResourceState(playerRepository, forUser, gameRepository, sendMessageService));
+    }
+
+    private boolean checkToInvite(WebSocketMessage message) {
+        if (!(message instanceof WantPlayMessage)) {
+            return false;
+        }
+
+        if (((WantPlayMessage) message).getData() == null) {
+            return false;
+        }
+
+        if (!(((WantPlayMessage) message).getData() instanceof String)) {
+            return false;
+        }
+
+        if (!(((String) ((WantPlayMessage) message).getData()).startsWith("ref"))) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override

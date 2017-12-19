@@ -5,6 +5,7 @@ import ru.glitchless.newserver.data.model.WebSocketMessage;
 
 public class GameInitState extends WebSocketMessage {
     private final String type;
+    private Object data;
     private int state;
 
     public GameInitState() {
@@ -21,5 +22,13 @@ public class GameInitState extends WebSocketMessage {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }
