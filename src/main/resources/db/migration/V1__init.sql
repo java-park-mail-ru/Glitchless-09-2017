@@ -15,22 +15,20 @@ CREATE UNIQUE INDEX users_login_uindex
 CREATE UNIQUE INDEX users_email_uindex
   ON public.users (email);
 
-CREATE TABLE users
+CREATE TABLE score
 (
-  id       SERIAL NOT NULL
-    CONSTRAINT users_pkey
+  id     SERIAL  NOT NULL
+    CONSTRAINT score_id_pk
     PRIMARY KEY,
-  login    CITEXT NOT NULL,
-  password TEXT   NOT NULL,
-  email    CITEXT
+  score  INTEGER NOT NULL,
+  userid INTEGER NOT NULL
+    CONSTRAINT score_users_id_fk
+    REFERENCES users
 );
 
-CREATE UNIQUE INDEX users_id_uindex
-  ON users (id);
+CREATE UNIQUE INDEX score_id_uindex
+  ON score (id);
 
-CREATE UNIQUE INDEX users_login_uindex
-  ON users (login);
-
-CREATE UNIQUE INDEX users_email_uindex
-  ON users (email);
+CREATE INDEX score_score_index
+  ON score (score);
 
