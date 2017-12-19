@@ -40,7 +40,7 @@ public class PlayerStore {
     public List<WebSocketUser> getAllUser() {
         final List<WebSocketUser> users = new ArrayList<>();
         playerStateMap.forEach((key, value) -> {
-                users.add(key);
+            users.add(key);
         });
         return users;
     }

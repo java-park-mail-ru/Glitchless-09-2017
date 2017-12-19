@@ -24,6 +24,26 @@ public class WaitInviteState implements IPlayerState {
         this.waitUserState = waitUserState;
     }
 
+    public static boolean checkToInvite(WebSocketMessage message) {
+        if (!(message instanceof WantPlayMessage)) {
+            return false;
+        }
+
+        if (((WantPlayMessage) message).getData() == null) {
+            return false;
+        }
+
+        if (!(((WantPlayMessage) message).getData() instanceof String)) {
+            return false;
+        }
+
+        if (!(((String) ((WantPlayMessage) message).getData()).startsWith("ref"))) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public void processPacket(@NotNull WebSocketMessage message, @Nullable WebSocketUser forUser) {
         if (forUser == null) {
@@ -46,25 +66,5 @@ public class WaitInviteState implements IPlayerState {
         gameInitState.setState(ClientState.WAITING_USER_BY_INVITE.getId());
         gameInitState.setData("ref:" + refLink);
         return gameInitState;
-    }
-
-    public static boolean checkToInvite(WebSocketMessage message) {
-        if (!(message instanceof WantPlayMessage)) {
-            return false;
-        }
-
-        if (((WantPlayMessage) message).getData() == null) {
-            return false;
-        }
-
-        if (!(((WantPlayMessage) message).getData() instanceof String)) {
-            return false;
-        }
-
-        if (!(((String) ((WantPlayMessage) message).getData()).startsWith("ref"))) {
-            return false;
-        }
-
-        return true;
     }
 }

@@ -3,6 +3,9 @@ package ru.glitchless.newserver.data.model;
 public class ScoreModel {
     private long score;
 
+    public ScoreModel() {
+    }
+
     public ScoreModel(long score) {
         this.score = score;
     }
