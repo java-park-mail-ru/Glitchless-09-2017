@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.glitchless.newserver.data.model.UserModel
-import ru.glitchless.newserver.data.stores.UserDao
+import ru.glitchless.newserver.data.dao.UserDao
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @RunWith(SpringRunner::class)

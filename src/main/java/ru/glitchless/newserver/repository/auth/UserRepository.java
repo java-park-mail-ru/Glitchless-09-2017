@@ -3,7 +3,7 @@ package ru.glitchless.newserver.repository.auth;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.newserver.data.stores.UserDao;
+import ru.glitchless.newserver.data.dao.UserDao;
 import ru.glitchless.newserver.data.throwables.InvalidLoginOrPassword;
 
 @Component

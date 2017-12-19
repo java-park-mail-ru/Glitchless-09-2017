@@ -1,4 +1,4 @@
-package ru.glitchless.newserver.data.stores;
+package ru.glitchless.newserver.data.dao;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;

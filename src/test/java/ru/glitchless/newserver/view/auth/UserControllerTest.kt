@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import ru.glitchless.newserver.data.model.UserModel
-import ru.glitchless.newserver.data.stores.UserDao
+import ru.glitchless.newserver.data.dao.UserDao
 import ru.glitchless.newserver.interactor.auth.UserInteractor
 
 
