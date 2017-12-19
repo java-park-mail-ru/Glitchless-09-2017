@@ -38,16 +38,18 @@ public class WaitUserState implements IPlayerState {
 
         final WebSocketUser secondUser;
 
-        if (checkToInvite(message)) {
+        if (WaitInviteState.checkToInvite(message)) {
             final String reflink = (String) ((WantPlayMessage) message).getData();
             final String[] refParts = reflink.split(":");
             if (refParts.length == 1) {
-                playerRepository.putPlayerState(forUser, new WaitInviteState(inviteRepository, forUser));
+                playerRepository.putPlayerState(forUser, new WaitInviteState(inviteRepository,
+                        playerRepository, forUser, this));
                 return;
             }
             secondUser = this.inviteRepository.getUserAndRemoveByInvite(refParts[1]);
             if (!secondUser.getSession().isOpen()) {
-                playerRepository.putPlayerState(forUser, new WaitInviteState(inviteRepository, forUser));
+                playerRepository.putPlayerState(forUser, new WaitInviteState(inviteRepository,
+                        playerRepository, forUser, this));
                 return;
             }
         } else {
@@ -65,25 +67,6 @@ public class WaitUserState implements IPlayerState {
                 new PreparingResourceState(playerRepository, forUser, gameRepository, sendMessageService));
     }
 
-    private boolean checkToInvite(WebSocketMessage message) {
-        if (!(message instanceof WantPlayMessage)) {
-            return false;
-        }
-
-        if (((WantPlayMessage) message).getData() == null) {
-            return false;
-        }
-
-        if (!(((WantPlayMessage) message).getData() instanceof String)) {
-            return false;
-        }
-
-        if (!(((String) ((WantPlayMessage) message).getData()).startsWith("ref"))) {
-            return false;
-        }
-
-        return true;
-    }
 
     @Override
     public GameInitState getMessageForState() {
