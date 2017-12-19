@@ -1,4 +1,4 @@
-package ru.glitchless.game.collision.`object`
+package ru.glitchless.game.collision.data
 
 import kotlin.math.*
 

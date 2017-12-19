@@ -1,9 +1,9 @@
 package ru.glitchless.game.collision
 
-import ru.glitchless.game.collision.`object`.Arc
-import ru.glitchless.game.collision.`object`.Circle
-import ru.glitchless.game.collision.`object`.CollisionPoint
-import ru.glitchless.game.collision.`object`.Line
+import ru.glitchless.game.collision.data.Arc
+import ru.glitchless.game.collision.data.Circle
+import ru.glitchless.game.collision.data.CollisionPoint
+import ru.glitchless.game.collision.data.Line
 import ru.glitchless.game.collision.utils.Constant
 
 import kotlin.math.*
@@ -28,7 +28,7 @@ fun findIntersection(lineInput: Line, circle: Circle): Array<CollisionPoint> {
         if (abs(abs(line.C) - circle.radius) < EPS) {
             return arrayOf(CollisionPoint(line.C.toFloat(), circle.center.y));
         }
-        val tmpSqrt = sqrt(r * r - pow((x0), 2.0));
+        val tmpSqrt = sqrt(r * r - x0.pow(2));
         val y1 = circle.center.y + tmpSqrt;
         val y2 = circle.center.y - tmpSqrt;
         return arrayOf(CollisionPoint((x0 + endShift[0]).toFloat(), y1.toFloat()),
@@ -43,7 +43,7 @@ fun findIntersection(lineInput: Line, circle: Circle): Array<CollisionPoint> {
         if (abs(abs(line.C) - circle.radius) < EPS) {
             return arrayOf(CollisionPoint(line.C.toFloat(), circle.center.x));
         }
-        val tmpSqrt = sqrt(r * r - pow((y0), 2.0));
+        val tmpSqrt = sqrt(r * r - y0.pow(2));
         val x1 = circle.center.x + tmpSqrt;
         val x2 = circle.center.x - tmpSqrt;
 
@@ -190,9 +190,9 @@ fun main(args: Array<String>) {
 }
 
 fun minDist(radian1: Double, radian2: Double): Array<Double> {
-    val sign1 = signum(radian1);
-    val sign2 = signum(radian2);
-    if (signum(radian1) == signum(radian2)) {
+    val sign1 = sign(radian1);
+    val sign2 = sign(radian2);
+    if (sign(radian1) == sign(radian2)) {
         val diffsign = if (abs(radian2) > abs(radian1)) -1 else 1;
         return arrayOf(abs(radian2 - radian1) % PI, diffsign.toDouble());
     }

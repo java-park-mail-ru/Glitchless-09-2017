@@ -33,7 +33,7 @@ public class ResourceFactory {
         try {
             resource = objectMapper.readValue(Resources.getResource("config/" + path), clazz);
         } catch (IOException e) {
-            throw new ResourceException("Failed constructing resource object " + path + " of type " + clazz.getName(), e);
+            throw new ResourceException("Failed constructing resource data " + path + " of type " + clazz.getName(), e);
         }
 
         return resource;
