@@ -1,7 +1,6 @@
 package ru.glitchless.game.physics;
 
 import ru.glitchless.game.GameMechanic;
-import ru.glitchless.game.collision.utils.Constant;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.Vector;
 import ru.glitchless.game.data.packages.toclient.CreateObjectMessage;
