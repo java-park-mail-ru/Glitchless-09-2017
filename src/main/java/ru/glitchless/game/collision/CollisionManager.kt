@@ -131,6 +131,7 @@ fun checkCollision(point: CollisionPoint, vector: CollisionPoint, arc: Arc, elap
  *
  * @return {[Point, Point] | Boolean} Point of collision and new speed vector if collision exists, else false
  */
+
 fun getReflection(point: CollisionPoint, vector: CollisionPoint, arc: Arc, elapsedMS: Double): Array<CollisionPoint>? {
     val collisionResult = checkCollision(point, vector, arc, elapsedMS) ?: return null;
 
@@ -153,7 +154,7 @@ fun getReflection(point: CollisionPoint, vector: CollisionPoint, arc: Arc, elaps
     }
 
     val resultTrajectory = Line.fromSlopeAndPoint(reflectionAngle, collision);
-    return arrayOf(collision, resultTrajectory.getVector(speed.toInt()));
+    return arrayOf(collision, resultTrajectory.getVector(speed));
 }
 
 fun simpleTest() {
@@ -183,10 +184,6 @@ fun radianLimit(radian: Double): Double {
         return radian;
     }
     return PI + radian % PI;
-}
-
-fun main(args: Array<String>) {
-    simpleTest()
 }
 
 fun minDist(radian1: Double, radian2: Double): Array<Double> {
