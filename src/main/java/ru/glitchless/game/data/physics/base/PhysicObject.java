@@ -2,15 +2,18 @@ package ru.glitchless.game.data.physics.base;
 
 import ru.glitchless.game.data.Point;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PhysicObject {
     private Point point;
     private float rotation = 0;
     private boolean forDestroy = false;
-    private int objectId = 0;
+    private int objectId = -1;
+    private List<IDestroyListener> destroyListeners = new ArrayList<>();
 
-    public PhysicObject(Point point, int objectId) {
+    public PhysicObject(Point point) {
         this.point = point;
-        this.objectId = objectId;
     }
 
     public Point getPoint() {
@@ -43,5 +46,15 @@ public class PhysicObject {
 
     public void setObjectId(int objectId) {
         this.objectId = objectId;
+    }
+
+    public void destroy() {
+        this.destroyListeners.forEach((item) -> {
+            item.onDestroy(this);
+        });
+    }
+
+    public void subscribeOnDestroy(IDestroyListener destroyListener) {
+        this.destroyListeners.add(destroyListener);
     }
 }

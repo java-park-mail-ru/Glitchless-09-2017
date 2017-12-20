@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import ru.glitchless.game.data.ProcessingCommit;
+import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 
@@ -40,6 +41,11 @@ public class SendMessageService implements Runnable {
         }
         waitSendingCommit.add(commit);
         return true;
+    }
+
+    public boolean sendMessage(WebSocketMessage message, RoomUsers users) {
+        return sendMessage(message, users.getFirstUser())
+                && sendMessage(message, users.getSecondUser());
     }
 
     public boolean sendMessage(WebSocketMessage message, WebSocketUser user) {

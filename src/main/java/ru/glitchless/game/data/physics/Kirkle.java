@@ -7,8 +7,8 @@ import ru.glitchless.newserver.utils.Constants;
 public class Kirkle extends PhysicObject {
     private int radius = Constants.CIRCLE_RADIUS;
 
-    public Kirkle(Point point, int objectId) {
-        super(point, objectId);
+    public Kirkle(Point point) {
+        super(point);
     }
 
     public int getRadius() {

@@ -25,7 +25,7 @@ public class PacketHandlerManager {
     public Pair<LightServerSnapMessage, ServerSnapMessage> processPacket(ProcessingCommit<ClientCommitMessage> commit, WebSocketUser user) {
         final PhysicObject object = idToObject.get(commit.getMessage().getObjectId());
         if (object == null) {
-            throw new GameException("Not found object with id: " + commit.getMessage().getObjectId());
+            throw new GameException("Not found data with id: " + commit.getMessage().getObjectId());
         }
 
         final IPacketHandler<?> handler = packetHandlers.get(object.getClass());

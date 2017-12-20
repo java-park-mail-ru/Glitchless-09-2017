@@ -10,8 +10,8 @@ public class Platform extends PhysicEntity {
     private final WebSocketUser platformUser;
     private final Kirkle circle;
 
-    public Platform(Point point, int objectId, WebSocketUser webSocketUser, Kirkle circle) {
-        super(point, objectId);
+    public Platform(Point point, WebSocketUser webSocketUser, Kirkle circle) {
+        super(point);
         this.platformUser = webSocketUser;
         this.circle = circle;
     }

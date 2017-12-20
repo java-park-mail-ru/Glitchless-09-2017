@@ -14,6 +14,7 @@ import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.game.network.PacketHandlerManager;
+import ru.glitchless.game.physics.GameplayLoop;
 import ru.glitchless.game.physics.VectorToPointTick;
 import ru.glitchless.newserver.data.IGameMechanic;
 import ru.glitchless.newserver.data.model.RoomUsers;
@@ -46,6 +47,7 @@ public class GameMechanic implements IGameMechanic {
     //Loops
     private final VectorToPointTick vectorTick;
     private final PacketHandlerManager packetHandlerManager;
+    private final GameplayLoop gameplayLoop;
 
 
     public GameMechanic(RoomUsers roomUsers, SendMessageService sendMessageService) {
@@ -53,6 +55,7 @@ public class GameMechanic implements IGameMechanic {
         this.sendMessageService = sendMessageService;
         this.vectorTick = new VectorToPointTick(physicEntities);
         this.packetHandlerManager = new PacketHandlerManager(idToObject);
+        this.gameplayLoop = new GameplayLoop(roomUsers, sendMessageService, this);
         this.firstSetting();
     }
 
@@ -69,6 +72,18 @@ public class GameMechanic implements IGameMechanic {
         }
 
         vectorTick.processTick(elapsedMS);
+        gameplayLoop.processGameplay(elapsedMS);
+
+        removeDestroyElement();
+    }
+
+    private void removeDestroyElement() {
+        final List<PhysicObject> tmp = new ArrayList<>(physicEntities);
+        tmp.forEach(item -> {
+            if (item.isForDestroy()) {
+                item.destroy();
+            }
+        });
     }
 
     private void processMessage(ProcessingCommit<ClientCommitMessage> cmtMessage) {
@@ -101,13 +116,11 @@ public class GameMechanic implements IGameMechanic {
     private void firstSetting() {
         final Kirkle circle = new Kirkle(
                 new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
-                        Constants.GAME_FIELD_SIZE.getPosY() / 2),
-                idCounter.getAndIncrement());
+                        Constants.GAME_FIELD_SIZE.getPosY() / 2));
         putObject(circle);
         this.entityStorage.setCircle(circle);
 
         final Platform platform1 = new Platform(new Point(0, 0),
-                idCounter.getAndIncrement(),
                 roomUsers.getFirstUser(),
                 circle);
         platform1.setRotation(Constants.GAME_START_PLATFORM1);
@@ -115,7 +128,6 @@ public class GameMechanic implements IGameMechanic {
         this.entityStorage.setFirstPlatform(platform1);
 
         final Platform platform2 = new Platform(new Point(0, 0),
-                idCounter.getAndIncrement(),
                 roomUsers.getSecondUser(),
                 circle);
         platform2.setRotation(Constants.GAME_START_PLATFORM2);
@@ -123,11 +135,17 @@ public class GameMechanic implements IGameMechanic {
         this.entityStorage.setSecondPlatform(platform2);
     }
 
-    private void putObject(PhysicObject physicObject) {
+    public void putObject(PhysicObject physicObject) {
+        physicObject.setObjectId(idCounter.getAndIncrement());
+
         idToObject.put(physicObject.getObjectId(), physicObject);
+        physicObject.subscribeOnDestroy((item) -> idToObject.remove(item.getObjectId()));
 
         if (physicObject instanceof PhysicEntity) {
             physicEntities.add((PhysicEntity) physicObject);
+            physicObject.subscribeOnDestroy(item -> {
+                physicEntities.remove(item);
+            });
         }
     }
 
