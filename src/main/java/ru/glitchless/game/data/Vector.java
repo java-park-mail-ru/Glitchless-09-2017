@@ -27,6 +27,10 @@ public class Vector {
                 diffY * multiplexer);
     }
 
+    public Vector clone() {
+        return new Vector(diffX, diffY);
+    }
+
     public Point toPoint() {
         return new Point(diffX, diffY);
     }

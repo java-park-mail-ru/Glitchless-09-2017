@@ -7,8 +7,8 @@ public class PhysicEntity extends PhysicObject {
     private Vector speed = new Vector(0, 0);
     private float rotationSpeed = 0;
 
-    public PhysicEntity(Point point, int objectId) {
-        super(point, objectId);
+    public PhysicEntity(Point point) {
+        super(point);
     }
 
     public Vector getSpeed() {

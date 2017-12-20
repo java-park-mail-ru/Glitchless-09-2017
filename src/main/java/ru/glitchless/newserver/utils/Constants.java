@@ -18,6 +18,7 @@ public class Constants {
     public static final int MAX_ROOMS_COUNT = 2;
     public static final int CIRCLE_RADIUS = 1080 / 2 - 60;
     public static final float CIRCLE_ANGEL = 360f;
+    public static final long LASER_PER_TIME = 1000;
     public static final float GAME_ROTATION_COEFFICIENT = (float) (360f / (Math.PI * 2));
     public static final Point GAME_FIELD_SIZE = new Point(1920, 1080);
 
