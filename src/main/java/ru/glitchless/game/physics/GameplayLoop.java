@@ -46,6 +46,7 @@ public class GameplayLoop {
         angleCounter++;
 
         gameMechanic.putObject(laser);
+        gameMechanic.getEntityStorage().addLaser(laser);
 
         sendMessageService.sendMessage(new CreateObjectMessage(laser), roomUsers);
     }

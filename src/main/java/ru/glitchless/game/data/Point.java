@@ -35,6 +35,10 @@ public class Point {
         return new CollisionPoint(posX, posY);
     }
 
+    public Vector toVector() {
+        return new Vector(posX, posY);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

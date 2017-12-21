@@ -2,10 +2,7 @@ package ru.glitchless.game.data;
 
 import ru.glitchless.game.data.packages.toclient.FullSwapScene;
 import ru.glitchless.game.data.packages.toclient.SnapObject;
-import ru.glitchless.game.data.physics.ForceField;
-import ru.glitchless.game.data.physics.HealthBlock;
-import ru.glitchless.game.data.physics.Kirkle;
-import ru.glitchless.game.data.physics.Platform;
+import ru.glitchless.game.data.physics.*;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 
 import java.util.ArrayList;
@@ -15,8 +12,10 @@ public class EntityStorage {
     private Kirkle circle;
     private Platform firstPlatform;
     private Platform secondPlatform;
-    private List<HealthBlock> healthBlockList = new ArrayList<>();
-    private List<ForceField> forceFields = new ArrayList<>();
+    private Alien alien;
+    private final List<HealthBlock> healthBlockList = new ArrayList<>();
+    private final List<ForceField> forceFields = new ArrayList<>();
+    private final List<Laser> lasers = new ArrayList<>();
 
     public EntityStorage() {
 
@@ -46,6 +45,14 @@ public class EntityStorage {
         this.secondPlatform = secondPlatform;
     }
 
+    public Alien getAlien() {
+        return alien;
+    }
+
+    public void setAlien(Alien alien) {
+        this.alien = alien;
+    }
+
     public void addHPBlock(HealthBlock healthBlock) {
         this.healthBlockList.add(healthBlock);
     }
@@ -68,6 +75,8 @@ public class EntityStorage {
                         .getUserModel()
                         .getLogin()));
 
+        scene.put("alien", new SnapObject(alien));
+
         healthBlockList.sort((item1, item2) -> (int) (item1.getRotation() - item2.getRotation()));
 
         forceFields.sort((item1, item2) -> (int) (item1.getRotation() - item2.getRotation()));
@@ -88,5 +97,16 @@ public class EntityStorage {
         scene.put("forceFields", forceSnap);
 
         return scene; // Init all game element
+    }
+
+    public void addLaser(Laser laser) {
+        this.lasers.add(laser);
+        laser.subscribeOnDestroy((item) -> {
+            this.lasers.remove(item);
+        });
+    }
+
+    public List<Laser> getLasers() {
+        return lasers;
     }
 }

@@ -3,6 +3,7 @@ package ru.glitchless.game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.glitchless.game.collision.data.Circle;
+import ru.glitchless.game.data.Alien;
 import ru.glitchless.game.data.EntityStorage;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.ProcessingCommit;
@@ -171,6 +172,10 @@ public class GameMechanic implements IGameMechanic {
             putObject(forceField);
             this.entityStorage.addForceField(forceField);
         }
+
+        final Alien alien = new Alien(center);
+        putObject(alien);
+        this.entityStorage.setAlien(alien);
     }
 
     public void putObject(PhysicObject physicObject) {
@@ -192,5 +197,9 @@ public class GameMechanic implements IGameMechanic {
     public boolean isDestroy() {
         return !(roomUsers.getFirstUser().getSession().isOpen()
                 || roomUsers.getSecondUser().getSession().isOpen());
+    }
+
+    public EntityStorage getEntityStorage() {
+        return entityStorage;
     }
 }

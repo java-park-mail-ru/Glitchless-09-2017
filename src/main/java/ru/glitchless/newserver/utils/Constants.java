@@ -25,6 +25,7 @@ public class Constants {
     public static final float GAME_ROTATION_COEFFICIENT = (float) (360f / (Math.PI * 2));
     public static final Point GAME_FIELD_SIZE = new Point(1920, 1080);
     public static final float GAME_PLATFORM_SIZE = 105;
+    public static final float GAME_ALIEN_SIZE = 100;
     public static final int GAME_HP_COUNT = 5;
     public static final float GAME_HP_CIRCLE_RADIUS = (float) ((1080 / 2 - 60) * 1.15);
     public static final float GAME_FORCEFIELD_RADIUS = (float) ((1080 / 2 - 60) * 1.1);
