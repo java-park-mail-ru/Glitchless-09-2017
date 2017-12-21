@@ -62,9 +62,9 @@ public class WaitUserState implements IPlayerState {
         }
 
         playerRepository.putPlayerState(forUser,
-                new PreparingResourceState(playerRepository, secondUser, gameRepository, sendMessageService));
+                new PreparingResourceState(playerRepository, secondUser, gameRepository, sendMessageService, this));
         playerRepository.putPlayerState(secondUser,
-                new PreparingResourceState(playerRepository, forUser, gameRepository, sendMessageService));
+                new PreparingResourceState(playerRepository, forUser, gameRepository, sendMessageService, this));
     }
 
 

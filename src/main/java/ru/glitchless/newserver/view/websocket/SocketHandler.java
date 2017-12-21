@@ -72,6 +72,7 @@ public class SocketHandler extends TextWebSocketHandler {
         try {
             handleMessage(wsUser, message);
         } catch (Throwable e) {
+            LOGGER.error("Error handle message", e);
             session.sendMessage(new TextMessage(exceptionToJson(e)));
         }
     }

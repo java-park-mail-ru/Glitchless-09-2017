@@ -8,15 +8,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FullSwapScene extends WebSocketMessage {
-    private final Map<String, SnapObject> hashMap = new HashMap<>();
+    private final Map<String, Object> hashMap = new HashMap<>();
 
     @JsonAnySetter
     public void put(String type, SnapObject object) {
         hashMap.put(type, object);
     }
 
+    public void put(String type, SnapObject[] objects) {
+        hashMap.put(type, objects);
+    }
+
     @JsonAnyGetter
-    public Map<String, SnapObject> getMap() {
+    public Map<String, Object> getMap() {
         return hashMap;
     }
 }

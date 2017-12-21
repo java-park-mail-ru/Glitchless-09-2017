@@ -10,15 +10,23 @@ import ru.glitchless.newserver.repository.lobby.PlayerRepository;
 
 public class WaitingEnemyState implements IPlayerState {
     private final PlayerRepository playerRepository;
+    private final WebSocketUser secondUser;
+    private final WaitUserState waitUserState;
 
-    public WaitingEnemyState(PlayerRepository playerRepository, WebSocketUser secondUser) {
-        WebSocketUser secondUser1 = secondUser;
+    public WaitingEnemyState(PlayerRepository playerRepository, WebSocketUser secondUser, WaitUserState waitUserState) {
         this.playerRepository = playerRepository;
+        this.secondUser = secondUser;
+        this.waitUserState = waitUserState;
     }
 
     @Override
     public void processPacket(@NotNull WebSocketMessage message, @Nullable WebSocketUser forUser) {
         if (forUser == null) {
+            return;
+        }
+
+        if (!secondUser.getSession().isOpen()) {
+            playerRepository.putPlayerState(forUser, waitUserState);
             return;
         }
 

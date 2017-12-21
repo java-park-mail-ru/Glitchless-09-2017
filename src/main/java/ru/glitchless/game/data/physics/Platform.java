@@ -1,12 +1,15 @@
 package ru.glitchless.game.data.physics;
 
+import ru.glitchless.game.collision.data.Arc;
+import ru.glitchless.game.collision.data.CollisionPoint;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 
-public class Platform extends PhysicEntity {
+public class Platform extends PhysicEntity implements ICanGetArc {
+    public static final float MAGIC_CONSTANT = 0.5f;
     private final WebSocketUser platformUser;
     private final Kirkle circle;
 
@@ -43,5 +46,28 @@ public class Platform extends PhysicEntity {
 
         // TODO check speed
         return true;
+    }
+
+    @Override
+    public Arc getArc() {
+        final Point coord = this.getPoint();
+        final float rotation = this.getRotation();
+        final float angle = MAGIC_CONSTANT;
+        final float lengthHypotenuse = Constants.GAME_PLATFORM_SIZE / 2;
+
+        final float deltaXLeft = (float) (lengthHypotenuse * Math.cos(rotation + angle));
+        final float deltaYLeft = (float) (lengthHypotenuse * Math.sin(rotation + angle));
+        final float deltaXRight = (float) (lengthHypotenuse * Math.cos(rotation - angle));
+        final float deltaYRight = (float) (lengthHypotenuse * Math.sin(rotation - angle));
+        final float centralX = (float) (coord.getPosX() - (lengthHypotenuse / 4) * Math.sin(rotation));
+        final float centralY = (float) (coord.getPosY() + (lengthHypotenuse / 4) * Math.cos(rotation));
+
+        final CollisionPoint pointLeft = new CollisionPoint(centralX - deltaXLeft,
+                centralY - deltaYLeft);
+        final CollisionPoint pointRight = new CollisionPoint(centralX + deltaXRight,
+                centralY + deltaYRight);
+        final CollisionPoint pointCentral = new CollisionPoint(centralX, centralY);
+
+        return Arc.Companion.fromPoints(pointLeft, pointRight, pointCentral);
     }
 }

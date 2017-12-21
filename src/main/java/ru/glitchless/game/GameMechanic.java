@@ -2,6 +2,7 @@ package ru.glitchless.game;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.glitchless.game.collision.data.Circle;
 import ru.glitchless.game.data.EntityStorage;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.ProcessingCommit;
@@ -9,6 +10,8 @@ import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.toclient.FullSwapScene;
 import ru.glitchless.game.data.packages.toclient.LightServerSnapMessage;
 import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
+import ru.glitchless.game.data.physics.ForceField;
+import ru.glitchless.game.data.physics.HealthBlock;
 import ru.glitchless.game.data.physics.Kirkle;
 import ru.glitchless.game.data.physics.Platform;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
@@ -114,9 +117,11 @@ public class GameMechanic implements IGameMechanic {
     }
 
     private void firstSetting() {
-        final Kirkle circle = new Kirkle(
+        final Point center =
                 new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
-                        Constants.GAME_FIELD_SIZE.getPosY() / 2));
+                        Constants.GAME_FIELD_SIZE.getPosY() / 2);
+
+        final Kirkle circle = new Kirkle(center);
         putObject(circle);
         this.entityStorage.setCircle(circle);
 
@@ -133,6 +138,39 @@ public class GameMechanic implements IGameMechanic {
         platform2.setRotation(Constants.GAME_START_PLATFORM2);
         putObject(platform2);
         this.entityStorage.setSecondPlatform(platform2);
+
+        final int hpBlockCount = Constants.GAME_HP_COUNT * 2;
+        for (int i = 0; i < hpBlockCount; i++) {
+            final WebSocketUser player;
+            if (i < Constants.GAME_HP_COUNT) {
+                player = roomUsers.getFirstUser();
+            } else {
+                player = roomUsers.getSecondUser();
+            }
+
+            final HealthBlock hpBlock = new HealthBlock(new Point(0f, 0f),
+                    new Circle(Constants.GAME_HP_CIRCLE_RADIUS, center.toCollisionPoint()),
+                    player);
+
+            hpBlock.setRotation(i * Constants.CIRCLE_ANGEL / hpBlockCount
+                    + Constants.CIRCLE_ANGEL / hpBlockCount / 2);
+
+            putObject(hpBlock);
+            this.entityStorage.addHPBlock(hpBlock);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            final ForceField forceField = new ForceField(
+                    new Point((float) (center.getPosX()
+                            + Constants.CIRCLE_RADIUS * Constants.FORCEFIELD_ANGEL_COEFICIENT), center.getPosY()),
+                    new Circle(Constants.GAME_FORCEFIELD_RADIUS, center.toCollisionPoint()));
+            forceField.setRotation(Constants.CIRCLE_ANGEL / 4 + i * Constants.CIRCLE_ANGEL / 2);
+            final Point coords = forceField.getPoint();
+            forceField.setPoint(new Point(coords.getPosX(), coords.getPosY() - i));
+
+            putObject(forceField);
+            this.entityStorage.addForceField(forceField);
+        }
     }
 
     public void putObject(PhysicObject physicObject) {
