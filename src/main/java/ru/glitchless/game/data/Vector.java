@@ -5,9 +5,9 @@ import ru.glitchless.newserver.utils.Constants;
 
 public class Vector {
     @JsonProperty("x")
-    private final float diffX;
+    private float diffX;
     @JsonProperty("y")
-    private final float diffY;
+    private float diffY;
 
     public Vector(@JsonProperty("x") float diffX, @JsonProperty("y") float diffY) {
         this.diffX = diffX;
@@ -23,8 +23,9 @@ public class Vector {
     }
 
     public Vector multipy(long multiplexer) {
-        return new Vector(diffX * multiplexer,
-                diffY * multiplexer);
+        diffX *= multiplexer;
+        diffY *= multiplexer;
+        return this;
     }
 
     public Vector clone() {

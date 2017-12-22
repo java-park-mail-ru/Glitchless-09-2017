@@ -1,6 +1,8 @@
 package ru.glitchless.game.collision.data
 
-import kotlin.math.*
+import kotlin.math.atan2
+import kotlin.math.max
+import kotlin.math.min
 
 class Arc(radius: Double,
           private val boundingPoints: Array<CollisionPoint>,

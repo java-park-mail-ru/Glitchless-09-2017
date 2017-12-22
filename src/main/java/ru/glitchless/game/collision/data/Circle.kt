@@ -1,7 +1,9 @@
 package ru.glitchless.game.collision.data
 
 import ru.glitchless.game.collision.utils.Constant
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 open class Circle(public val radius: Double,
                   public val center: CollisionPoint) {

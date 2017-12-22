@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityStorage {
+    private final List<HealthBlock> healthBlockList = new ArrayList<>();
+    private final List<ForceField> forceFields = new ArrayList<>();
+    private final List<Laser> lasers = new ArrayList<>();
     private Kirkle circle;
     private Platform firstPlatform;
     private Platform secondPlatform;
     private Alien alien;
-    private final List<HealthBlock> healthBlockList = new ArrayList<>();
-    private final List<ForceField> forceFields = new ArrayList<>();
-    private final List<Laser> lasers = new ArrayList<>();
 
     public EntityStorage() {
 
@@ -55,10 +55,16 @@ public class EntityStorage {
 
     public void addHPBlock(HealthBlock healthBlock) {
         this.healthBlockList.add(healthBlock);
+        healthBlockList.sort((item1, item2) -> (int) (item1.getRotation() - item2.getRotation()));
+        healthBlock.subscribeOnDestroy((item) -> {
+            this.healthBlockList.remove(item);
+        });
     }
 
     public void addForceField(ForceField forceField) {
         this.forceFields.add(forceField);
+
+        forceFields.sort((item1, item2) -> (int) (item1.getRotation() - item2.getRotation()));
     }
 
     public FullSwapScene fullSwapScene(WebSocketUser firstUser, WebSocketUser secondUser) {
@@ -77,10 +83,6 @@ public class EntityStorage {
 
         scene.put("alien", new SnapObject(alien));
 
-        healthBlockList.sort((item1, item2) -> (int) (item1.getRotation() - item2.getRotation()));
-
-        forceFields.sort((item1, item2) -> (int) (item1.getRotation() - item2.getRotation()));
-
         final SnapObject[] healthSnap = new SnapObject[healthBlockList.size()];
 
         for (int i = 0; i < healthSnap.length; i++) {
@@ -97,6 +99,14 @@ public class EntityStorage {
         scene.put("forceFields", forceSnap);
 
         return scene; // Init all game element
+    }
+
+    public List<HealthBlock> getHealthBlockList() {
+        return healthBlockList;
+    }
+
+    public List<ForceField> getForceFields() {
+        return forceFields;
     }
 
     public void addLaser(Laser laser) {

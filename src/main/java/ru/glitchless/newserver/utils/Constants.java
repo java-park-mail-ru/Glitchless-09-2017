@@ -15,12 +15,17 @@ public class Constants {
     public static final long PING_TIMEOUT = 10000L;
     public static final String SESSION_EXTRA_USER = "user";
     public static final String SESSION_EXTRA_USERWS = "userws";
+    public static final int MESSAGE_THREAD_COUNT = 20;
 
 
     public static final int MAX_ROOMS_COUNT = 2;
     public static final int CIRCLE_RADIUS = 1080 / 2 - 60;
     public static final float CIRCLE_ANGEL = 360f;
-    public static final long LASER_PER_TIME = 1000;
+    public static final float SHIELD_REGEN_RATIO = 5 / 1000;
+    public static final float SHIELD_ACTIVATION_PERCENT = 0.1f;
+    public static final float LASER_DAMAGE = 20;
+    public static final float MAX_SHIELD = 100;
+    public static final long LASER_PER_TIME = 500;
     public static final double FORCEFIELD_ANGEL_COEFICIENT = 1.1;
     public static final float GAME_ROTATION_COEFFICIENT = (float) (360f / (Math.PI * 2));
     public static final Point GAME_FIELD_SIZE = new Point(1920, 1080);

@@ -26,7 +26,7 @@ public class PlayerRepository {
 
     public void putPlayerState(WebSocketUser user, IPlayerState state) {
         playerStore.putPlayer(user, state);
-        sendMessageService.sendMessageSync(state.getMessageForState(), user);
+        sendMessageService.sendMessage(state.getMessageForState(), user);
     }
 
     public void logoutUser(WebSocketUser user) {

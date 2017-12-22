@@ -87,7 +87,7 @@ fun findIntersection(lineInput: Line, circle: Circle): Array<CollisionPoint> {
  *
  * @return {[Point, Line] | Boolean} Point of collision and old trajectory line if collision exists, else false
  */
-fun checkCollision(point: CollisionPoint, vector: CollisionPoint, arc: Arc, elapsedMS: Double,
+fun checkCollision(point: CollisionPoint, vector: CollisionPoint, arc: Circle, elapsedMS: Double,
                    fullCircle: Boolean = false, isRay: Boolean = false): Array<Any>? {
     val speed = vector.getLength();
     val initialPoint = point.copy();
@@ -112,7 +112,7 @@ fun checkCollision(point: CollisionPoint, vector: CollisionPoint, arc: Arc, elap
     }
 
     val collisions = intersections.filter {
-        line.segmentContains(it)!! && (fullCircle || arc.contains(it));
+        line.segmentContains(it)!! && (fullCircle || (arc is Arc && arc.contains(it)));
     }
 
     if (collisions.isEmpty()) {

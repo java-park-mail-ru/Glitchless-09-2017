@@ -70,4 +70,8 @@ public class Platform extends PhysicEntity implements ICanGetArc {
 
         return Arc.Companion.fromPoints(pointLeft, pointRight, pointCentral);
     }
+
+    public WebSocketUser getPlatformUser() {
+        return platformUser;
+    }
 }

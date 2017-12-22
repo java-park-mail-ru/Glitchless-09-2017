@@ -5,14 +5,14 @@ import ru.glitchless.game.collision.data.Circle;
 import ru.glitchless.game.collision.data.CollisionPoint;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.physics.base.PhysicObject;
+import ru.glitchless.game.network.CollisionHandler;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 
 public class HealthBlock extends PhysicObject implements ICanGetArc {
-    private static final float MAGIC_NUMBER = 0.15f;
     public static final float MAGIC_NUMBER2 = 2.15f;
     public static final int HEALTH_SIZE = 252;
-
+    private static final float MAGIC_NUMBER = 0.15f;
     private Circle circle;
     private Arc collisionArc;
     private WebSocketUser aligmentPlayer;
@@ -66,5 +66,11 @@ public class HealthBlock extends PhysicObject implements ICanGetArc {
         this.setPoint(newPoint);
 
         this.refreshCollisionArc();
+    }
+
+    public void onCollision(Object[] points, CollisionHandler collisionHandler) {
+        this.setForDestroy(true);
+        collisionHandler.onDestroyObject(this);
+        collisionHandler.onHpLoss(aligmentPlayer);
     }
 }

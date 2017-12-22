@@ -8,11 +8,12 @@ import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.newserver.utils.Constants;
 
 public class ForceField extends PhysicObject implements ICanGetArc {
-    private static final float MAGIC_NUMBER = 0.79f;
     public static final float MAGIC_NUMBER2 = 2.15f;
-
+    private static final float MAGIC_NUMBER = 0.79f;
     private Circle circle;
     private Arc collisionArc;
+    private boolean off = false;
+    private float shieldStatus = Constants.MAX_SHIELD;
 
     public ForceField(Point point, Circle circle) {
         super(point);
@@ -61,5 +62,25 @@ public class ForceField extends PhysicObject implements ICanGetArc {
 
         this.setPoint(newPoint);
         this.refreshCollisionArc();
+    }
+
+    public float getShieldStatus() {
+        return shieldStatus;
+    }
+
+    public void addShieldStatus(float increase) {
+        final float newShield = shieldStatus + increase;
+        this.shieldStatus = Math.max(Math.min(newShield, Constants.MAX_SHIELD), 0);
+
+        this.off = (shieldStatus / Constants.MAX_SHIELD) < Constants.SHIELD_ACTIVATION_PERCENT;
+    }
+
+
+    public boolean isOff() {
+        return off;
+    }
+
+    public void onCollision(Object[] objects) {
+        addShieldStatus(-Constants.LASER_DAMAGE);
     }
 }

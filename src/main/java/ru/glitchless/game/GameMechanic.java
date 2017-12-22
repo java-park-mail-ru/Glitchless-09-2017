@@ -3,7 +3,6 @@ package ru.glitchless.game;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.glitchless.game.collision.data.Circle;
-import ru.glitchless.game.data.Alien;
 import ru.glitchless.game.data.EntityStorage;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.ProcessingCommit;
@@ -11,13 +10,12 @@ import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.packages.toclient.FullSwapScene;
 import ru.glitchless.game.data.packages.toclient.LightServerSnapMessage;
 import ru.glitchless.game.data.packages.toclient.ServerSnapMessage;
-import ru.glitchless.game.data.physics.ForceField;
-import ru.glitchless.game.data.physics.HealthBlock;
-import ru.glitchless.game.data.physics.Kirkle;
-import ru.glitchless.game.data.physics.Platform;
+import ru.glitchless.game.data.physics.*;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
 import ru.glitchless.game.data.physics.base.PhysicObject;
+import ru.glitchless.game.network.CollisionHandler;
 import ru.glitchless.game.network.PacketHandlerManager;
+import ru.glitchless.game.physics.CollisionLoop;
 import ru.glitchless.game.physics.GameplayLoop;
 import ru.glitchless.game.physics.VectorToPointTick;
 import ru.glitchless.newserver.data.IGameMechanic;
@@ -47,11 +45,13 @@ public class GameMechanic implements IGameMechanic {
     private final AtomicInteger idCounter = new AtomicInteger();
     private final HashMap<Integer, PhysicObject> idToObject = new HashMap<>();
     private final EntityStorage entityStorage = new EntityStorage();
+    private final CollisionHandler collisionHandler;
 
     //Loops
     private final VectorToPointTick vectorTick;
     private final PacketHandlerManager packetHandlerManager;
     private final GameplayLoop gameplayLoop;
+    private final CollisionLoop collisionLoop;
 
 
     public GameMechanic(RoomUsers roomUsers, SendMessageService sendMessageService) {
@@ -60,6 +60,8 @@ public class GameMechanic implements IGameMechanic {
         this.vectorTick = new VectorToPointTick(physicEntities);
         this.packetHandlerManager = new PacketHandlerManager(idToObject);
         this.gameplayLoop = new GameplayLoop(roomUsers, sendMessageService, this);
+        this.collisionHandler = new CollisionHandler(sendMessageService, roomUsers);
+        this.collisionLoop = new CollisionLoop(entityStorage, collisionHandler);
         this.firstSetting();
     }
 
@@ -75,9 +77,10 @@ public class GameMechanic implements IGameMechanic {
             }
         }
 
+        collisionLoop.processCollisions(elapsedMS);
         vectorTick.processTick(elapsedMS);
         gameplayLoop.processGameplay(elapsedMS);
-
+        // TODO repair shield
         removeDestroyElement();
     }
 

@@ -1,6 +1,6 @@
 package ru.glitchless.game.collision.data
 
-import kotlin.math.*
+import kotlin.math.sqrt
 
 class CollisionPoint(public var x: Float,
                      public var y: Float) {

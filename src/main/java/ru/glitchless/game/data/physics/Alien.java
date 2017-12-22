@@ -1,6 +1,7 @@
-package ru.glitchless.game.data;
+package ru.glitchless.game.data.physics;
 
 import ru.glitchless.game.collision.data.Circle;
+import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.newserver.utils.Constants;
 

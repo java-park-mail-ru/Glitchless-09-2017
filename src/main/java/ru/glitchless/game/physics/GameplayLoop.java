@@ -14,13 +14,13 @@ public class GameplayLoop {
     private final SendMessageService sendMessageService;
     private final GameMechanic gameMechanic;
     private final Vector[] anglePoints = new Vector[]{
-            new Vector(0.1f, -0.05f),
+            new Vector(-0.1f, -0.05f),
             new Vector(0f, -0.1f),
-            new Vector(0.05f, -0.1f),
+            new Vector(-0.05f, -0.1f),
             new Vector(0.1f, -0.1f),
-            new Vector(0.1f, -0.05f),
+            new Vector(-0.1f, -0.05f),
             new Vector(0.1f, 0f),
-            new Vector(0.1f, 0.05f),
+            new Vector(-0.1f, 0.05f),
             new Vector(0.1f, 0.1f)};
     private int angleCounter = 0;
     private long counter;
@@ -41,15 +41,22 @@ public class GameplayLoop {
         final Laser laser = new Laser(new Point(Constants.GAME_FIELD_SIZE.getPosX() / 2,
                 Constants.GAME_FIELD_SIZE.getPosY() / 2));
 
-        final Vector laserSpeed = this.anglePoints[Math.abs(this.angleCounter % this.anglePoints.length)].multipy(-1).clone().multipy(-2);
+        final Vector laserSpeed = this.anglePoints[Math.abs(this.angleCounter % this.anglePoints.length)]
+                .multipy(-1).clone().multipy(-4);
         laser.setSpeed(laserSpeed);
-        angleCounter++;
+        angleCounter += Math.floor(Math.random() * 4 + 1);
 
         gameMechanic.putObject(laser);
         gameMechanic.getEntityStorage().addLaser(laser);
 
         sendMessageService.sendMessage(new CreateObjectMessage(laser), roomUsers);
+        chargeField(elapsedMs);
     }
 
+    private void chargeField(long elapsedMS) {
+        gameMechanic.getEntityStorage().getForceFields().forEach((item) -> {
+            item.addShieldStatus(elapsedMS * Constants.SHIELD_REGEN_RATIO);
+        });
 
+    }
 }

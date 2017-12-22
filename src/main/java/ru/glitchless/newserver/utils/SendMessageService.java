@@ -4,42 +4,51 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 import ru.glitchless.game.data.ProcessingCommit;
 import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 
-import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class SendMessageService implements Runnable {
+public class SendMessageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SendMessageService.class);
 
-    private final Object lockObject = new Object();
-    private final BlockingQueue<ProcessingCommit<WebSocketMessage>> waitSendingCommit
-            = new LinkedBlockingQueue<>();
+    private final Executor executor = Executors.newFixedThreadPool(Constants.MESSAGE_THREAD_COUNT);
 
-    private final Executor executor = Executors.newSingleThreadExecutor();
-    private final ObjectMapper objectMapper;
+    private SendWorker[] workers = new SendWorker[Constants.MESSAGE_THREAD_COUNT];
+    private Map<WebSocketUser, SendWorker> webSocketUserSendWorkerMap = new ConcurrentHashMap<>();
+    private AtomicInteger counter = new AtomicInteger(0);
 
     public SendMessageService(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+        for (int i = 0; i < Constants.MESSAGE_THREAD_COUNT; i++) {
+            workers[i] = new SendWorker(objectMapper);
+        }
     }
 
     public void init() {
-        executor.execute(this); // Add more workers for perfomance
+        for (int i = 0; i < Constants.MESSAGE_THREAD_COUNT; i++) {
+            executor.execute(workers[i]);
+        }
     }
 
     public boolean sendMessage(ProcessingCommit<WebSocketMessage> commit) {
         if (!commit.getUser().getSession().isOpen()) {
             return false;
         }
-        waitSendingCommit.add(commit);
+        SendWorker sendWorker = webSocketUserSendWorkerMap.get(commit.getUser());
+
+        if (sendWorker == null) {
+            sendWorker = workers[counter.getAndIncrement()];
+            webSocketUserSendWorkerMap.put(commit.getUser(), sendWorker);
+        }
+
+        sendWorker.addToQueue(commit);
         return true;
     }
 
@@ -50,42 +59,5 @@ public class SendMessageService implements Runnable {
 
     public boolean sendMessage(WebSocketMessage message, WebSocketUser user) {
         return sendMessage(new ProcessingCommit<>(message, user));
-    }
-
-    public boolean sendMessageSync(WebSocketMessage message, WebSocketUser user) {
-        return sendMessageSync(new ProcessingCommit<>(message, user));
-    }
-
-    public boolean sendMessageSync(ProcessingCommit<WebSocketMessage> commit) {
-        if (!commit.getUser().getSession().isOpen()) {
-            return false;
-        }
-
-        try {
-            commit.getUser().getSession().sendMessage(
-                    new TextMessage(objectMapper.writeValueAsString(commit.getMessage())));
-        } catch (IOException e) {
-            LOGGER.error("Error while sending message. Socket is open: "
-                    + commit.getUser().getSession().isOpen(), e);
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    @SuppressWarnings("OverlyBroadCatchBlock")
-    public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                ProcessingCommit<WebSocketMessage> commit;
-                while ((commit = waitSendingCommit.take()) != null) {
-                    sendMessageSync(commit);
-                }
-            } catch (Exception e) {
-                LOGGER.error("Error in worker loop", e);
-            }
-            LOGGER.error("Terminated message worker...");
-        }
     }
 }
