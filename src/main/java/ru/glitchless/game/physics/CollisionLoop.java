@@ -36,7 +36,7 @@ public class CollisionLoop {
                     elapsedMS);
             if (points != null) {
                 laser.onCollision(points, platform);
-                collisionHandler.onObjectChange(laser);
+                collisionHandler.onLaserChange(laser);
             }
 
         });
@@ -80,8 +80,8 @@ public class CollisionLoop {
                     laser.getSpeed().toPoint().toCollisionPoint(),
                     healthBlock.getArc(), elapsedMS, false, false);
             if (points != null) {
-                laser.setForDestroy(true);
                 healthBlock.onCollision(points, collisionHandler);
+                laser.setForDestroy(true);
             }
         });
     }

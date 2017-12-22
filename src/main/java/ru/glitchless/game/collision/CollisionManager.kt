@@ -28,7 +28,7 @@ fun findIntersection(lineInput: Line, circle: Circle): Array<CollisionPoint> {
         if (abs(abs(line.C) - circle.radius) < EPS) {
             return arrayOf(CollisionPoint(line.C.toFloat(), circle.center.y));
         }
-        val tmpSqrt = sqrt(r * r - x0.pow(2));
+        val tmpSqrt = sqrt(r * r - x0.pow(2.0));
         val y1 = circle.center.y + tmpSqrt;
         val y2 = circle.center.y - tmpSqrt;
         return arrayOf(CollisionPoint((x0 + endShift[0]).toFloat(), y1.toFloat()),
@@ -43,7 +43,7 @@ fun findIntersection(lineInput: Line, circle: Circle): Array<CollisionPoint> {
         if (abs(abs(line.C) - circle.radius) < EPS) {
             return arrayOf(CollisionPoint(line.C.toFloat(), circle.center.x));
         }
-        val tmpSqrt = sqrt(r * r - y0.pow(2));
+        val tmpSqrt = sqrt(r * r - y0.pow(2.0));
         val x1 = circle.center.x + tmpSqrt;
         val x2 = circle.center.x - tmpSqrt;
 
@@ -89,7 +89,6 @@ fun findIntersection(lineInput: Line, circle: Circle): Array<CollisionPoint> {
  */
 fun checkCollision(point: CollisionPoint, vector: CollisionPoint, arc: Circle, elapsedMS: Double,
                    fullCircle: Boolean = false, isRay: Boolean = false): Array<Any>? {
-    val speed = vector.getLength();
     val initialPoint = point.copy();
     val tmpPoint = point.copy();
 
@@ -112,7 +111,7 @@ fun checkCollision(point: CollisionPoint, vector: CollisionPoint, arc: Circle, e
     }
 
     val collisions = intersections.filter {
-        line.segmentContains(it)!! && (fullCircle || (arc is Arc && arc.contains(it)));
+        line.segmentContains(it)!! && (fullCircle || (arc as Arc).contains(it));
     }
 
     if (collisions.isEmpty()) {
@@ -190,8 +189,8 @@ fun minDist(radian1: Double, radian2: Double): Array<Double> {
     val sign1 = sign(radian1);
     val sign2 = sign(radian2);
     if (sign(radian1) == sign(radian2)) {
-        val diffsign = if (abs(radian2) > abs(radian1)) -1 else 1;
-        return arrayOf(abs(radian2 - radian1) % PI, diffsign.toDouble());
+        val diffsign = if (abs(radian2) > abs(radian1)) -1.0 else 1.0;
+        return arrayOf(abs(radian2 - radian1) % PI, diffsign);
     }
     val simpleDiff = abs(radian2 - radian1);
     val reverseDiff = abs(radian1 - sign1 * PI) + abs(radian2 - sign2 * PI);

@@ -178,7 +178,7 @@ class Line(val A: Double,
                 return Line.createHorizontal((-point1.y).toDouble(), arrayOf(point1, point2), isVector);
             }
 
-            val A = 1;
+            val A = 1.0;
             val B = (point1.x - point2.x) / (point2.y - point1.y);
             val C = point1.y * (point2.x - point1.x) / (point2.y - point1.y) - point1.x;
             return Line(A.toDouble(), B.toDouble(), C.toDouble(), arrayOf(point1, point2), isVector);
@@ -186,7 +186,7 @@ class Line(val A: Double,
 
         fun fromSlopeAndPoint(slope: Double, point: CollisionPoint, isVector: Boolean = true): Line {
             val A = 1.0;
-            val B = -1 / tan(slope);
+            val B = -1.0 / tan(slope);
             val C = -(point.x + B * point.y);
             var vectorDirectionByX: Boolean = false;
             var vectorDirectionByY: Boolean = false;
@@ -196,11 +196,11 @@ class Line(val A: Double,
                 vectorDirectionByY = slope >= -PI / 2 && slope < PI / 2;
             }
 
-            var incrementX: Int;
+            var incrementX: Float;
             if (vectorDirectionByX) {
-                incrementX = 1;
+                incrementX = 1.0f;
             } else {
-                incrementX = -1;
+                incrementX = -1.0f;
             }
 
             return Line(A, B, C, arrayOf(point, CollisionPoint(point.x + incrementX, (point.y - B * incrementX).toFloat())), isVector);

@@ -5,6 +5,7 @@ import ru.glitchless.game.collision.data.Circle;
 import ru.glitchless.game.collision.data.CollisionPoint;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.physics.base.PhysicObject;
+import ru.glitchless.game.utils.Utils;
 import ru.glitchless.newserver.utils.Constants;
 
 public class ForceField extends PhysicObject implements ICanGetArc {
@@ -27,7 +28,7 @@ public class ForceField extends PhysicObject implements ICanGetArc {
         }
 
         final CollisionPoint coord = this.getPoint().toCollisionPoint();
-        final float rotation = this.getRotation();
+        final float rotation = (float) Utils.radians(this.getRotation());
         final double lengthHypotenuse = Math.sqrt(Math.pow(Constants.GAME_FIELD_SIZE.getPosX(), 2)
                 + Math.pow(Constants.GAME_FIELD_SIZE.getPosY(), 2)) / MAGIC_NUMBER2; //empiric coefficient
 

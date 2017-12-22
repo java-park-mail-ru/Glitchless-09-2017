@@ -25,7 +25,7 @@ public class Constants {
     public static final float SHIELD_ACTIVATION_PERCENT = 0.1f;
     public static final float LASER_DAMAGE = 20;
     public static final float MAX_SHIELD = 100;
-    public static final long LASER_PER_TIME = 500;
+    public static final long LASER_PER_TIME = 2000;
     public static final double FORCEFIELD_ANGEL_COEFICIENT = 1.1;
     public static final float GAME_ROTATION_COEFFICIENT = (float) (360f / (Math.PI * 2));
     public static final Point GAME_FIELD_SIZE = new Point(1920, 1080);

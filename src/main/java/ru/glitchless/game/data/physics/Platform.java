@@ -5,6 +5,7 @@ import ru.glitchless.game.collision.data.CollisionPoint;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.packages.fromclient.ClientCommitMessage;
 import ru.glitchless.game.data.physics.base.PhysicEntity;
+import ru.glitchless.game.utils.Utils;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 
@@ -33,10 +34,8 @@ public class Platform extends PhysicEntity implements ICanGetArc {
         final float deltaX = (float) (radius * Math.sin(rotationRadian));
         final float deltaY = (float) (radius * Math.cos(rotationRadian));
 
-        this.setPoint(circle
-                .getPoint()
-                .plus(new Point(deltaX, deltaY))
-        );
+        this.setPoint(new Point(circle.getPoint().getPosX() - deltaX,
+                circle.getPoint().getPosY() + deltaY));
     }
 
     public boolean valid(WebSocketUser user, ClientCommitMessage clientCommitMessage) {
@@ -51,7 +50,7 @@ public class Platform extends PhysicEntity implements ICanGetArc {
     @Override
     public Arc getArc() {
         final Point coord = this.getPoint();
-        final float rotation = this.getRotation();
+        final float rotation = (float) Utils.radians(this.getRotation());
         final float angle = MAGIC_CONSTANT;
         final float lengthHypotenuse = Constants.GAME_PLATFORM_SIZE / 2;
 

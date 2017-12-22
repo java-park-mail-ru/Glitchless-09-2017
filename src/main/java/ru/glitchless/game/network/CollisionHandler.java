@@ -1,7 +1,11 @@
 package ru.glitchless.game.network;
 
-import ru.glitchless.game.data.packages.toclient.*;
+import ru.glitchless.game.data.packages.toclient.DestroyObject;
+import ru.glitchless.game.data.packages.toclient.EndGameMessage;
+import ru.glitchless.game.data.packages.toclient.LaserDump;
+import ru.glitchless.game.data.packages.toclient.SyncShield;
 import ru.glitchless.game.data.physics.ForceField;
+import ru.glitchless.game.data.physics.Laser;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.data.model.WebSocketUser;
@@ -24,10 +28,8 @@ public class CollisionHandler {
         hpCount.put(roomUsers.getSecondUser(), Constants.GAME_HP_COUNT);
     }
 
-    public void onObjectChange(PhysicObject physicObject) {
-        sendMessageService.sendMessage(new SingleSnapObject(
-                new SnapObject(physicObject)
-        ), roomUsers);
+    public void onLaserChange(Laser laser) {
+        sendMessageService.sendMessage(new LaserDump(laser), roomUsers);
     }
 
     public void onDestroyObject(PhysicObject physicObject) {
@@ -46,8 +48,10 @@ public class CollisionHandler {
     public void onHpLoss(WebSocketUser webSocketUser) {
         int newHpCount = hpCount.get(webSocketUser) - 1;
         hpCount.put(webSocketUser, newHpCount);
-        if (newHpCount <= 0) {
+        if (newHpCount == 0) {
             sendMessageService.sendMessage(new EndGameMessage(webSocketUser), roomUsers);
+            hpCount.put(webSocketUser, -1);
+            hpCount.put(roomUsers.getComanion(webSocketUser), -1);
         }
     }
 }

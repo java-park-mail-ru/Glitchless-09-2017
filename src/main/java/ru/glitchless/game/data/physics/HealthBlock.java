@@ -6,6 +6,7 @@ import ru.glitchless.game.collision.data.CollisionPoint;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.game.network.CollisionHandler;
+import ru.glitchless.game.utils.Utils;
 import ru.glitchless.newserver.data.model.WebSocketUser;
 import ru.glitchless.newserver.utils.Constants;
 
@@ -25,12 +26,9 @@ public class HealthBlock extends PhysicObject implements ICanGetArc {
 
     @Override
     public Arc getArc() {
-        if (this.collisionArc != null) {
-            return this.collisionArc;
-        }
 
         final CollisionPoint coord = this.getPoint().toCollisionPoint();
-        final float rotation = this.getRotation();
+        final float rotation = (float) Utils.radians(this.getRotation());
         final double lengthHypotenuse = HEALTH_SIZE / 2; //empiric coefficient
 
         final float deltaXLeft = (float) (lengthHypotenuse * Math.cos(rotation + MAGIC_NUMBER));
@@ -72,5 +70,15 @@ public class HealthBlock extends PhysicObject implements ICanGetArc {
         this.setForDestroy(true);
         collisionHandler.onDestroyObject(this);
         collisionHandler.onHpLoss(aligmentPlayer);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
+
+    @Override
+    public void setForDestroy(boolean forDestroy) {
+        super.setForDestroy(forDestroy);
     }
 }

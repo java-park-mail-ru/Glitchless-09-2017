@@ -85,10 +85,10 @@ public class GameMechanic implements IGameMechanic {
     }
 
     private void removeDestroyElement() {
-        final List<PhysicObject> tmp = new ArrayList<>(physicEntities);
-        tmp.forEach(item -> {
-            if (item.isForDestroy()) {
-                item.destroy();
+        final List<PhysicObject> values = new ArrayList<>(idToObject.values());
+        values.forEach(value -> {
+            if (value.isForDestroy()) {
+                value.destroy();
             }
         });
     }

@@ -3,7 +3,7 @@ package ru.glitchless.game.physics;
 import ru.glitchless.game.GameMechanic;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.Vector;
-import ru.glitchless.game.data.packages.toclient.CreateObjectMessage;
+import ru.glitchless.game.data.packages.toclient.LaserCreate;
 import ru.glitchless.game.data.packages.toclient.SyncShield;
 import ru.glitchless.game.data.physics.Laser;
 import ru.glitchless.newserver.data.model.RoomUsers;
@@ -50,7 +50,7 @@ public class GameplayLoop {
         gameMechanic.putObject(laser);
         gameMechanic.getEntityStorage().addLaser(laser);
 
-        sendMessageService.sendMessage(new CreateObjectMessage(laser), roomUsers);
+        sendMessageService.sendMessage(new LaserCreate(laser), roomUsers);
         chargeField(elapsedMs);
     }
 
