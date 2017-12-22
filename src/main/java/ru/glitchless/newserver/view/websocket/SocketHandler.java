@@ -11,6 +11,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import ru.glitchless.game.data.packages.toclient.AuthMessage;
 import ru.glitchless.game.data.packages.toclient.WebSocketMessageError;
 import ru.glitchless.newserver.data.model.UserModel;
 import ru.glitchless.newserver.data.model.WebSocketMessage;
@@ -30,6 +31,7 @@ public class SocketHandler extends TextWebSocketHandler {
     private static final CloseStatus ACCESS_DENIED = new CloseStatus(4500, "Not logged in. Access denied");
     private final SocketMessageHandlerManager handlerManager;
     private final ObjectMapper objectMapper;
+    private final SendMessageService sendMessageService;
     private final UserInteractor userInteractor;
 
     public SocketHandler(@NotNull SocketMessageHandlerManager manager,
@@ -41,14 +43,16 @@ public class SocketHandler extends TextWebSocketHandler {
         this.objectMapper = objectMapper;
         this.userInteractor = service;
         sendMessageService.init();
+        this.sendMessageService = sendMessageService;
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        final UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
-        if (user == null || !userInteractor.isContains(user)) {
-            LOGGER.warn("User requested websocket is not registred or not logged in. Openning websocket session is denied.");
-            closeSessionSilently(session);
+        UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
+        if (user == null) {
+            user = userInteractor.getAnonUser();
+            sendMessageService.sendMessage(new AuthMessage(user.getLogin()), new WebSocketUser(session, user));
+            session.getAttributes().put(Constants.SESSION_EXTRA_USER, user);
         }
     }
 
@@ -58,11 +62,11 @@ public class SocketHandler extends TextWebSocketHandler {
         if (!session.isOpen()) {
             return;
         }
-        final UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
+        UserModel user = (UserModel) session.getAttributes().get(Constants.SESSION_EXTRA_USER);
         if (user == null) {
-            LOGGER.warn("User requested websocket is not registred or not logged in. Openning websocket session is denied.");
-            closeSessionSilently(session);
-            return;
+            user = userInteractor.getAnonUser();
+            sendMessageService.sendMessage(new AuthMessage(user.getLogin()), new WebSocketUser(session, user));
+            session.getAttributes().put(Constants.SESSION_EXTRA_USER, user);
         }
         WebSocketUser wsUser = (WebSocketUser) session.getAttributes().get(Constants.SESSION_EXTRA_USERWS);
         if (wsUser == null) {

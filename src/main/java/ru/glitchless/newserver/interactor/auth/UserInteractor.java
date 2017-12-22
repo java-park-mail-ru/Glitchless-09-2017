@@ -72,6 +72,10 @@ public class UserInteractor {
         }
     }
 
+    public UserModel getAnonUser() {
+        return userRepository.getAnonUser();
+    }
+
     @VisibleForTesting
     public void validateForTest(UserModel userModel) {
         validate(userModel);
