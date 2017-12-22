@@ -3,6 +3,8 @@ package ru.glitchless.game.network;
 import ru.glitchless.game.data.packages.toclient.DestroyObject;
 import ru.glitchless.game.data.packages.toclient.SingleSnapObject;
 import ru.glitchless.game.data.packages.toclient.SnapObject;
+import ru.glitchless.game.data.packages.toclient.SyncShield;
+import ru.glitchless.game.data.physics.ForceField;
 import ru.glitchless.game.data.physics.base.PhysicObject;
 import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.data.model.WebSocketUser;
@@ -30,6 +32,10 @@ public class CollisionHandler {
 
         sendMessageService.sendMessage(new DestroyObject(physicObject), roomUsers);
 
+    }
+
+    public void onFieldShot(ForceField forceField) {
+        sendMessageService.sendMessage(new SyncShield(forceField), roomUsers);
     }
 
     public void onHpLoss(WebSocketUser webSocketUser) {

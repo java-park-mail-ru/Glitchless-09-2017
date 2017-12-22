@@ -69,7 +69,7 @@ public class CollisionLoop {
             if (points != null) {
                 laser.setForDestroy(true);
                 forceField.onCollision(points);
-                // TODO on discharge
+                collisionHandler.onFieldShot(forceField);
             }
         }));
     }

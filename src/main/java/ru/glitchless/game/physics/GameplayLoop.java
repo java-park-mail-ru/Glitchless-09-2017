@@ -4,6 +4,7 @@ import ru.glitchless.game.GameMechanic;
 import ru.glitchless.game.data.Point;
 import ru.glitchless.game.data.Vector;
 import ru.glitchless.game.data.packages.toclient.CreateObjectMessage;
+import ru.glitchless.game.data.packages.toclient.SyncShield;
 import ru.glitchless.game.data.physics.Laser;
 import ru.glitchless.newserver.data.model.RoomUsers;
 import ru.glitchless.newserver.utils.Constants;
@@ -55,8 +56,11 @@ public class GameplayLoop {
 
     private void chargeField(long elapsedMS) {
         gameMechanic.getEntityStorage().getForceFields().forEach((item) -> {
+            final boolean prevMax = item.getShieldStatus() == Constants.MAX_SHIELD;
             item.addShieldStatus(elapsedMS * Constants.SHIELD_REGEN_RATIO);
+            if (!prevMax && item.getShieldStatus() == Constants.MAX_SHIELD) {
+                sendMessageService.sendMessage(new SyncShield(item), roomUsers);
+            }
         });
-
     }
 }

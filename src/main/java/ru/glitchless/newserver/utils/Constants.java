@@ -21,7 +21,7 @@ public class Constants {
     public static final int MAX_ROOMS_COUNT = 2;
     public static final int CIRCLE_RADIUS = 1080 / 2 - 60;
     public static final float CIRCLE_ANGEL = 360f;
-    public static final float SHIELD_REGEN_RATIO = 5 / 1000;
+    public static final float SHIELD_REGEN_RATIO = (float) 5 / 1000;
     public static final float SHIELD_ACTIVATION_PERCENT = 0.1f;
     public static final float LASER_DAMAGE = 20;
     public static final float MAX_SHIELD = 100;

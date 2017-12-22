@@ -16,6 +16,7 @@ import ru.glitchless.game.data.packages.toclient.*;
         @JsonSubTypes.Type(ServerSnapMessage.class),
         @JsonSubTypes.Type(LightServerSnapMessage.class),
         @JsonSubTypes.Type(SingleSnapObject.class),
+        @JsonSubTypes.Type(SyncShield.class),
 })
 public abstract class WebSocketMessage {
 }
