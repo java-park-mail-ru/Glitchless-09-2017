@@ -44,7 +44,7 @@ public class SendMessageService {
         SendWorker sendWorker = webSocketUserSendWorkerMap.get(commit.getUser());
 
         if (sendWorker == null) {
-            sendWorker = workers[counter.getAndIncrement()];
+            sendWorker = workers[counter.getAndIncrement() % Constants.MESSAGE_THREAD_COUNT];
             webSocketUserSendWorkerMap.put(commit.getUser(), sendWorker);
         }
 
