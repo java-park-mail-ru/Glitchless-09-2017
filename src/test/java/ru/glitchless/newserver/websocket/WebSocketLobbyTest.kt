@@ -46,9 +46,9 @@ class WebSocketLobbyTest {
     @Test
     @Throws(Exception::class)
     fun shouldReceiveAMessageFromTheServer() {
-    }
+        myClient.connect();
+        myClient.waitOpen();
 
-    companion object {
-        internal val WEBSOCKET_URI = "ws://localhost:8080/game"
+        myClient.close();
     }
 }
