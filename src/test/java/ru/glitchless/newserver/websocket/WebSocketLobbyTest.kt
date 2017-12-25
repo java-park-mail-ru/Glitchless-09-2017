@@ -39,11 +39,11 @@ class WebSocketLobbyTest {
         myClient.waitOpen();
     }
 
-    private fun authAsAnonim(){
+    private fun authAsAnonim(client: MyWebSocketClient) {
         val msg = WantPlayMessage();
         msg.state = ClientState.WAITING_USER.id;
-        myClient.send(objectMapper.writeValueAsString(msg))
-        val answer = objectMapper.readValue<AuthMessage>(blockingQueue.poll(1, TimeUnit.SECONDS),
+        client.send(objectMapper.writeValueAsString(msg))
+        val answer = objectMapper.readValue<AuthMessage>(client.blockingQueue.poll(1, TimeUnit.SECONDS),
                 AuthMessage::class.java);
 
         assert(answer.login.isNotEmpty())
@@ -52,13 +52,13 @@ class WebSocketLobbyTest {
     @Test
     @Throws(Exception::class)
     fun testAnonimLogin() {
-        authAsAnonim()
+        authAsAnonim(myClient)
     }
 
     @Test
     @Throws(Exception::class)
     fun testFirstStage() {
-        authAsAnonim()
+        authAsAnonim(myClient)
 
         val answer = objectMapper.readValue<GameInitState>(blockingQueue.poll(1, TimeUnit.SECONDS),
                 GameInitState::class.java);
@@ -75,13 +75,7 @@ class WebSocketLobbyTest {
         secondClient.connect()
         secondClient.waitOpen()
 
-        val msg = WantPlayMessage();
-        msg.state = ClientState.WAITING_USER.id;
-        secondClient.send(objectMapper.writeValueAsString(msg))
-        var answerAuth = objectMapper.readValue<AuthMessage>(queue.poll(1, TimeUnit.SECONDS),
-                AuthMessage::class.java);
-
-        assert(answerAuth.login.isNotEmpty())
+        authAsAnonim(secondClient)
 
         var answerState = objectMapper.readValue<GameInitState>(queue.poll(1, TimeUnit.SECONDS),
                 GameInitState::class.java);
@@ -95,7 +89,7 @@ class WebSocketLobbyTest {
     }
 
     @After
-    fun after(){
-       myClient.close()
+    fun after() {
+        myClient.close()
     }
 }

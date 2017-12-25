@@ -46,6 +46,10 @@ public class MyWebSocketClient extends WebSocketClient {
         LOGGER.error("onError", e);
     }
 
+    public BlockingQueue<String> getBlockingQueue() {
+        return blockingQueue;
+    }
+
     public void waitOpen() throws InterruptedException {
         synchronized (lock) {
             while (!super.isOpen()) {
