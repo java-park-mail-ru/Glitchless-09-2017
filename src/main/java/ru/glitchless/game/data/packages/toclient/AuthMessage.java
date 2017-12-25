@@ -6,6 +6,10 @@ public class AuthMessage extends WebSocketMessage {
     private String type;
     private String login;
 
+    public AuthMessage() {
+        this.type = "AuthMessage";
+    }
+
     public AuthMessage(String login) {
         this.type = "AuthMessage";
         this.login = login;

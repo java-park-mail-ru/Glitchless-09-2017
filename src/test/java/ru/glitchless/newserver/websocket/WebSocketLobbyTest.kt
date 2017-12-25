@@ -1,7 +1,7 @@
 package ru.glitchless.newserver.websocket
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.Assert
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -9,21 +9,15 @@ import org.springframework.boot.context.embedded.LocalServerPort
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.messaging.simp.stomp.StompFrameHandler
-import org.springframework.messaging.simp.stomp.StompHeaders
-import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter
 import org.springframework.test.context.junit4.SpringRunner
-import org.springframework.web.socket.client.standard.StandardWebSocketClient
-import org.springframework.web.socket.messaging.WebSocketStompClient
-import org.springframework.web.socket.sockjs.client.SockJsClient
-import org.springframework.web.socket.sockjs.client.Transport
-import org.springframework.web.socket.sockjs.client.WebSocketTransport
 import ru.glitchless.game.data.packages.fromclient.WantPlayMessage
-import java.lang.reflect.Type
-import java.util.Arrays.asList
+import ru.glitchless.game.data.packages.toclient.AuthMessage
+import ru.glitchless.game.data.packages.toclient.GameInitState
+import ru.glitchless.newserver.data.model.ClientState
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.concurrent.TimeUnit
+import kotlin.test.assertEquals
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -41,14 +35,67 @@ class WebSocketLobbyTest {
     fun setup() {
         blockingQueue = LinkedBlockingDeque()
         myClient = MyWebSocketClient(blockingQueue, randomServerPort)
+        myClient.connect();
+        myClient.waitOpen();
+    }
+
+    private fun authAsAnonim(){
+        val msg = WantPlayMessage();
+        msg.state = ClientState.WAITING_USER.id;
+        myClient.send(objectMapper.writeValueAsString(msg))
+        val answer = objectMapper.readValue<AuthMessage>(blockingQueue.poll(1, TimeUnit.SECONDS),
+                AuthMessage::class.java);
+
+        assert(answer.login.isNotEmpty())
     }
 
     @Test
     @Throws(Exception::class)
-    fun shouldReceiveAMessageFromTheServer() {
-        myClient.connect();
-        myClient.waitOpen();
+    fun testAnonimLogin() {
+        authAsAnonim()
+    }
 
-        myClient.close();
+    @Test
+    @Throws(Exception::class)
+    fun testFirstStage() {
+        authAsAnonim()
+
+        val answer = objectMapper.readValue<GameInitState>(blockingQueue.poll(1, TimeUnit.SECONDS),
+                GameInitState::class.java);
+        assertEquals(answer.state, ClientState.WAITING_USER.id)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun testFindingUser() {
+        testFirstStage()
+
+        val queue = LinkedBlockingDeque<String>();
+        val secondClient = myClient.clone(queue);
+        secondClient.connect()
+        secondClient.waitOpen()
+
+        val msg = WantPlayMessage();
+        msg.state = ClientState.WAITING_USER.id;
+        secondClient.send(objectMapper.writeValueAsString(msg))
+        var answerAuth = objectMapper.readValue<AuthMessage>(queue.poll(1, TimeUnit.SECONDS),
+                AuthMessage::class.java);
+
+        assert(answerAuth.login.isNotEmpty())
+
+        var answerState = objectMapper.readValue<GameInitState>(queue.poll(1, TimeUnit.SECONDS),
+                GameInitState::class.java);
+        assertEquals(answerState.state, ClientState.WAITING_USER.id)
+
+        answerState = objectMapper.readValue<GameInitState>(queue.poll(1, TimeUnit.SECONDS),
+                GameInitState::class.java);
+        assertEquals(answerState.state, ClientState.PREPARING_RESOURCE.id)
+
+        secondClient.close()
+    }
+
+    @After
+    fun after(){
+       myClient.close()
     }
 }

@@ -13,9 +13,11 @@ public class MyWebSocketClient extends WebSocketClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyWebSocketClient.class);
     private final Object lock = new Object();
     private final BlockingQueue<String> blockingQueue;
+    private final int port;
 
     public MyWebSocketClient(BlockingQueue<String> blockingQueue, int port) throws URISyntaxException {
         super(new URI("ws://localhost:" + port + "/game"));
+        this.port = port;
         this.blockingQueue = blockingQueue;
     }
 
@@ -50,5 +52,9 @@ public class MyWebSocketClient extends WebSocketClient {
                 lock.wait();
             }
         }
+    }
+
+    public MyWebSocketClient clone(BlockingQueue<String> blockingQueue) throws URISyntaxException {
+        return new MyWebSocketClient(blockingQueue, port);
     }
 }
