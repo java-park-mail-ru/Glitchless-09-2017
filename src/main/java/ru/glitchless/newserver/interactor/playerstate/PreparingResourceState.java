@@ -23,15 +23,18 @@ public class PreparingResourceState implements IPlayerState {
     private final PlayerRepository playerRepository;
     private final GameRepository gameRepository;
     private final SendMessageService sendMessageService;
+    private final WaitUserState waitUserState;
 
     public PreparingResourceState(PlayerRepository playerRepository,
                                   WebSocketUser secondUser,
                                   GameRepository gameRepository,
-                                  SendMessageService sendMessageService) {
+                                  SendMessageService sendMessageService,
+                                  WaitUserState waitUserState) {
         this.secondUser = secondUser;
         this.playerRepository = playerRepository;
         this.gameRepository = gameRepository;
         this.sendMessageService = sendMessageService;
+        this.waitUserState = waitUserState;
     }
 
     @Override
@@ -42,11 +45,16 @@ public class PreparingResourceState implements IPlayerState {
 
         final WantPlayMessage wantPlayMessage = (WantPlayMessage) message;
 
+        if (!secondUser.getSession().isOpen()) {
+            playerRepository.putPlayerState(forUser, waitUserState);
+            return;
+        }
+
         if (wantPlayMessage.getState() != ClientState.WAITING_ENEMY_RESOURCE.getId()) {
             return;
         }
 
-        playerRepository.putPlayerState(forUser, new WaitingEnemyState(playerRepository, secondUser));
+        playerRepository.putPlayerState(forUser, new WaitingEnemyState(playerRepository, secondUser, waitUserState));
 
         final IPlayerState enemyState = playerRepository.getPlayerState(secondUser);
 

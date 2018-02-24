@@ -37,7 +37,7 @@ public class PlayingState implements IPlayerState {
         if (message instanceof WantPlayMessage) {
             final IGameMechanic gameMechanic = gameStore.getGameMechanic();
             if (gameMechanic != null) {
-                sendMessageService.sendMessageSync(gameMechanic.dumpSwapScene(), forUser);
+                sendMessageService.sendMessage(gameMechanic.dumpSwapScene(), forUser);
             }
         }
     }

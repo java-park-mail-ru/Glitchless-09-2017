@@ -17,7 +17,7 @@ public abstract class SocketMessageHandler<T extends WebSocketMessage> {
         try {
             handle(clazz.cast(message), forUser);
         } catch (ClassCastException ex) {
-            throw new HandleException("Can't read incoming message of type " + message.getClass(), ex);
+            throw ex;
         }
     }
 

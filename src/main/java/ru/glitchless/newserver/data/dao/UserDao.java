@@ -1,4 +1,4 @@
-package ru.glitchless.newserver.data.stores;
+package ru.glitchless.newserver.data.dao;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -33,7 +33,7 @@ public class UserDao {
 
     public UserModel addUser(UserModel userLocalModel) {
         try {
-            return template.queryForObject("INSERT INTO users (login, password, email) VALUES (?, ?, ?) RETURNING *;",
+            return template.queryForObject("INSERT INTO users (login, password, email) VALUES (?::CITEXT, ?, ?) RETURNING *;",
                     USER_MAPPER,
                     userLocalModel.getLogin(),
                     userLocalModel.getPassword(),

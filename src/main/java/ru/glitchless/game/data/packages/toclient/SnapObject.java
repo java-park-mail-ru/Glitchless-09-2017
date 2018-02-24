@@ -19,10 +19,12 @@ public class SnapObject {
     private float rotation;
     @JsonProperty("rotationspeed")
     private float rotationSpeed;
+    private boolean isDestroyed;
 
     public SnapObject(PhysicObject object) {
         this.objectId = object.getObjectId();
         this.coord = object.getPoint();
+        this.isDestroyed = object.isForDestroy();
         this.rotation = object.getRotation();
     }
 
@@ -55,5 +57,9 @@ public class SnapObject {
 
     public float getRotation() {
         return rotation;
+    }
+
+    public boolean isDestroyed() {
+        return isDestroyed;
     }
 }

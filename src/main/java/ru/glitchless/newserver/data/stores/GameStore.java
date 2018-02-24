@@ -16,11 +16,10 @@ public class GameStore implements Runnable {
 
     private final Clock clock = Clock.systemDefaultZone();
     private final IGameMechanic gameMechanic;
-    private long lastFrameMillis = Constants.STEP_TIME;
-
     private final PlayerRepository playerRepository;
     private final RoomUsers roomUsers;
     private final SendMessageService sendMessageService;
+    private long lastFrameMillis = Constants.STEP_TIME;
 
     public GameStore(RoomUsers roomUsers, SendMessageService sendMessageService, PlayerRepository playerRepository) {
         this.gameMechanic = new GameMechanic(roomUsers, sendMessageService);

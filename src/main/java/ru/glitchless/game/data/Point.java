@@ -1,6 +1,7 @@
 package ru.glitchless.game.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ru.glitchless.game.collision.data.CollisionPoint;
 import ru.glitchless.newserver.utils.Constants;
 
 public class Point {
@@ -28,6 +29,14 @@ public class Point {
     public Point apply(Vector vector) {
         return new Point(posX + vector.getDiffX(),
                 posY + vector.getDiffY());
+    }
+
+    public CollisionPoint toCollisionPoint() {
+        return new CollisionPoint(posX, posY);
+    }
+
+    public Vector toVector() {
+        return new Vector(posX, posY);
     }
 
     @Override

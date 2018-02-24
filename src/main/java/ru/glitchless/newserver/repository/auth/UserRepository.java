@@ -2,12 +2,17 @@ package ru.glitchless.newserver.repository.auth;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import ru.glitchless.newserver.data.dao.UserDao;
 import ru.glitchless.newserver.data.model.UserModel;
-import ru.glitchless.newserver.data.stores.UserDao;
 import ru.glitchless.newserver.data.throwables.InvalidLoginOrPassword;
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 
 @Component
 public class UserRepository {
+    private final Set<String> anonUsers = new HashSet<>();
     private final PasswordEncoder encoder;
     private final UserDao userDao;
 
@@ -48,5 +53,16 @@ public class UserRepository {
         final UserModel model = userDao.getUser(userModel.getLogin());
 
         return model != null;
+    }
+
+    public UserModel getAnonUser() {
+        final Random random = new Random();
+        String login;
+
+        do {
+            login = "Anonim" + random.nextInt();
+        } while (anonUsers.contains(login));
+
+        return new UserModel(login, "");
     }
 }
